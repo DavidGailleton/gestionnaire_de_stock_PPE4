@@ -1,9 +1,10 @@
 <?php
 
-namespace models;
+namespace ppe4;
+
+require_once "Model.php";
 
 use Cassandra\Date;
-use models\Model;
 
 class Commande extends Model
 {
@@ -22,5 +23,11 @@ class Commande extends Model
         $this->date_validation = $date_validation;
         $this->utilisateur = $utilisateur;
         $this->validateur = $validateur;
+    }
+
+    public function __construct()
+    {
+        $this->table = "commande";
+        $this->get_connection();
     }
 }

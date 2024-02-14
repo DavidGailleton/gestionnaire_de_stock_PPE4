@@ -1,8 +1,8 @@
 <?php
 
-namespace models;
+namespace ppe4;
 
-use models\Model;
+require_once "Model.php";
 
 class Produit extends Model
 {

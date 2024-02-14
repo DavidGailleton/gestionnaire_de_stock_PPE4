@@ -1,6 +1,6 @@
 <?php
 
-namespace models;
+namespace ppe4;
 
 enum Statut: string
 {

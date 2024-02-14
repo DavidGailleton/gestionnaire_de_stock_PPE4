@@ -1,8 +1,8 @@
 <?php
 
-namespace models;
+namespace ppe4;
 
-use models\Model;
+require_once "Model.php";
 
 class Ligne_commande extends Model
 {
@@ -16,6 +16,11 @@ class Ligne_commande extends Model
         $this->commande = $commande;
         $this->medicament = $medicament;
         $this->qte = $qte;
+    }
+    public function __construct()
+    {
+        $this->table = "ligne_commande";
+        $this->get_connection();
     }
 
     public function new_ligne_commande_mat(Commande $commande, Materiel $materiel, int $qte):void

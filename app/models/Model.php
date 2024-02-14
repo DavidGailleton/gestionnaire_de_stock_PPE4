@@ -1,6 +1,6 @@
 <?php
 
-namespace models;
+namespace ppe4;
 
 use PDO;
 use PDOException;
@@ -12,7 +12,7 @@ abstract class Model
     private string $username = 'root'; // Nom d'utilisateur de la base de données
     private string $password = '';  // Mot de passe de la base de données
 
-    public PDO $pdo;
+    protected $pdo;
 
     public string $table;
     public int $id;
@@ -24,7 +24,7 @@ abstract class Model
         try {
             $this->pdo = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name . ";charset=utf8", $this->username, $this->password);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $this->pdo->exec();
+            $this->pdo->exec("set names utf8");
         } catch (PDOException $exception) {
             echo "Erreur de connexion : " . $exception->getMessage();
         }

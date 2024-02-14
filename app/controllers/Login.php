@@ -1,10 +1,8 @@
 <?php
-require '../models/Model.php'; // Assurez-vous que ce fichier contient les informations de connexion à votre base de données
-
-get_connection();
+require '../models/Utilisateur.php'; // Assurez-vous que ce fichier contient les informations de connexion à votre base de données
 
 // Vérifie si l'utilisateur est déjà connecté
-if (isset($_SESSION['user_id'])) {
+if (isset($_SESSION['user_mail'])) {
     header("Location: Dashboard.php"); // Redirige l'utilisateur vers la page du tableau de bord s'il est déjà connecté
     exit;
 }
@@ -17,30 +15,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['email'], $_POST['passw
     $password = $_POST['password'];
 
     // Requête pour vérifier si l'utilisateur existe
-    $sql = "SELECT id_uti, email_uti, password_uti, libelle_rol FROM utilisateur INNER JOIN role ON utilisateur.id_rol = role.id_rol WHERE email_uti = :email";
-    $stmt = $pdo->prepare($sql);
+    $user_model = new \ppe4\Utilisateur();
+    $user = $user_model->select_utilisateur($email);
 
-    // Exécution de la requête
-    $stmt->execute(['email' => $email]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    /*if ($user && password_verify($password, $user['password_uti'])) {
-        // Si les identifiants sont corrects, démarrage de la session
-        $_SESSION['user_id'] = $user['id_uti'];
-        $_SESSION['user_email'] = $user['email_uti'];
+    // Verification du mot de passe (condition à remplacer par : $user && password_verify($password, $user_model->select_mot_de_passe($email)))
+    if ($user && $user_model->select_mot_de_passe($email) == $password) {
+        $_SESSION['user_email'] = $user->get_email();
         header("Location: dashboard.php"); // Redirection vers le tableau de bord
         exit;
-    } else {
-        $error_message = 'Email ou mot de passe incorrect.';
-    }*/
-
-    if ($user['password_uti'] == $password) {
-        // Si les identifiants sont corrects, démarrage de la session
-        $_SESSION['user_id'] = $user['id_uti'];
-        $_SESSION['user_email'] = $user['email_uti'];
-        header("Location: dashboard.php"); // Redirection vers le tableau de bord
-        exit;
-    } else {
+    }else {
         $error_message = 'Email ou mot de passe incorrect.';
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace models;
+namespace ppe4;
 
-use models\Produit;
+require_once "Produit.php";
 
 class Medicament extends Produit
 {
@@ -16,5 +16,11 @@ class Medicament extends Produit
         $this->qte_stock = $qte;
         $this->cis = $cis;
         $this->forme = $forme;
+    }
+
+    public function __construct()
+    {
+        $this->table = "medicaments";
+        $this->get_connection();
     }
 }

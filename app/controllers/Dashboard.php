@@ -13,5 +13,5 @@ require '../models/Model.php';
 // Récupération des informations de l'utilisateur connecté
 $user_id = $_SESSION['user_id'];
 
-require_once ROOT."app/views/dashboard.php"
+require_once "../views/dashboard.php"
 ?>

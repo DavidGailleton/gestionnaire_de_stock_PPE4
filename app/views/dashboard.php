@@ -18,8 +18,8 @@ $user_id = $_SESSION['user_id'];
 
 <!doctype html>
 <html lang="en">
-<?php require_once ROOT."app/views/component/head.php" ?>
+<?php require_once "../views/component/head.php" ?>
 <body>
- <?php include_once ROOT."app/views/component/header.php"; ?>
+ <?php include_once "../views/component/header.php"; ?>
 </body>
 </html>
