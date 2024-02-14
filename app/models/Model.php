@@ -3,18 +3,19 @@
 namespace models;
 
 use PDO;
+use PDOException;
 
 abstract class Model
 {
-    private $host = 'localhost'; // Hôte de la base de données
-    private $db_name = 'ppe4'; // Nom de la base de données
-    private $username = 'root'; // Nom d'utilisateur de la base de données
-    private $password = '';  // Mot de passe de la base de données
+    private string $host = 'localhost'; // Hôte de la base de données
+    private string $db_name = 'ppe4'; // Nom de la base de données
+    private string $username = 'root'; // Nom d'utilisateur de la base de données
+    private string $password = '';  // Mot de passe de la base de données
 
-    protected $pdo;
+    protected PDO $pdo;
 
-    public $table;
-    public $id;
+    public string $table;
+    public int $id;
 
     public function get_connection ()
     {
