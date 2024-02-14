@@ -12,12 +12,12 @@ abstract class Model
     private string $username = 'root'; // Nom d'utilisateur de la base de données
     private string $password = '';  // Mot de passe de la base de données
 
-    protected PDO $pdo;
+    public PDO $pdo;
 
     public string $table;
     public int $id;
 
-    public function get_connection ()
+    public function get_connection ():void
     {
         $this->pdo = null;
 

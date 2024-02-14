@@ -1,6 +1,8 @@
 <?php
 require '../models/Model.php'; // Assurez-vous que ce fichier contient les informations de connexion à votre base de données
 
+get_connection();
+
 // Vérifie si l'utilisateur est déjà connecté
 if (isset($_SESSION['user_id'])) {
     header("Location: Dashboard.php"); // Redirige l'utilisateur vers la page du tableau de bord s'il est déjà connecté
