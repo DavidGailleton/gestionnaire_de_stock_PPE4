@@ -8,14 +8,14 @@ use Cassandra\Date;
 
 class Commande extends Model
 {
-    protected int $id_com;
-    protected \DateTime $date_commande;
-    protected bool $mouvement;
-    protected \DateTime $date_validation;
-    protected Utilisateur $utilisateur;
-    protected Utilisateur $validateur;
+    private int $id_com;
+    private \DateTime $date_commande;
+    private bool $mouvement;
+    private \DateTime $date_validation;
+    private Utilisateur $utilisateur;
+    private Utilisateur $validateur;
 
-    public function new_commande(int $id, \DateTime $date_commande, bool $mouvement, \DateTime $date_validation, Utilisateur $utilisateur, Utilisateur $validateur):void
+    public function set_commande(int $id, \DateTime $date_commande, bool $mouvement, \DateTime $date_validation, Utilisateur $utilisateur, Utilisateur $validateur):void
     {
         $this->id_com = $id;
         $this->date_commande = $date_commande;
@@ -29,5 +29,60 @@ class Commande extends Model
     {
         $this->table = "commande";
         $this->get_connection();
+    }
+
+    public function getIdCom(): int
+    {
+        return $this->id_com;
+    }
+
+    public function getDateCommande(): \DateTime
+    {
+        return $this->date_commande;
+    }
+
+    public function setDateCommande(\DateTime $date_commande): void
+    {
+        $this->date_commande = $date_commande;
+    }
+
+    public function isMouvement(): bool
+    {
+        return $this->mouvement;
+    }
+
+    public function setMouvement(bool $mouvement): void
+    {
+        $this->mouvement = $mouvement;
+    }
+
+    public function getDateValidation(): \DateTime
+    {
+        return $this->date_validation;
+    }
+
+    public function setDateValidation(\DateTime $date_validation): void
+    {
+        $this->date_validation = $date_validation;
+    }
+
+    public function getUtilisateur(): Utilisateur
+    {
+        return $this->utilisateur;
+    }
+
+    public function setUtilisateur(Utilisateur $utilisateur): void
+    {
+        $this->utilisateur = $utilisateur;
+    }
+
+    public function getValidateur(): Utilisateur
+    {
+        return $this->validateur;
+    }
+
+    public function setValidateur(Utilisateur $validateur): void
+    {
+        $this->validateur = $validateur;
     }
 }

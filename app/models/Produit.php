@@ -6,8 +6,23 @@ require_once "Model.php";
 
 class Produit extends Model
 {
-    protected string $libelle;
-    protected string $descritpion;
-    protected int $qte_stock;
+    private string $libelle;
+    private string $descritpion;
+    private int $qte_stock;
+
+    public function getLibelle(): string
+    {
+        return $this->libelle;
+    }
+
+    public function getDescritpion(): string
+    {
+        return $this->descritpion;
+    }
+
+    public function getQteStock(): int
+    {
+        return $this->qte_stock;
+    }
 
 }

@@ -7,17 +7,19 @@ class Login extends Controller
 {
     public function login():void
     {
-        $this->loadModel('Utilisateur');
-
 // Vérifie si l'utilisateur est déjà connecté
         if (isset($_SESSION['user_mail'])) {
             header("Location: Dashboard.php"); // Redirige l'utilisateur vers la page du tableau de bord s'il est déjà connecté
             exit;
         }
 
+        $this->verification_connection();
+    }
+    // Traitement du formulaire de connexion
+    public function verification_connection(): void
+    {
         $error_message = '';
 
-// Traitement du formulaire de connexion
         if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['email'], $_POST['password'])) {
             $email = $_POST['email'];
             $password = $_POST['password'];
@@ -36,7 +38,7 @@ class Login extends Controller
             }
         }
 
-        require_once ("../views/login.php");
+        require_once (ROOT."./app/views/login.php");
     }
 
 }

@@ -6,10 +6,10 @@ require_once "Produit.php";
 
 class Medicament extends Produit
 {
-    protected int $cis;
-    protected string $forme;
+    private int $cis;
+    private string $forme;
 
-    public function new_medicament(string $libelle, string $description, int $qte, int $cis, string $forme):void
+    public function set_medicament(string $libelle, string $description, int $qte, int $cis, string $forme):void
     {
         $this->libelle = $libelle;
         $this->descritpion = $description;
@@ -22,5 +22,15 @@ class Medicament extends Produit
     {
         $this->table = "medicaments";
         $this->get_connection();
+    }
+
+    public function getCis(): int
+    {
+        return $this->cis;
+    }
+
+    public function getForme(): string
+    {
+        return $this->forme;
     }
 }

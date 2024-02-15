@@ -8,8 +8,8 @@ use PDO;
 
 class Role extends Model
 {
-    protected string $libelle;
-    protected string $description;
+    private string $libelle;
+    private string $description;
 
     public function new_role(string $libelle, string $description):void
     {
@@ -35,5 +35,15 @@ class Role extends Model
         $result->new_role($role['libelle_rol'], $role['description_rol']);
 
         return $result;
+    }
+
+    public function getLibelle(): string
+    {
+        return $this->libelle;
+    }
+
+    public function getDescription(): string
+    {
+        return $this->description;
     }
 }

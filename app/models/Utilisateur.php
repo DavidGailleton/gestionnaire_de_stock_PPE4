@@ -8,10 +8,10 @@ use PDO;
 
 class Utilisateur extends Model
 {
-    protected string $email;
-    protected string $nom;
-    protected string $prenom;
-    protected Role $role;
+    private string $email;
+    private string $nom;
+    private string $prenom;
+    private Role $role;
 
     public function __construct()
     {
@@ -19,12 +19,7 @@ class Utilisateur extends Model
         $this->get_connection();
     }
 
-    public function get_email():string
-    {
-        return $this->email;
-    }
-
-    public function new_utilisateur(string $email, string $nom, string $prenom, Role $role):void
+    public function set_utilisateur(string $email, string $nom, string $prenom, Role $role):void
     {
         $this->email = $email;
         $this->nom = $nom;
@@ -46,7 +41,7 @@ class Utilisateur extends Model
             $role = $role_model->get_one_role($email);
 
             $user = new Utilisateur();
-            $user->new_utilisateur($fetch['email_uti'], $fetch['nom_uti'], $fetch['prenom_uti'], $role);
+            $user->set_utilisateur($fetch['email_uti'], $fetch['nom_uti'], $fetch['prenom_uti'], $role);
 
             return $user;
         } else {
@@ -62,5 +57,25 @@ class Utilisateur extends Model
         $fetch = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return $fetch['password_uti'];
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function getNom(): string
+    {
+        return $this->nom;
+    }
+
+    public function getPrenom(): string
+    {
+        return $this->prenom;
+    }
+
+    public function getRole(): Role
+    {
+        return $this->role;
     }
 }

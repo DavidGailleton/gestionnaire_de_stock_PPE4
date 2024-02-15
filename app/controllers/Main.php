@@ -13,8 +13,11 @@ class Main extends Controller
             header("Location: ../views/dashboard.php");
             exit();
         } else {
-            $login = new Login();
-            $login->login();
+            //$login = new Login();
+            //$login->login();
+
+            header('Location: '.SERVER_URL.'?page=login');
+            exit();
         }
     }
 
