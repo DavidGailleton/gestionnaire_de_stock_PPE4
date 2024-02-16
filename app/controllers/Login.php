@@ -39,7 +39,11 @@ class Login extends Controller
         }
 
         require_once (ROOT."./app/views/login.php");
+        echo ROOT;
+        echo SERVER_URL;
     }
+
+
 
 }
 ?>

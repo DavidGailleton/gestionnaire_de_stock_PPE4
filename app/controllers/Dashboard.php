@@ -6,7 +6,6 @@ class Dashboard extends Controller
 {
     public function __construct()
     {
-
 // Vérification si l'utilisateur est connecté
         if (!isset($_SESSION['user_id'])) {
             header('Location: '.SERVER_URL.'?page=login');
