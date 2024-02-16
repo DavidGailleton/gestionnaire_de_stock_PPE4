@@ -8,6 +8,7 @@ use PDO;
 
 class Utilisateur extends Model
 {
+    private int $id_;
     private string $email;
     private string $nom;
     private string $prenom;
@@ -19,8 +20,9 @@ class Utilisateur extends Model
         $this->get_connection();
     }
 
-    public function set_utilisateur(string $email, string $nom, string $prenom, Role $role):void
+    public function set_utilisateur(int $id, string $email, string $nom, string $prenom, Role $role):void
     {
+        $this->id_ = $id;
         $this->email = $email;
         $this->nom = $nom;
         $this->prenom = $prenom;
@@ -29,7 +31,7 @@ class Utilisateur extends Model
 
     public function select_utilisateur(string $email):Utilisateur | null
     {
-        $query = "SELECT email_uti, nom_uti, prenom_uti FROM utilisateur WHERE email_uti = :email";
+        $query = "SELECT id_uti, email_uti, nom_uti, prenom_uti FROM utilisateur WHERE email_uti = :email";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['email' => $email]);
         $fetch = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -41,7 +43,7 @@ class Utilisateur extends Model
             $role = $role_model->get_one_role($email);
 
             $user = new Utilisateur();
-            $user->set_utilisateur($fetch['email_uti'], $fetch['nom_uti'], $fetch['prenom_uti'], $role);
+            $user->set_utilisateur($fetch['id_uti'], $fetch['email_uti'], $fetch['nom_uti'], $fetch['prenom_uti'], $role);
 
             return $user;
         } else {
@@ -57,6 +59,11 @@ class Utilisateur extends Model
         $fetch = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return $fetch['password_uti'];
+    }
+
+    public function getId(): int
+    {
+        return $this->id_;
     }
 
     public function getEmail(): string

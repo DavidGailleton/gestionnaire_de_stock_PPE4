@@ -4,8 +4,14 @@ namespace ppe4;
 
 class JWT
 {
-
-
+    public function generate_payload(string $id, string $email, Role $role):array
+    {
+        return [
+            'user_id' => $id,
+            'user_email' => $email,
+            'user_role' => $role->getLibelle()
+        ];
+    }
     public function generate(array $payload, int $validity = 14400):string
     {
 

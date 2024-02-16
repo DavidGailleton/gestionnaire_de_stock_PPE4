@@ -5,44 +5,56 @@ require_once 'Controller.php';
 
 class Login extends Controller
 {
-    public function login():void
+    public function verify():void
     {
-// Vérifie si l'utilisateur est déjà connecté
-        if (isset($_SESSION['user_mail'])) {
-            header("Location: Dashboard.php"); // Redirige l'utilisateur vers la page du tableau de bord s'il est déjà connecté
-            exit;
+        require_once ROOT.'app/models/JWT.php';
+        $jwt = new JWT();
+        $token = $_COOKIE['JWT'];
+
+        if ($jwt->is_valid($token) && !$jwt->is_expired($token) && $jwt->check($token)) {
+            $this->redirect('dashboard');
         }
 
-        $this->verification_connection();
+        $this->load_view();
     }
+
     // Traitement du formulaire de connexion
-    public function verification_connection(): void
+    public function load_view(): void
     {
-        $error_message = '';
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['email'], $_POST['password'])) {
-            $email = $_POST['email'];
-            $password = $_POST['password'];
-
-            // Requête pour vérifier si l'utilisateur existe
-            $user_model = new \ppe4\Utilisateur();
-            $user = $user_model->select_utilisateur($email);
-
-            // Verification du mot de passe (condition à remplacer par : $user && password_verify($password, $user_model->select_mot_de_passe($email)))
-            if ($user && $user_model->select_mot_de_passe($email) == $password) {
-                $_SESSION['user_email'] = $user->get_email();
-                header("Location: dashboard.php"); // Redirection vers le tableau de bord
-                exit;
-            }else {
-                $error_message = 'Email ou mot de passe incorrect.';
-            }
-        }
-
         require_once (ROOT."./app/views/login.php");
-        echo ROOT;
-        echo SERVER_URL;
     }
 
+    public function connect(string $email, string $password):bool
+    {
+        require_once ROOT.'app/models/Utilisateur.php';
+        $utilisateur = new Utilisateur();
+        require_once ROOT.'app/models/JWT.php';
+        $jwt = new JWT();
+
+        $user = $utilisateur->select_utilisateur($email);
+
+        if ($utilisateur->select_utilisateur($email) && $this->check_password($email, $password)){
+            $id = $user->getId();
+            $role = $user->getRole();
+
+            $payload = $jwt->generate_payload($id, $email, $role);
+            return setcookie('JWT', $jwt->generate($payload), 14400);
+        }
+        return false;
+    }
+
+    public function check_password(string $email, string $password):bool
+    {
+        require_once ROOT.'app/models/Utilisateur.php';
+        $utilisateur = new Utilisateur();
+
+        $import_password = $utilisateur->select_mot_de_passe($email);
+
+        if ($import_password === $password){
+            return true;
+        }
+        return false;
+    }
 
 
 }

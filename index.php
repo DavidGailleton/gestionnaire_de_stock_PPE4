@@ -9,7 +9,7 @@ if (isset($_GET['page']) && $_GET['page'] != '')
         case 'login' :
             require_once (ROOT.'app/controllers/Login.php');
             $login = new \ppe4\Login();
-            $login->login();
+            $login->verify();
             break;
         case 'dashboard' :
             require_once (ROOT.'app/controllers/Dashboard.php');

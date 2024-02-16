@@ -9,7 +9,8 @@ class Main extends Controller
 {
     public function index():void
     {
-        if (isset($_SESSION["user_mail"])){
+
+        if (isset($_COOKIE["JWT"])){
             header("Location: ../views/dashboard.php");
             exit();
         } else {
