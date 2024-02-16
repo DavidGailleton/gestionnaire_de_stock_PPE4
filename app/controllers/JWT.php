@@ -10,7 +10,7 @@ class JWT
     {
 
         if($validity > 0){
-            $now = new DateTime();
+            $now = new \DateTime();
             $expiration = $now->getTimestamp() + $validity;
             $payload['iat'] = $now->getTimestamp();
             $payload['exp'] = $expiration;
@@ -75,7 +75,7 @@ class JWT
     public function is_valid(string $token):bool
     {
         return preg_match(
-            '/^[a-zA-Z0-9\-\_\=]+\.[a-zA-Z0-9\-\_\=]+\.[a-zA-Z0-9\-\_\=]+$/',
+            '/^[a-zA-Z0-9\-_=]+\.[a-zA-Z0-9\-_=]+\.[a-zA-Z0-9\-_=]+$/',
                 $token
         ) === 1;
 
