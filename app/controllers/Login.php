@@ -1,51 +1,57 @@
 <?php
 namespace ppe4;
 
+use JetBrains\PhpStorm\NoReturn;
+
 require_once 'Controller.php';
 
 class Login extends Controller
 {
-    public function verify():void
+    public function __construct()
     {
+        require_once ROOT.'app/models/Utilisateur.php';
         require_once ROOT.'app/models/JWT.php';
+    }
+    public function index():void
+    {
         $jwt = new JWT();
-        $token = $_COOKIE['JWT'];
 
-        if ($jwt->is_valid($token) && !$jwt->is_expired($token) && $jwt->check($token)) {
-            $this->redirect('dashboard');
+        if (isset($_COOKIE['JWT'])){
+            $token = $_COOKIE['JWT'];
+            if ($jwt->is_valid($token) && !$jwt->is_expired($token) && $jwt->check($token)) {
+                $this->redirect('dashboard');
+            }
         }
-
-        $this->load_view();
+        require_once (ROOT."./app/views/login.php");
     }
 
-    // Traitement du formulaire de connexion
     public function load_view(): void
     {
         require_once (ROOT."./app/views/login.php");
     }
 
-    public function connect(string $email, string $password):bool
+    #[NoReturn] public function connect(string $email, string $password):void
     {
-        require_once ROOT.'app/models/Utilisateur.php';
         $utilisateur = new Utilisateur();
-        require_once ROOT.'app/models/JWT.php';
         $jwt = new JWT();
 
         $user = $utilisateur->select_utilisateur($email);
 
-        if ($utilisateur->select_utilisateur($email) && $this->check_password($email, $password)){
+        if ($user && $this->check_password($email, $password)){
             $id = $user->getId();
             $role = $user->getRole();
 
             $payload = $jwt->generate_payload($id, $email, $role);
-            return setcookie('JWT', $jwt->generate($payload), 14400);
+            setcookie('JWT', $jwt->generate($payload), time() + 14400);
+            $this->redirect('dashboard');
+        } else {
+            $this->redirect('login');
         }
-        return false;
+        exit();
     }
 
     public function check_password(string $email, string $password):bool
     {
-        require_once ROOT.'app/models/Utilisateur.php';
         $utilisateur = new Utilisateur();
 
         $import_password = $utilisateur->select_mot_de_passe($email);
@@ -56,5 +62,16 @@ class Login extends Controller
         return false;
     }
 
+    public function verify():void
+    {
+        $jwt = new JWT();
+        $token = $_COOKIE['JWT'];
+
+        if ($jwt->is_valid($token) && !$jwt->is_expired($token) && $jwt->check($token)) {
+            $this->redirect('dashboard');
+        }
+
+        $this->load_view();
+    }
 
 }

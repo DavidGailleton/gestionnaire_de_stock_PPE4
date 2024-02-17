@@ -51,22 +51,20 @@ class JWT
         return $token === $verif_token;
     }
 
-    public function get_header(string $token):string
+    public function get_header(string $token):array
     {
         $array = explode('.', $token);
         $header = $array[0];
 
-        $header_decode = json_decode(base64_decode($header));
-
-        return $header_decode;
+        return json_decode(base64_decode($header), true);
     }
 
-    public function get_payload(string $token):string
+    public function get_payload(string $token):array
     {
         $array = explode('.', $token);
         $payload = $array[1];
 
-        return $payload;
+        return json_decode(base64_decode($payload), true);
     }
 
     public function is_expired(string $token):bool
@@ -75,7 +73,7 @@ class JWT
 
         $now = new \DateTime();
 
-        return $payload['exp'] < $now->getTimestamp();
+        return ($payload['exp'] < $now->getTimestamp());
     }
 
     public function is_valid(string $token):bool

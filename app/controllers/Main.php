@@ -9,15 +9,11 @@ class Main extends Controller
 {
     public function index():void
     {
-
         if (isset($_COOKIE["JWT"])){
-            header("Location: ../views/dashboard.php");
-            exit();
+            $login = new Login();
+            $login->verify();
         } else {
-            //$login = new Login();
-            //$login->login();
-
-            header('Location: '.SERVER_URL.'?page=login');
+            $this->redirect('login');
             exit();
         }
     }
