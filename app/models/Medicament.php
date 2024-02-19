@@ -2,6 +2,8 @@
 
 namespace ppe4;
 
+use PDO;
+
 require_once "Produit.php";
 
 class Medicament extends Produit
@@ -32,5 +34,22 @@ class Medicament extends Produit
     public function getForme(): string
     {
         return $this->forme;
+    }
+
+    public function select_medicaments():array
+    {
+        $query = "SELECT libelle_pro, description_pro, qte_stock_pro, forme_med, cis_med FROM medicaments INNER JOIN produits on medicaments.id_pro = produits.id_pro";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute();
+        $fetch = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $medicaments = [];
+
+        foreach ($fetch as $medicament) {
+            $result = $this->set_medicament($medicament['libelle_pro'], $medicament['description_pro'], $medicament['qte_stock_pro'], $medicament['cis_med'], $medicament['forme_med']);
+
+            array_push($medicaments, $result);
+        }
+        return $medicaments;
     }
 }

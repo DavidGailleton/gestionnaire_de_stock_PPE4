@@ -1,32 +1,14 @@
-<?php
-
-function show_medic_card($labelle, $cis, $description, $stock, $forme)
-{
-    $in_stock = "";
-
-    if ($stock == true){
-        $in_stock = "En Stock";
-    } else {
-        $in_stock = "Indisponible";
-    }
-
-
-    echo "
-       <li> 
-            <div>
-                <div>
-                    $labelle - $cis
-                </div>
-                <div>$forme</div>
-            </div>
-            <div>
-                <p>
-                $description
-                </p>
-                <div>$in_stock</div>
-            </div>
-       </li>
-    ";
-    }
-
-?>
+<div>
+    <?php foreach ($_SESSION['medicaments'] as $medicament): ?>
+        <?php echo $medicament->getLibelle(); ?>
+        <br>
+        <?php echo $medicament->getDescription(); ?>
+        <br>
+        <?php echo $medicament->getQteStock()->toString(); ?>
+        <br>
+        <?php echo $medicament->getCis()->ToString(); ?>
+        <br>
+        <?php echo $medicament->getForm(); ?>
+        <br>
+    <?php endforeach; ?>
+</div>

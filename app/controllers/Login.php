@@ -47,7 +47,6 @@ class Login extends Controller
         } else {
             $this->redirect('login');
         }
-        exit();
     }
 
     public function check_password(string $email, string $password):bool

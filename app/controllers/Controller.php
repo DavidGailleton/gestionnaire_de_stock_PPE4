@@ -2,6 +2,8 @@
 
 namespace ppe4;
 
+use JetBrains\PhpStorm\NoReturn;
+
 abstract class Controller
 {
     public function loadModel(string $model):object
@@ -11,7 +13,7 @@ abstract class Controller
         return $this->$model;
     }
 
-    public function redirect(string $page):void
+    #[NoReturn] public function redirect(string $page):void
     {
         header('Location: '.SERVER_URL.'?page='.$page);
         exit();
