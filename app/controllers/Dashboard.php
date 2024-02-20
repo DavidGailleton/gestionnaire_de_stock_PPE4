@@ -10,7 +10,7 @@ class Dashboard extends Controller
         if (!isset($_COOKIE['JWT'])) {
             $this->redirect('login');
         }
-        echo 'page dashboard';
+        require_once ROOT.'app/views/dashboard.php';
     }
 
 }

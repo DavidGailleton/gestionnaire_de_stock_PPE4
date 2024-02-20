@@ -4,17 +4,18 @@
 <body>
  <?php include_once ROOT."app/views/component/header.php"; ?>
 
+ <a href="">
+
+ </a>
 <?php
+ require_once ROOT.'app/models/Medicament.php';
  $medicament = new \ppe4\Medicament();
  $medicaments = $medicament->select_medicaments();
 
-
+ include_once ROOT.'app/views/component/medic_card.php';
  foreach ($medicaments as $item){
-     $_SESSION['medicaments'][] = $item;
-     echo 'test';
+     echo medic_card($item);
  }
-
- require_once ROOT.'app/views/component/medic_card.php';
  ?>
 </body>
 </html>

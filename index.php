@@ -30,6 +30,9 @@ if (isset($_GET['page']) && $_GET['page'] != '')
             $dashboard = new \ppe4\Dashboard();
             $dashboard->index();
             break;
+        case 'medicaments' :
+            require_once (ROOT.'app/controllers/Medicaments.php');
+            $medicament = new \ppe4\Medicaments();
     endswitch;
 } else {
     require_once (ROOT.'app/controllers/Main.php');

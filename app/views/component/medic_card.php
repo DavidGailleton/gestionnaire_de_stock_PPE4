@@ -1,14 +1,6 @@
-<div>
-    <?php foreach ($_SESSION['medicaments'] as $medicament): ?>
-        <?php echo $medicament->getLibelle(); ?>
-        <br>
-        <?php echo $medicament->getDescription(); ?>
-        <br>
-        <?php echo $medicament->getQteStock()->toString(); ?>
-        <br>
-        <?php echo $medicament->getCis()->ToString(); ?>
-        <br>
-        <?php echo $medicament->getForm(); ?>
-        <br>
-    <?php endforeach; ?>
-</div>
+<?php
+require_once ROOT.'app/models/Medicament.php';
+function medic_card(\ppe4\Medicament $medicament):string
+{
+    return '<div>' . $medicament->getLibelle(). $medicament->getDescription(). $medicament->getQteStock() . $medicament->getForme() . $medicament->getCis() .'</div>';
+}

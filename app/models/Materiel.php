@@ -8,7 +8,7 @@ class Materiel extends Produit
     public function set_materiel(string $libelle, string $description, int $qte):void
     {
         $this->libelle = $libelle;
-        $this->descritpion = $description;
+        $this->description = $description;
         $this->qte_stock = $qte;
     }
 
