@@ -3,19 +3,14 @@
 <?php require_once ROOT."app/views/component/head.php" ?>
 <body>
  <?php include_once ROOT."app/views/component/header.php"; ?>
+<main>
+    <a href=<?php echo SERVER_URL.'?page=medicaments' ?>>
+        Medicaments
+    </a>
+    <a href=<?php echo SERVER_URL.'?page=materiels' ?>>
+        Materiels
+    </a>
+</main>
 
- <a href="">
-
- </a>
-<?php
- require_once ROOT.'app/models/Medicament.php';
- $medicament = new \ppe4\Medicament();
- $medicaments = $medicament->select_medicaments();
-
- include_once ROOT.'app/views/component/medic_card.php';
- foreach ($medicaments as $item){
-     echo medic_card($item);
- }
- ?>
 </body>
 </html>

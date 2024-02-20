@@ -1,1 +1,3 @@
-<?php
+<footer>
+copyright GSB
+</footer>

@@ -33,6 +33,11 @@ if (isset($_GET['page']) && $_GET['page'] != '')
         case 'medicaments' :
             require_once (ROOT.'app/controllers/Medicaments.php');
             $medicament = new \ppe4\Medicaments();
+            $medicament->index();
+        default :
+            require_once (ROOT.'app/controllers/Error.php');
+            $error = new \ppe4\Error();
+            $error->fausse_url();
     endswitch;
 } else {
     require_once (ROOT.'app/controllers/Main.php');

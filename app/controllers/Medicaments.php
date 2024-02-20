@@ -2,9 +2,12 @@
 
 namespace ppe4;
 
-use ppe4\Controller;
+require_once 'Controller.php';
 
 class Medicaments extends Controller
 {
-
+    public function index():void
+    {
+        require_once ROOT.'app/views/medicaments.php';
+    }
 }

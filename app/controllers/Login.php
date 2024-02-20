@@ -5,12 +5,21 @@ use JetBrains\PhpStorm\NoReturn;
 
 require_once 'Controller.php';
 
-class Login extends Controller
+class Login
 {
-    public function __construct()
+    #[NoReturn] public function __construct()
     {
         require_once ROOT.'app/models/Utilisateur.php';
         require_once ROOT.'app/models/JWT.php';
+
+        if (isset($_COOKIE['JWT'])) {
+            $jwt = new JWT();
+            $token = $_COOKIE['JWT'];
+
+            if ($jwt->is_valid($token) && !$jwt->is_expired($token) && $jwt->check($token)) {
+                header('Location: '.SERVER_URL.'?page=dashboard');
+            }
+        }
     }
     public function index():void
     {
@@ -19,7 +28,8 @@ class Login extends Controller
         if (isset($_COOKIE['JWT'])){
             $token = $_COOKIE['JWT'];
             if ($jwt->is_valid($token) && !$jwt->is_expired($token) && $jwt->check($token)) {
-                $this->redirect('dashboard');
+                header('Location: '.SERVER_URL.'?page=dashboard');
+                exit();
             }
         }
         require_once (ROOT."./app/views/login.php");
@@ -43,9 +53,12 @@ class Login extends Controller
 
             $payload = $jwt->generate_payload($id, $email, $role);
             setcookie('JWT', $jwt->generate($payload), time() + 14400);
-            $this->redirect('dashboard');
+
+            header('Location: '.SERVER_URL.'?page=dashboard');
+            exit();
         } else {
-            $this->redirect('login');
+            header('Location: '.SERVER_URL.'?page=login');
+            exit();
         }
     }
 
@@ -67,7 +80,8 @@ class Login extends Controller
         $token = $_COOKIE['JWT'];
 
         if ($jwt->is_valid($token) && !$jwt->is_expired($token) && $jwt->check($token)) {
-            $this->redirect('dashboard');
+            header('Location: '.SERVER_URL.'?page=dashboard');
+            exit();
         }
 
         $this->load_view();

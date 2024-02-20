@@ -14,7 +14,6 @@ class Main extends Controller
             $login->verify();
         } else {
             $this->redirect('login');
-            exit();
         }
     }
 
