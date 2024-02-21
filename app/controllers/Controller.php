@@ -9,7 +9,7 @@ abstract class Controller
     #[NoReturn] public function __construct()
     {
         if (isset($_COOKIE['JWT'])) {
-            require_once ROOT . 'app/models/JWT.php';
+            require_once ROOT . 'app/controllers/JWT.php';
             $jwt = new JWT();
             $token = $_COOKIE['JWT'];
 

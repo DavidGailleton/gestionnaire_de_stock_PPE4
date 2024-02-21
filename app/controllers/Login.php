@@ -10,7 +10,7 @@ class Login
     #[NoReturn] public function __construct()
     {
         require_once ROOT.'app/models/Utilisateur.php';
-        require_once ROOT.'app/models/JWT.php';
+        require_once ROOT.'app/controllers/JWT.php';
 
         if (isset($_COOKIE['JWT'])) {
             $jwt = new JWT();

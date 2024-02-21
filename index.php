@@ -34,6 +34,7 @@ if (isset($_GET['page']) && $_GET['page'] != '')
             require_once (ROOT.'app/controllers/Medicaments.php');
             $medicament = new \ppe4\Medicaments();
             $medicament->index();
+            break;
         default :
             require_once (ROOT.'app/controllers/Error.php');
             $error = new \ppe4\Error();
