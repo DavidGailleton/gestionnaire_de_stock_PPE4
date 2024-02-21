@@ -41,7 +41,6 @@ class Medicament extends Produit
         $query = "SELECT libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS qte_stock, forme_med AS forme, cis_med AS cis FROM medicaments INNER JOIN produits on medicaments.id_pro = produits.id_pro";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute();
-        require_once ROOT.'app/models/Medicament.php';
         return $stmt->fetchAll(PDO::FETCH_CLASS, '\ppe4\Medicament');
     }
 }

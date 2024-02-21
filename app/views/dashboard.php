@@ -11,6 +11,6 @@
         Materiels
     </a>
 </main>
-
+ <?php include_once ROOT.'app/views/component/footer.php'?>
 </body>
 </html>

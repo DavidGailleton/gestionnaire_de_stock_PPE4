@@ -1,3 +1,9 @@
+<?php
+include_once ROOT.'app/controllers/JWT.php';
+$jwt = new \ppe4\JWT();
+$payload = $jwt->get_payload($_COOKIE['JWT']);
+$role = $payload['user_role'];
+?>
 <header>
     <div>
         <img src='../public/img/gsb_logo.png' alt='Logo de GSB' id='gsb_logo'>
@@ -5,10 +11,10 @@
     <ul>
         <li>Accueil</li>
         <li>Commander</li>
-        <?php if ($_SESSION['role'] == ('admin' || 'validator')): ?>
+        <?php if ($role == ('admin' || 'validator')): ?>
             <li>Valider une commande</li>
         <?php endif; ?>
-        <?php if ($_SESSION['role'] == 'admin'): ?>
+        <?php if ($role == 'admin'): ?>
             <li>Gestion des utilisateurs</li>
         <?php endif; ?>
     </ul>

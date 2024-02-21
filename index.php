@@ -35,10 +35,51 @@ if (isset($_GET['page']) && $_GET['page'] != '')
             $medicament = new \ppe4\Medicaments();
             $medicament->index();
             break;
+        case 'materiels' :
+            require_once (ROOT.'app/controllers/Materiels.php');
+            $materiel = new \ppe4\Materiels();
+            $materiel->index();
+            break;
+        case 'commande' :
+            require_once (ROOT.'app/controllers/Commande.php');
+            $commande = new \ppe4\Commande();
+            $commande->index();
+            break;
+        case 'confirmation_commande' :
+            require_once (ROOT.'app/controllers/Confirmation_commande.php');
+            $confirmation_commande = new \ppe4\Confirmation_commande();
+            $confirmation_commande->index();
+            break;
+        case 'liste_commande' :
+            require_once (ROOT.'app/controllers/Liste_commande.php');
+            $list_commande = new \ppe4\Liste_commande();
+            $list_commande->index();
+            break;
+        case 'liste_utilisateur' :
+            require_once (ROOT.'app/controllers/Liste_utilisateur.php');
+            $liste_utilisateur = new \ppe4\Liste_utilisateur();
+            $liste_utilisateur->index();
+            break;
+        case 'page_produit' :
+            require_once (ROOT.'app/controllers/Page_produit.php');
+            $page_produit = new \ppe4\Page_produit();
+            $page_produit->index();
+            break;
+        case 'profile' :
+            require_once (ROOT.'app/controllers/Profile.php');
+            $profile = new \ppe4\Profile();
+            $profile->index();
+            break;
+        case 'profile_vue_admin' :
+            require_once (ROOT.'app/controllers/Profile_vue_admin.php');
+            $profile_vue_admin = new \ppe4\Profile_vue_admin();
+            $profile_vue_admin->index();
+            break;
         default :
             require_once (ROOT.'app/controllers/Error.php');
             $error = new \ppe4\Error();
             $error->fausse_url();
+            break;
     endswitch;
 } else {
     require_once (ROOT.'app/controllers/Main.php');

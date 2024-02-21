@@ -2,7 +2,9 @@
 
 namespace ppe4;
 
-require_once "Produit.php";
+use PDO;
+
+require_once ROOT."app/models/Produit.php";
 class Materiel extends Produit
 {
     public function set_materiel(string $libelle, string $description, int $qte):void
@@ -16,5 +18,13 @@ class Materiel extends Produit
     {
         $this->table = "materiels";
         $this->get_connection();
+    }
+
+    public function select_materiels():array
+    {
+        $query = "SELECT libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS qte_stock FROM materiels INNER JOIN produits on materiels.id_pro = produits.id_pro";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_CLASS, '\ppe4\Materiel');
     }
 }
