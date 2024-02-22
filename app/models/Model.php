@@ -7,6 +7,8 @@ use PDOException;
 
 abstract class Model
 {
+    protected string $id;
+
     private string $host = 'localhost'; // Hôte de la base de données
     private string $db_name = 'ppe4'; // Nom de la base de données
     private string $username = 'root'; // Nom d'utilisateur de la base de données
@@ -14,8 +16,7 @@ abstract class Model
 
     protected $pdo;
 
-    public string $table;
-    public int $id;
+    protected string $table;
 
     public function get_connection ():void
     {
@@ -34,7 +35,7 @@ abstract class Model
     {
         $sql = "GET * FROM :table WHERE :id_table = :id";
         $query = $this->pdo->prepare($sql);
-        $query->execute(['table' => $this->table], ['id_table' => "id_" . $this->table[0 - 2]], ['id' => $this->id]);
+        $query->execute(['table' => $this->table], ['id_table' => "id_" . $this->table[0 - 2]], ['id' => $this->id[1-3]]);
     }
 
     public function get_all()

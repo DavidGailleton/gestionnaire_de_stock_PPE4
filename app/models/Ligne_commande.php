@@ -11,8 +11,9 @@ class Ligne_commande extends Model
     private Materiel $materiel;
     private int $qte;
 
-    public function set_ligne_commande_med(Commande $commande, Medicament $medicament, int $qte):void
+    public function set_ligne_commande_med(int $id, Commande $commande, Medicament $medicament, int $qte):void
     {
+        $this->id = $id;
         $this->commande = $commande;
         $this->medicament = $medicament;
         $this->qte = $qte;

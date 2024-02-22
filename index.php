@@ -2,6 +2,9 @@
 require_once 'app/includes/config.php';
 
 session_start();
+
+$_SESSION['panier'] = [];
+
 if (isset($_GET['action']) && $_GET['action'] != '')
 {
     switch ($_GET['action']) :
@@ -12,6 +15,22 @@ if (isset($_GET['action']) && $_GET['action'] != '')
                 $login->connect($_POST['email'], $_POST['password']);
             } else {
                 echo 'nope';
+            }
+            break;
+        case 'ajouter_au_panier_medicament':
+            if (isset($_POST['id']) && $_POST['id']->is_numeric)
+            {
+                require_once ROOT.'app/controllers/Page_produit.php';
+                $page_produit = new \ppe4\Page_produit();
+                $page_produit->ajouter_au_panier_medicament($_POST['id']);
+            }
+            break;
+        case 'ajouter_au_panier_materiel':
+            if (isset($_POST['id']) && $_POST['id']->is_numeric)
+            {
+                require_once ROOT.'app/controllers/Page_produit.php';
+                $page_produit = new \ppe4\Page_produit();
+                $page_produit->ajouter_au_panier_materiel($_POST['id']);
             }
             break;
     endswitch;
@@ -41,8 +60,8 @@ if (isset($_GET['page']) && $_GET['page'] != '')
             $materiel->index();
             break;
         case 'commande' :
-            require_once (ROOT.'app/controllers/Commande.php');
-            $commande = new \ppe4\Commande();
+            require_once(ROOT . 'app/controllers/Commande_vue.php');
+            $commande = new \ppe4\Commande_vue();
             $commande->index();
             break;
         case 'confirmation_commande' :

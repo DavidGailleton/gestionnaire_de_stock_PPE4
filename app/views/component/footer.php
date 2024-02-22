@@ -1,3 +1,3 @@
 <footer>
-copyright GSB
+    <p>copyright GSB</p>
 </footer>

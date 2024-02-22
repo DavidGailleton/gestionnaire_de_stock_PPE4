@@ -29,7 +29,7 @@ abstract class Controller
 
     #[NoReturn] public function redirect(string $page):void
     {
-        header('Location: '.SERVER_URL.'?page='.$page);
+        header('Location: '.SERVER_URL.'index.php?page='.$page);
         exit();
     }
 }

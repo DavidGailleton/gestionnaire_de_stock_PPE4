@@ -4,10 +4,10 @@
 <body>
  <?php include_once ROOT."app/views/component/header.php"; ?>
 <main>
-    <a href=<?php echo SERVER_URL.'?page=medicaments' ?>>
+    <a href=<?php echo SERVER_URL.'index.php?page=medicaments' ?>>
         Medicaments
     </a>
-    <a href=<?php echo SERVER_URL.'?page=materiels' ?>>
+    <a href=<?php echo SERVER_URL.'index.php?page=materiels' ?>>
         Materiels
     </a>
 </main>

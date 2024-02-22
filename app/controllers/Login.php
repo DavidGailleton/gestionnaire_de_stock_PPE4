@@ -17,7 +17,7 @@ class Login
             $token = $_COOKIE['JWT'];
 
             if ($jwt->is_valid($token) && !$jwt->is_expired($token) && $jwt->check($token)) {
-                header('Location: '.SERVER_URL.'?page=dashboard');
+                header('Location: '.SERVER_URL.'index.php?page=dashboard');
             }
         }
     }
@@ -28,7 +28,7 @@ class Login
         if (isset($_COOKIE['JWT'])){
             $token = $_COOKIE['JWT'];
             if ($jwt->is_valid($token) && !$jwt->is_expired($token) && $jwt->check($token)) {
-                header('Location: '.SERVER_URL.'?page=dashboard');
+                header('Location: '.SERVER_URL.'index.php?page=dashboard');
                 exit();
             }
         }
@@ -54,10 +54,10 @@ class Login
             $payload = $jwt->generate_payload($id, $email, $role);
             setcookie('JWT', $jwt->generate($payload), time() + 14400);
 
-            header('Location: '.SERVER_URL.'?page=dashboard');
+            header('Location: '.SERVER_URL.'index.php?page=dashboard');
             exit();
         } else {
-            header('Location: '.SERVER_URL.'?page=login');
+            header('Location: '.SERVER_URL.'index.php?page=login');
             exit();
         }
     }
@@ -80,7 +80,7 @@ class Login
         $token = $_COOKIE['JWT'];
 
         if ($jwt->is_valid($token) && !$jwt->is_expired($token) && $jwt->check($token)) {
-            header('Location: '.SERVER_URL.'?page=dashboard');
+            header('Location: '.SERVER_URL.'index.php?page=dashboard');
             exit();
         }
 

@@ -8,7 +8,6 @@ use Cassandra\Date;
 
 class Commande extends Model
 {
-    private int $id_com;
     private \DateTime $date_commande;
     private bool $mouvement;
     private \DateTime $date_validation;
@@ -17,7 +16,7 @@ class Commande extends Model
 
     public function set_commande(int $id, \DateTime $date_commande, bool $mouvement, \DateTime $date_validation, Utilisateur $utilisateur, Utilisateur $validateur):void
     {
-        $this->id_com = $id;
+        $this->id = $id;
         $this->date_commande = $date_commande;
         $this->mouvement = $mouvement;
         $this->date_validation = $date_validation;

@@ -11,8 +11,9 @@ class Role extends Model
     private string $libelle;
     private string $description;
 
-    public function new_role(string $libelle, string $description):void
+    public function new_role(int $id, string $libelle, string $description):void
     {
+        $this->id = $id;
         $this->libelle = $libelle;
         $this->description = $libelle;
     }

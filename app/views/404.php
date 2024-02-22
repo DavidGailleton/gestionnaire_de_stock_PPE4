@@ -5,7 +5,7 @@
 <main>
     Erreur 404
     <br>
-    <a href=<?php echo SERVER_URL.'?page=dashboard' ?>>Retourner a l'écran d'accueil</a>
+    <a href=<?php echo SERVER_URL.'index.php?page=dashboard' ?>>Retourner a l'écran d'accueil</a>
 </main>
 <?php include_once ROOT.'app/views/component/footer.php'?>
 </body>
