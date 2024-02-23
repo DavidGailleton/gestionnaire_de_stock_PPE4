@@ -39,7 +39,6 @@ abstract class Controller
         return $this->$model;
     }
 
-
     /**
      * Redirige l'utilisateur sur une autre page
      *
@@ -50,5 +49,22 @@ abstract class Controller
     {
         header('Location: '.SERVER_URL.'index.php?page='.$page);
         exit();
+    }
+
+    /**
+     * Affiche l'état du stock d'un produit
+     *
+     * @param int $nb_stock
+     * @return string
+     */
+    public function status_a_afficher(int $nb_stock):string
+    {
+        if ($nb_stock >= 50){
+            return 'En stock';
+        } elseif ($nb_stock == 0){
+            return 'Hors stock';
+        } else {
+            return $nb_stock.' en stock';
+        }
     }
 }

@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
-<?php require_once (ROOT."./app/views/component/head.php") ?>
+<head>
+    <?php require_once (ROOT."./app/views/component/head.php") ?>
+</head>
 <body>
     <main>
         <div class="login_card">

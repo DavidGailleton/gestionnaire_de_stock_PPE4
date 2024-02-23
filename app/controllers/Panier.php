@@ -3,6 +3,7 @@
 namespace ppe4;
 
 use ppe4\Controller;
+require_once 'Controller.php';
 
 class Panier extends Controller
 {
@@ -15,5 +16,17 @@ class Panier extends Controller
     public function index():void
     {
         require_once ROOT.'app/views/panier.php';
+    }
+
+    public function selectionner_medicaments(array $medicaments_id):array
+    {
+        require_once ROOT.'app/models/Medicament.php';
+        $medicament = new Medicament();
+
+        $medicaments[] = [];
+        foreach ($medicaments_id as $id){
+            array_push($medicaments, $medicament->select_medicament($id));
+        }
+        return $medicaments;
     }
 }

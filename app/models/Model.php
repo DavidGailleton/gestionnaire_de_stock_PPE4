@@ -48,4 +48,9 @@ abstract class Model
         $query = $this->pdo->prepare($sql);
         $query->execute(['table' => $this->table]);
     }
+
+    public function getId(): string
+    {
+        return $this->id;
+    }
 }

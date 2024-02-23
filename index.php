@@ -20,9 +20,9 @@ if (isset($_GET['action']) && $_GET['action'] != '')
         case 'ajouter_au_panier_medicament':
             if (isset($_POST['id']) && $_POST['id']->is_numeric)
             {
-                require_once ROOT.'app/controllers/Page_produit.php';
-                $page_produit = new \ppe4\Page_produit();
-                $page_produit->ajouter_au_panier_medicament($_POST['id']);
+                require_once ROOT.'app/controllers/Medicaments.php';
+                $medicaments = new \ppe4\Medicaments();
+                $medicaments->ajouter_au_panier_medicament($_POST['id'], $_POST['qte']);
             }
             break;
         case 'ajouter_au_panier_materiel':
@@ -93,6 +93,11 @@ if (isset($_GET['page']) && $_GET['page'] != '')
             require_once (ROOT.'app/controllers/Profile_vue_admin.php');
             $profile_vue_admin = new \ppe4\Profile_vue_admin();
             $profile_vue_admin->index();
+            break;
+        case 'panier' :
+            require_once (ROOT.'app/controllers/Panier.php');
+            $panier = new \ppe4\Panier();
+            $panier->index();
             break;
         default :
             require_once (ROOT.'app/controllers/Error.php');

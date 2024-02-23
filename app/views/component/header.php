@@ -10,24 +10,28 @@ $role = $payload['user_role'];
     </div>
     <ul>
         <li><a href="index.php?page=dashboard">Accueil</a></li>
-        <li>
-            <p class="dropdown_btn">Commander</p>
-            <div class="dropdown_menu">
-                <a href="index.php?page=materiels">Materiels</a>
-                <a href="index.php?page=medicaments">Medicaments</a>
-            </div>
-        </li>
 
-        <?php if ($role == ('admin' || 'validator')): ?>
+
+        <?php if ($role == ('utilisateur')): ?>
+            <li><a href="index.php?page=medicaments">Commande Medicaments</a></li>
+        <?php endif; ?>
+        <?php if ($role == ('utilisateur')): ?>
+            <li><a href="index.php?page=materiels">Commande Materiels</a></li>
+        <?php endif; ?>
+        <?php if ($role == ('validateur')): ?>
             <li><a href="index.php?page=confirmation_commande">Valider une commande</a></li>
         <?php endif; ?>
-
+        <?php if ($role == ('gestionnaire_de_stock')): ?>
+            <li><a href="index.php?page=confirmation_commande">Valider une commande</a></li>
+        <?php endif; ?>
         <?php if ($role == 'admin'): ?>
             <li><a href="index.php?page=gestion_utilisateur">Gestion des utilisateurs</a></li>
         <?php endif; ?>
     </ul>
     <div>
-        <img src='' alt=''>
-        <img src='' alt=''>
+        <a href=<?php echo SERVER_URL.'index.php?page=panier' ?>>
+            <img src=<?php echo ROOT.'public/img/panier.svg' ?> alt='panier'>
+        </a>
+        <img src='' alt='profile'>
     </div>
 </header>

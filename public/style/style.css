@@ -185,10 +185,6 @@ footer
 {
     grid-column-start: 1;
 }
-.product_card article .bas .status
-{
-grid-column-start: 3;
-}
 
 .bouton_ajout_panier
 {

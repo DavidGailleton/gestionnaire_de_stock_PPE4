@@ -1,11 +1,9 @@
 <?php
 require_once ROOT.'app/models/Medicament.php';
-require_once ROOT.'app/controllers/Medicaments.php';
-function medic_card(\ppe4\Medicament $medicament, int $i):string
+require_once ROOT.'app/controllers/Panier.php';
+function medic_card_panier(\ppe4\Medicament $medicament, int $i):string
 {
-    //return ('<div>' . $medicament->getLibelle(). $medicament->getDescription(). $medicament->getQteStock() . $medicament->getForme() . $medicament->getCis() .'</div>');
-    $medicaments = new \ppe4\Medicaments();
-
+    $panier = new \ppe4\Panier();
 
     return '<a href="" class="product_card">
     <article class="">
@@ -15,17 +13,17 @@ function medic_card(\ppe4\Medicament $medicament, int $i):string
         </div>
         <p>'.$medicament->getForme().'</p>
         <div class="status">
-            '.$medicaments->status_a_afficher($medicament->getQteStock()).'
+            '.$panier->status_a_afficher($medicament->getQteStock()).'
         </div>
     </div>
     <div class="bas">
         <p class="description">'.
-            $medicament->getDescription()
+        $medicament->getDescription()
         .'</p>
         <form action='.SERVER_URL."index.php?action=ajouter_au_panier_medicament".' method="post" id="formulaire_'.$i.'">
             <div>
                 <label>
-                    <input type="number" min="1" value="1" name="qte">
+                    <input type="number" min="1" value="1">
                 </label>
                 <input type="submit" value="Ajouter au panier" class="bouton_ajout_panier">
             </div>
@@ -35,7 +33,7 @@ function medic_card(\ppe4\Medicament $medicament, int $i):string
 <script >
     window.onload = function() {
       document.getElementById("formulaire_'.$i.'").addEventListener("submit", function()){
-          var champCache = document.createElement("input")
+          let champCache = document.createElement("input")
           champCache.type = "hidden";
           champCache.name = "id";
           champCache.value = '.$medicament->getId().'
@@ -47,5 +45,3 @@ function medic_card(\ppe4\Medicament $medicament, int $i):string
     ';
 }
 ?>
-
-
