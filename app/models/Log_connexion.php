@@ -11,6 +11,13 @@ class Log_connexion extends Model
     private string $email;
     private bool $echec;
 
+    /**
+     * Ajout une ligne à la table log_connexion
+     *
+     * @param string $email
+     * @param bool $echec
+     * @return void
+     */
     public function insert_log_connexion(string $email, bool $echec):void
     {
         $query = "INSERT INTO log_connexion (email_log_con, echec_log_con) VALUES (:email, :echec)";
@@ -18,6 +25,12 @@ class Log_connexion extends Model
         $stmt->execute(['email' => $email], ['echec' => $echec]);
     }
 
+    /**
+     * Retourne sous forme de tableau les logs associé à un email
+     *
+     * @param string $email
+     * @return array
+     */
     public function select_logs_utilisateur(string $email):array
     {
         $query = "SELECT id_log_con AS id, date_log_con AS date, email_log_con AS email, echec_log_con AS echec FROM log_connexion WHERE email_log_con = :email ORDER BY date_log_con DESC";
