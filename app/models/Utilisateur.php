@@ -8,10 +8,13 @@ use PDO;
 
 class Utilisateur extends Model
 {
+
     private string $email;
     private string $nom;
     private string $prenom;
     private Role $role;
+    private bool $compte_desactive;
+    private bool $mdp_a_changer;
 
     public function __construct()
     {
@@ -19,14 +22,17 @@ class Utilisateur extends Model
         $this->get_connection();
     }
 
-    public function set_utilisateur(int $id, string $email, string $nom, string $prenom, Role $role):void
+    public function set_utilisateur(int $id, string $email, string $nom, string $prenom, Role $role, bool $compte_desactive, bool $mdp_a_changer):void
     {
         $this->id = $id;
         $this->email = $email;
         $this->nom = $nom;
         $this->prenom = $prenom;
         $this->role = $role;
+        $this->compte_desactive = $compte_desactive;
+        $this->mdp_a_changer = $mdp_a_changer;
     }
+
 
     /**
      * Récupère un utilisateur depuis la base de données s'il existe.
@@ -38,7 +44,7 @@ class Utilisateur extends Model
      */
     public function select_utilisateur(string $email):Utilisateur | null
     {
-        $query = "SELECT id_uti, email_uti, nom_uti, prenom_uti FROM utilisateur WHERE email_uti = :email";
+        $query = "SELECT id_uti, email_uti, nom_uti, prenom_uti, compte_desactive_uti, mdp_a_changer_uti FROM utilisateur WHERE email_uti = :email";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['email' => $email]);
         $fetch = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -50,7 +56,7 @@ class Utilisateur extends Model
             $role = $role_model->select_role($email);
 
             $user = new Utilisateur();
-            $user->set_utilisateur($fetch['id_uti'], $fetch['email_uti'], $fetch['nom_uti'], $fetch['prenom_uti'], $role);
+            $user->set_utilisateur($fetch['id_uti'], $fetch['email_uti'], $fetch['nom_uti'], $fetch['prenom_uti'], $role, $fetch['compte_desactive_uti'], $fetch['mdp_a_changer_uti']);
 
             return $user;
         } else {
@@ -74,7 +80,47 @@ class Utilisateur extends Model
         return $fetch['password_uti'];
     }
 
+    /**
+     * Désactive l'utilisateur sur la base de données
+     *
+     * @param int $id
+     * @return void
+     */
+    public function desactiver_utilisateur(int $id):void
+    {
+        $query = "UPDATE utilisateur SET compte_desactive_uti = true WHERE id_uti = :id";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute(['id' => $id]);
+    }
 
+    /**
+     * Active l'utilisateur sur la base de données
+     *
+     * @param int $id
+     * @return void
+     */
+    public function activer_utilisateur(int $id):void
+    {
+        $query = "UPDATE utilisateur SET compte_desactive_uti = false WHERE id_uti = :id";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute(['id' => $id]);
+    }
+
+    /**
+     * Retourne true si le compte est désactivé, false sinon
+     *
+     * @param int $id
+     * @return bool
+     */
+    public function select_statut_activation_utilisateur(int $id):bool
+    {
+        $query = "SELECT compte_desactive_uti FROM utilisateur WHERE id_uti = :id";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute(['id' => $id]);
+        $fetch = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $fetch['compte_desactive_uti'];
+    }
 
     public function getEmail(): string
     {
@@ -95,4 +141,15 @@ class Utilisateur extends Model
     {
         return $this->role;
     }
+
+    public function isMdpAChanger(): bool
+    {
+        return $this->mdp_a_changer;
+    }
+
+    public function isCompteDesactive(): bool
+    {
+        return $this->compte_desactive;
+    }
+
 }

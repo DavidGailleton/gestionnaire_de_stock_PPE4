@@ -2,14 +2,20 @@
 
 namespace ppe4;
 
+use MongoDB\BSON\Timestamp;
 use PDO;
 use ppe4\Model;
 
 class Log_connexion extends Model
 {
-    private \DateTime $date;
+    private int $date;
     private string $email;
     private bool $echec;
+
+    public function __construct()
+    {
+        $this->get_connection();
+    }
 
     /**
      * Ajout une ligne à la table log_connexion
@@ -20,9 +26,12 @@ class Log_connexion extends Model
      */
     public function insert_log_connexion(string $email, bool $echec):void
     {
-        $query = "INSERT INTO log_connexion (email_log_con, echec_log_con) VALUES (:email, :echec)";
+        $datetime = new \DateTime();
+
+        $query = "INSERT INTO log_connexion (email_log_con, echec_log_con, date_log_con) VALUES (:email, :echec, :date)";
         $stmt = $this->pdo->prepare($query);
-        $stmt->execute(['email' => $email], ['echec' => $echec]);
+        $stmt->execute(['email' => $email, 'echec' => $echec, 'date' => $datetime->getTimestamp()]);
+        $stmt->fetch();
     }
 
     /**
@@ -39,14 +48,14 @@ class Log_connexion extends Model
         return $stmt->fetchAll(PDO::FETCH_CLASS, '\ppe4\Log_connexion');
     }
 
-    public function setLog_connexion(int $id, \DateTime $date, string $email, bool $echec):void
+    public function setLog_connexion(int $id, int $date, string $email, bool $echec):void
     {
         $this->date = $date;
         $this->email = $email;
         $this->echec = $echec;
     }
 
-    public function getDate(): \DateTime
+    public function getDate(): int
     {
         return $this->date;
     }
@@ -56,7 +65,7 @@ class Log_connexion extends Model
         return $this->email;
     }
 
-    public function isEchec(): bool
+    public function getEchec(): bool
     {
         return $this->echec;
     }

@@ -11,7 +11,7 @@ class Main extends Controller
     {
         if (isset($_COOKIE["JWT"])){
             $login = new Login();
-            $login->verify();
+            $login->verifier_validite_JWT();
         } else {
             $this->redirect('login');
         }
