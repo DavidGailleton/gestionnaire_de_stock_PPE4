@@ -18,6 +18,11 @@ abstract class Model
 
     protected string $table;
 
+    /**
+     * Permet de se connecter à la base de données
+     *
+     * @return void
+     */
     public function get_connection ():void
     {
         $this->pdo = null;
@@ -30,7 +35,6 @@ abstract class Model
             echo "Erreur de connexion : " . $exception->getMessage();
         }
     }
-
     public function get_one()
     {
         $sql = "GET * FROM :table WHERE :id_table = :id";

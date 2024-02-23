@@ -18,7 +18,7 @@ abstract class Controller
             $jwt = new JWT();
             $token = $_COOKIE['JWT'];
 
-            if (!$jwt->is_valid($token) || $jwt->is_expired($token) || !$jwt->check($token)) {
+            if (!$jwt->est_valide($token) || $jwt->est_expire($token) || !$jwt->check($token)) {
                 $this->redirect('login');
             }
         } else {

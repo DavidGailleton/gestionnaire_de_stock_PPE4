@@ -107,7 +107,7 @@ class JWT
      * @param string $token
      * @return bool
      */
-    public function is_expired(string $token):bool
+    public function est_expire(string $token):bool
     {
         $payload = $this->get_payload($token);
 
@@ -122,7 +122,7 @@ class JWT
      * @param string $token
      * @return bool
      */
-    public function is_valid(string $token):bool
+    public function est_valide(string $token):bool
     {
         return preg_match(
             '/^[a-zA-Z0-9\-_=]+\.[a-zA-Z0-9\-_=]+\.[a-zA-Z0-9\-_=]+$/',

@@ -21,6 +21,12 @@ class Materiel extends Produit
         $this->get_connection();
     }
 
+    /**
+     * Récupère les matériels depuis la base de données.
+     * Retourne un tableau d'objet de la classe Materiel
+     *
+     * @return array
+     */
     public function select_materiels():array
     {
         $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS qte_stock FROM materiels INNER JOIN produits on materiels.id_pro = produits.id_pro";
@@ -28,7 +34,15 @@ class Materiel extends Produit
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_CLASS, '\ppe4\Materiel');
     }
-    public function select_materiel(int $id):array
+
+    /**
+     * Récupère un matériel depuis la base de données en fonction de l'id fournie.
+     * Retourne un objet de la classe Materiel
+     *
+     * @param int $id
+     * @return Materiel
+     */
+    public function select_materiel(int $id):Materiel
     {
         $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS qte_stock FROM materiels INNER JOIN produits on materiels.id_pro = produits.id_pro WHERE produits.id_pro = :id";
         $stmt = $this->pdo->prepare($query);

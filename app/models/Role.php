@@ -24,7 +24,14 @@ class Role extends Model
         $this->get_connection();
     }
 
-    public function get_one_role(string $email):Role
+    /**
+     * Récupère le role d'un utilisateur.
+     * Retourne un objet de la classe Role
+     *
+     * @param string $email
+     * @return Role
+     */
+    public function select_role(string $email):Role
     {
         $query = "SELECT role.id_rol, libelle_rol, description_rol FROM utilisateur INNER JOIN role ON role.id_rol = utilisateur.id_rol WHERE email_uti = :email";
         $stmt = $this->pdo->prepare($query);

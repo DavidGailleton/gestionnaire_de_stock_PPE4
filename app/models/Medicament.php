@@ -36,7 +36,12 @@ class Medicament extends Produit
     {
         return $this->forme;
     }
-
+    /**
+     * Récupère les médicaments depuis la base de données.
+     * Retourne un tableau d'objet de la classe Medicament
+     *
+     * @return array
+     */
     public function select_medicaments():array
     {
         $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS qte_stock, forme_med AS forme, cis_med AS cis FROM medicaments INNER JOIN produits on medicaments.id_pro = produits.id_pro";
@@ -44,7 +49,14 @@ class Medicament extends Produit
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_CLASS, '\ppe4\Medicament');
     }
-    public function select_medicament(int $id):Medicaments
+    /**
+     * Récupère un medicament depuis la base de données en fonction de l'id fournie.
+     * Retourne un objet de la classe Medicament
+     *
+     * @param int $id
+     * @return Medicament
+     */
+    public function select_medicament(int $id):Medicament
     {
         $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS qte_stock, forme_med AS forme, cis_med AS cis FROM medicaments INNER JOIN produits on medicaments.id_pro = produits.id_pro WHERE produits.id_pro = :id";
         $stmt = $this->pdo->prepare($query);

@@ -16,8 +16,4 @@ class Main extends Controller
             $this->redirect('login');
         }
     }
-
-
-
-
 }

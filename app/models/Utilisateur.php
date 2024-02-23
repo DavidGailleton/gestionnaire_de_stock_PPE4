@@ -29,6 +29,14 @@ class Utilisateur extends Model
         $this->role = $role;
     }
 
+    /**
+     * Récupère un utilisateur depuis la base de données s'il existe.
+     * Si l'utilisateur éxiste, retourne un objet de la classe utilisateur.
+     * Sinon renvoie null
+     *
+     * @param string $email
+     * @return Utilisateur|null
+     */
     public function select_utilisateur(string $email):Utilisateur | null
     {
         $query = "SELECT id_uti, email_uti, nom_uti, prenom_uti FROM utilisateur WHERE email_uti = :email";
@@ -40,7 +48,7 @@ class Utilisateur extends Model
         if ($fetch){
             require_once 'Role.php';
             $role_model = new Role();
-            $role = $role_model->get_one_role($email);
+            $role = $role_model->select_role($email);
 
             $user = new Utilisateur();
             $user->set_utilisateur($fetch['id_uti'], $fetch['email_uti'], $fetch['nom_uti'], $fetch['prenom_uti'], $role);
@@ -51,6 +59,12 @@ class Utilisateur extends Model
         }
     }
 
+    /**
+     * Récupère le mot de passe d'un utilisateur
+     *
+     * @param string $email
+     * @return string
+     */
     public function select_mot_de_passe(string $email):string
     {
         $query = "SELECT password_uti FROM utilisateur WHERE email_uti = :email";

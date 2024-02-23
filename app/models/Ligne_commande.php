@@ -24,8 +24,9 @@ class Ligne_commande extends Model
         $this->get_connection();
     }
 
-    public function set_ligne_commande_mat(Commande $commande, Materiel $materiel, int $qte):void
+    public function set_ligne_commande_mat(int $id, Commande $commande, Materiel $materiel, int $qte):void
     {
+        $this->id = $id;
         $this->commande = $commande;
         $this->materiel = $materiel;
         $this->qte = $qte;

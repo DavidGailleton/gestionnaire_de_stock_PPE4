@@ -7,39 +7,39 @@ require_once 'Controller.php';
 
 class Login
 {
+
+    /**
+     * Constructeur de la classe Login vérifiant si le token JWT est déja mis en place puis s'il est valide
+     * Redirige l'utilisateur sur le dashboard si c'est le cas
+     */
     #[NoReturn] public function __construct()
     {
         require_once ROOT.'app/models/Utilisateur.php';
         require_once ROOT.'app/controllers/JWT.php';
 
         if (isset($_COOKIE['JWT'])) {
-            $jwt = new JWT();
-            $token = $_COOKIE['JWT'];
-
-            if ($jwt->is_valid($token) && !$jwt->is_expired($token) && $jwt->check($token)) {
-                header('Location: '.SERVER_URL.'index.php?page=dashboard');
-            }
+            $this->verify();
         }
     }
+
+    /**
+     * Affiche le formulaire de connexion
+     *
+     * @return void
+     */
     public function index():void
     {
-        $jwt = new JWT();
-
-        if (isset($_COOKIE['JWT'])){
-            $token = $_COOKIE['JWT'];
-            if ($jwt->is_valid($token) && !$jwt->is_expired($token) && $jwt->check($token)) {
-                header('Location: '.SERVER_URL.'index.php?page=dashboard');
-                exit();
-            }
-        }
         require_once (ROOT."./app/views/login.php");
     }
 
-    public function load_view(): void
-    {
-        require_once (ROOT."./app/views/login.php");
-    }
-
+    /**
+     * Vérifie la validité de l'identifiant et du mot de passe de l'utilisateur
+     * Si valide, ajoute le token JWT dans les cookies de l'utilisateur puis le redirige sur le dashboard
+     *
+     * @param string $email
+     * @param string $password
+     * @return void
+     */
     #[NoReturn] public function connect(string $email, string $password):void
     {
         $utilisateur = new Utilisateur();
@@ -62,6 +62,14 @@ class Login
         }
     }
 
+    /**
+     * Vérifie si le mot de passe entré par l'utilisateur est correct.
+     * Retourne true si c'est le cas, false sinon.
+     *
+     * @param string $email
+     * @param string $password
+     * @return bool
+     */
     public function check_password(string $email, string $password):bool
     {
         $utilisateur = new Utilisateur();
@@ -74,17 +82,22 @@ class Login
         return false;
     }
 
+    /**
+     * Vérifie la validité du token JWT.
+     *
+     * @return void
+     */
     public function verify():void
     {
         $jwt = new JWT();
         $token = $_COOKIE['JWT'];
 
-        if ($jwt->is_valid($token) && !$jwt->is_expired($token) && $jwt->check($token)) {
+        if ($jwt->est_valide($token) && !$jwt->est_expire($token) && $jwt->check($token)) {
             header('Location: '.SERVER_URL.'index.php?page=dashboard');
             exit();
         }
 
-        $this->load_view();
+        $this->index();
     }
 
 }
