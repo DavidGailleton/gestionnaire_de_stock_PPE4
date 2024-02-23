@@ -8,7 +8,6 @@ use PDO;
 
 class Utilisateur extends Model
 {
-    private int $id_;
     private string $email;
     private string $nom;
     private string $prenom;
@@ -22,7 +21,7 @@ class Utilisateur extends Model
 
     public function set_utilisateur(int $id, string $email, string $nom, string $prenom, Role $role):void
     {
-        $this->id_ = $id;
+        $this->id = $id;
         $this->email = $email;
         $this->nom = $nom;
         $this->prenom = $prenom;
@@ -75,10 +74,7 @@ class Utilisateur extends Model
         return $fetch['password_uti'];
     }
 
-    public function getId(): int
-    {
-        return $this->id_;
-    }
+
 
     public function getEmail(): string
     {

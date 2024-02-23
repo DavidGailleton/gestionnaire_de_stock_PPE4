@@ -37,17 +37,17 @@ class Login
      * Si valide, ajoute le token JWT dans les cookies de l'utilisateur puis le redirige sur le dashboard
      *
      * @param string $email
-     * @param string $password
+     * @param string $mdp
      * @return void
      */
-    #[NoReturn] public function connect(string $email, string $password):void
+    #[NoReturn] public function connect(string $email, string $mdp):void
     {
         $utilisateur = new Utilisateur();
         $jwt = new JWT();
 
         $user = $utilisateur->select_utilisateur($email);
 
-        if ($user && $this->check_password($email, $password)){
+        if ($user && $this->verifier_mot_de_passe($email, $mdp)){
             $id = $user->getId();
             $role = $user->getRole();
 
@@ -60,26 +60,6 @@ class Login
             header('Location: '.SERVER_URL.'index.php?page=login');
             exit();
         }
-    }
-
-    /**
-     * Vérifie si le mot de passe entré par l'utilisateur est correct.
-     * Retourne true si c'est le cas, false sinon.
-     *
-     * @param string $email
-     * @param string $password
-     * @return bool
-     */
-    public function check_password(string $email, string $password):bool
-    {
-        $utilisateur = new Utilisateur();
-
-        $import_password = $utilisateur->select_mot_de_passe($email);
-
-        if ($import_password === $password){
-            return true;
-        }
-        return false;
     }
 
     /**
@@ -98,6 +78,33 @@ class Login
         }
 
         $this->index();
+    }
+
+    /**
+     * Crypt le mot de passe mis en paramètre puis retourne son hash
+     *
+     * @param string $mdp
+     * @return string
+     */
+    public function crypt_mot_de_passe(string $mdp):string
+    {
+        return password_hash($mdp, PASSWORD_BCRYPT, ['cost' => 13]);
+    }
+
+    /**
+     * Vérifie si le mot de passe mis en paramètre est le bon mot de passe, retourne true si c'est le cas, false sinon
+     *
+     * @param string $email
+     * @param string $mdp
+     * @return bool
+     */
+    public function verifier_mot_de_passe(string $email, string $mdp):bool
+    {
+        $utilisateur = new Utilisateur();
+
+        $import_password = $utilisateur->select_mot_de_passe($email);
+
+        return password_verify($mdp, $import_password);
     }
 
 }

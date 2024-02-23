@@ -32,6 +32,8 @@ $role = $payload['user_role'];
         <a href=<?php echo SERVER_URL.'index.php?page=panier' ?>>
             <img src=<?php echo ROOT.'public/img/panier.svg' ?> alt='panier'>
         </a>
-        <img src='' alt='profile'>
+        <a href=<?php echo SERVER_URL.'index.php?page=profile' ?>>
+            <img src='' alt='profile'>
+        </a>
     </div>
 </header>

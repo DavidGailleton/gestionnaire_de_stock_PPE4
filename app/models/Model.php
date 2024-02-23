@@ -7,7 +7,7 @@ use PDOException;
 
 abstract class Model
 {
-    protected string $id;
+    protected int $id;
 
     private string $host = 'localhost'; // Hôte de la base de données
     private string $db_name = 'ppe4'; // Nom de la base de données
