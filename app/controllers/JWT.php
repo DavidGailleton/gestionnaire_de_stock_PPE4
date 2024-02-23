@@ -4,6 +4,14 @@ namespace ppe4;
 
 class JWT
 {
+    /**
+     * Génère le tableau de données nécessaire à la création du JWT
+     *
+     * @param string $id
+     * @param string $email
+     * @param Role $role
+     * @return array
+     */
     public function generate_payload(string $id, string $email, Role $role):array
     {
         return [
@@ -12,6 +20,14 @@ class JWT
             'user_role' => $role->getLibelle()
         ];
     }
+
+    /**
+     * Génère le JWT sous forme de chaine de caractère
+     *
+     * @param array $payload
+     * @param int $validity
+     * @return string
+     */
     public function generate(array $payload, int $validity = 14400):string
     {
 
@@ -42,6 +58,12 @@ class JWT
         return $jwt;
     }
 
+    /**
+     * Vérifie si le token JWT est valide
+     *
+     * @param string $token
+     * @return bool
+     */
     public function check(string $token):bool
     {
         $payload = $this->get_payload($token);
@@ -51,6 +73,12 @@ class JWT
         return $token === $verif_token;
     }
 
+    /**
+     * Récupère le header contenue dans le token JWT
+     *
+     * @param string $token
+     * @return array
+     */
     public function get_header(string $token):array
     {
         $array = explode('.', $token);
@@ -59,6 +87,12 @@ class JWT
         return json_decode(base64_decode($header), true);
     }
 
+    /**
+     * Récupère le payload contenue dans le token JWT
+     *
+     * @param string $token
+     * @return array
+     */
     public function get_payload(string $token):array
     {
         $array = explode('.', $token);
@@ -67,6 +101,12 @@ class JWT
         return json_decode(base64_decode($payload), true);
     }
 
+    /**
+     * Vérifie si le token JWT est expiré
+     *
+     * @param string $token
+     * @return bool
+     */
     public function is_expired(string $token):bool
     {
         $payload = $this->get_payload($token);
@@ -76,6 +116,12 @@ class JWT
         return ($payload['exp'] < $now->getTimestamp());
     }
 
+    /**
+     * Vérifie si le token JWT est conforme aux normes JWT
+     *
+     * @param string $token
+     * @return bool
+     */
     public function is_valid(string $token):bool
     {
         return preg_match(
