@@ -29,3 +29,8 @@ function medic_card(\ppe4\Medicament $medicament):string
     return $html;
 }
 ?>
+<div class="bouton_ajout_panier">
+    <input type="text" >
+    <span>    </span>
+    <input type="number" >
+</div>

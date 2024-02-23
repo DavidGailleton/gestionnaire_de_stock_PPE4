@@ -85,7 +85,7 @@ footer
 }
 
 .login_card {
-    position: absolute;
+    position: relative;
     width: 400px;
     background: #dcdcdc;
     z-index: 1000;
@@ -190,3 +190,11 @@ footer
 grid-column-start: 3;
 }
 
+.bouton_ajout_panier
+{
+    height: 2em;
+    width: 10em;
+    border: 1px black solid;
+    border-radius: 2em;
+
+}
