@@ -6,6 +6,11 @@ use JetBrains\PhpStorm\NoReturn;
 
 abstract class Controller
 {
+
+    /**
+     *  Vérifie s'il y a un token JWT dans les cookies du navigateur de l'utilisateur
+     *  Puis vérifie son authenticité
+     */
     #[NoReturn] public function __construct()
     {
         if (isset($_COOKIE['JWT'])) {
@@ -20,6 +25,13 @@ abstract class Controller
             $this->redirect('login');
         }
     }
+
+    /**
+     * Génère un objet de la class mis en paramètre
+     *
+     * @param string $model
+     * @return object
+     */
     public function loadModel(string $model):object
     {
         require_once ROOT.'app/models/'.$model.'.php';
@@ -27,6 +39,13 @@ abstract class Controller
         return $this->$model;
     }
 
+
+    /**
+     * Redirige l'utilisateur sur une autre page
+     *
+     * @param string $page
+     * @return void
+     */
     #[NoReturn] public function redirect(string $page):void
     {
         header('Location: '.SERVER_URL.'index.php?page='.$page);
