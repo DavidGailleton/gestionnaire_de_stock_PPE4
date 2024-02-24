@@ -34,6 +34,12 @@ if (isset($_GET['action']) && $_GET['action'] != '')
             }
             break;
         case 'modifier_mdp' :
+            if (isset($_SESSION['user_email']) && isset($_POST['ancien_mdp']) && isset($_POST['nouveau_mdp']))
+            {
+                require_once ROOT.'app/controllers/Nouveau_mdp.php';
+                $nouveau_mdp = new \ppe4\Nouveau_mdp();
+                $nouveau_mdp->modifier_mdp($_SESSION['user_email'], $_POST['ancien_mdp'], $_POST['nouveau_mdp']);
+            }
             break;
         default :
             require_once (ROOT.'app/controllers/Error.php');

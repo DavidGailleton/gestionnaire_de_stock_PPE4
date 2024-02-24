@@ -13,13 +13,20 @@ class Nouveau_mdp
         require_once ROOT.'app/views/nouveau_mdp.php';
     }
 
-    public function modifier_mdp(Utilisateur $utilisateur, string $nouveau_mdp):void
+    public function modifier_mdp(string $email,string $ancien_mdp, string $nouveau_mdp):void
     {
-        if ($this->verifier_mot_de_passe($utilisateur->getEmail(), $nouveau_mdp)){
-            $utilisateur->update_mdp_utilisateur($utilisateur->getId(), $nouveau_mdp);
+        if ($ancien_mdp == $nouveau_mdp){
+            require_once ROOT.'app/views/nouveau_mdp.php';
+            echo '<script>alert("L\'ancien et le nouveau mdp sont les mêmes")</script>';
+        }
+
+        $utilisateur = new Utilisateur();
+        if ($this->verifier_mot_de_passe($_SESSION['user_email'], $ancien_mdp)){
+            $utilisateur->update_mdp_utilisateur($email, $nouveau_mdp);
             header('Location: '.SERVER_URL.'index.php?page=login');
         } else {
-            header('Location: '.SERVER_URL.'index.php?page=error');
+            require_once ROOT.'app/views/nouveau_mdp.php';
+            echo '<script>alert("Une erreur s\'est produite")</script>';
         }
     }
 

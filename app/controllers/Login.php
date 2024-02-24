@@ -50,6 +50,12 @@ class Login
         $user = $utilisateur->select_utilisateur($email);
 
         if ($user && $this->compte_non_bloque($user) && $this->verifier_mot_de_passe($email, $mdp)){
+            if ($this->mdp_a_changer($email)){
+                $_SESSION['user_email'] = $email;
+                header('Location: '.SERVER_URL.'index.php?page=nouveau_mdp');
+                exit();
+            }
+
             $id = $user->getId();
             $role = $user->getRole();
 
@@ -59,12 +65,11 @@ class Login
             $log_connexion->insert_log_connexion($email, false);
 
             header('Location: '.SERVER_URL.'index.php?page=dashboard');
-            exit();
         } else {
             $log_connexion->insert_log_connexion($email, true);
             header('Location: '.SERVER_URL.'index.php?page=login');
-            exit();
         }
+        exit();
     }
 
     /**
@@ -155,8 +160,15 @@ class Login
         return false;
     }
 
-    public function mdp_a_changer():bool
+    /**
+     * Vérifie si le mot de passe doit être modifié
+     *
+     * @param string $email
+     * @return bool
+     */
+    public function mdp_a_changer(string $email):bool
     {
-
+        $utilisateur = new Utilisateur();
+        return $utilisateur->select_mdp_a_changer($email);
     }
 }
