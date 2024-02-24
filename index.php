@@ -33,6 +33,13 @@ if (isset($_GET['action']) && $_GET['action'] != '')
                 $page_produit->ajouter_au_panier_materiel($_POST['id']);
             }
             break;
+        case 'modifier_mdp' :
+            break;
+        default :
+            require_once (ROOT.'app/controllers/Error.php');
+            $error = new \ppe4\Error();
+            $error->fausse_url();
+            break;
     endswitch;
 }
 
@@ -43,6 +50,11 @@ if (isset($_GET['page']) && $_GET['page'] != '')
             require_once (ROOT.'app/controllers/Login.php');
             $login = new \ppe4\Login();
             $login->index();
+            break;
+        case 'nouveau_mdp' :
+            require_once (ROOT.'app/controllers/Nouveau_mdp.php');
+            $nouveau_mdp = new \ppe4\Nouveau_mdp();
+            $nouveau_mdp->index();
             break;
         case 'dashboard' :
             require_once (ROOT.'app/controllers/Dashboard.php');

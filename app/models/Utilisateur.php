@@ -122,6 +122,31 @@ class Utilisateur extends Model
         return $fetch['compte_desactive_uti'];
     }
 
+    /**
+     * Met à jour le mot de passe de l'utilisateur
+     *
+     * @param int $id
+     * @param string $nouveau_mdp
+     * @return void
+     */
+    public function update_mdp_utilisateur(int $id, string $nouveau_mdp): void
+    {
+        $query = "UPDATE utilisateur SET mdp_a_changer_uti = false AND password_uti = :nouveau_mdp WHERE id_uti = :id";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute(['nouveau_mdp' => $nouveau_mdp, 'id' => $id]);
+        $stmt->fetch();
+    }
+
+    public function select_mdp_a_changer(string $email):bool
+    {
+        $query = "SELECT mdp_a_changer_uti FROM utilisateur WHERE email_uti = :email";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute(['email' => $email]);
+        $fetch = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $fetch['mdp_a_changer_uti'];
+    }
+
     public function getEmail(): string
     {
         return $this->email;
@@ -151,5 +176,4 @@ class Utilisateur extends Model
     {
         return $this->compte_desactive;
     }
-
 }

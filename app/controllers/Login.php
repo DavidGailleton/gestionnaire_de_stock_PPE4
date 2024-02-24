@@ -49,7 +49,7 @@ class Login
 
         $user = $utilisateur->select_utilisateur($email);
 
-        if ($user && $this->compte_valide($user) && $this->verifier_mot_de_passe($email, $mdp)){
+        if ($user && $this->compte_non_bloque($user) && $this->verifier_mot_de_passe($email, $mdp)){
             $id = $user->getId();
             $role = $user->getRole();
 
@@ -141,7 +141,7 @@ class Login
      * @param Utilisateur $utilisateur
      * @return bool
      */
-    public function compte_valide(Utilisateur $utilisateur):bool
+    public function compte_non_bloque(Utilisateur $utilisateur):bool
     {
         if (!$utilisateur->select_statut_activation_utilisateur($utilisateur->getId())){
             $nb_echec_connexion = $this->nb_echec_connexion_d_affile($utilisateur->getEmail());
@@ -153,5 +153,10 @@ class Login
             return true;
         }
         return false;
+    }
+
+    public function mdp_a_changer():bool
+    {
+
     }
 }
