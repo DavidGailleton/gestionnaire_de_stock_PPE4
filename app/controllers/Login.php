@@ -90,16 +90,7 @@ class Login
         $this->index();
     }
 
-    /**
-     * Crypt le mot de passe mis en paramètre puis retourne son hash
-     *
-     * @param string $mdp
-     * @return string
-     */
-    public function crypt_mot_de_passe(string $mdp):string
-    {
-        return password_hash($mdp, PASSWORD_BCRYPT, ['cost' => 13]);
-    }
+
 
     /**
      * Vérifie si le mot de passe mis en paramètre est le bon mot de passe, retourne true si c'est le cas, false sinon

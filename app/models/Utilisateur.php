@@ -131,7 +131,7 @@ class Utilisateur extends Model
      */
     public function update_mdp_utilisateur(string $email, string $nouveau_mdp): void
     {
-        $query = "UPDATE utilisateur SET mdp_a_changer_uti = false AND password_uti = :nouveau_mdp WHERE email_uti = :email";
+        $query = "UPDATE utilisateur SET mdp_a_changer_uti = false, password_uti = :nouveau_mdp WHERE email_uti = :email";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['nouveau_mdp' => $nouveau_mdp, 'email' => $email]);
         $stmt->fetch();

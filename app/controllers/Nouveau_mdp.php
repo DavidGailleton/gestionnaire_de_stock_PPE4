@@ -21,8 +21,9 @@ class Nouveau_mdp
         }
 
         $utilisateur = new Utilisateur();
-        if ($this->verifier_mot_de_passe($_SESSION['user_email'], $ancien_mdp)){
-            $utilisateur->update_mdp_utilisateur($email, $nouveau_mdp);
+        if ($this->verifier_mot_de_passe($_SESSION['user_email'], $ancien_mdp) && $this->mot_de_passe_est_valide($nouveau_mdp)){
+            $nouveau_mdp_crypte = $this->crypt_mot_de_passe($nouveau_mdp);
+            $utilisateur->update_mdp_utilisateur($email, $nouveau_mdp_crypte);
             header('Location: '.SERVER_URL.'index.php?page=login');
         } else {
             require_once ROOT.'app/views/nouveau_mdp.php';
@@ -45,4 +46,29 @@ class Nouveau_mdp
 
         return password_verify($mdp, $import_password);
     }
+
+    public function mot_de_passe_est_valide($mdp): bool
+    {
+        if (
+            preg_match_all('/[#?!@%&\-_.]/', $mdp) < SPE_CHAR_MIN ||
+            preg_match_all('/[a-z]/', $mdp) < LOWER_MIN ||
+            preg_match_all('/[A-Z]/', $mdp) < UPPER_MIN ||
+            preg_match_all('/[0-9]/', $mdp) < NUM_MIN
+        ) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Crypt le mot de passe mis en paramètre puis retourne son hash
+     *
+     * @param string $mdp
+     * @return string
+     */
+    public function crypt_mot_de_passe(string $mdp):string
+    {
+        return password_hash($mdp, PASSWORD_BCRYPT, ['cost' => 13]);
+    }
+
 }
