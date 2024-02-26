@@ -194,3 +194,38 @@ footer
     border-radius: 2em;
 
 }
+
+.search
+{
+    width: 100%;
+    position: relative;
+    display: flex;
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
+.search .searchTextBox{
+    width: 30em;
+    height: 3em;
+    border: 1px solid black;
+    border-right: none;
+    border-radius: 3em 0 0 3em;
+    padding: 1em;
+    outline: none;
+    color: black;
+}
+.search .searchButton {
+    width: 3em;
+    height: 3em;
+    border: 1px solid black;
+    border-left: none;
+    background: #ffffff;
+    text-align: center;
+    color: white;
+    border-radius: 0 3em 3em 0;
+    cursor: pointer;
+    padding-right: 2em;
+}
+.search .searchButton img {
+    width: 2em;
+    height: 2em;
+}

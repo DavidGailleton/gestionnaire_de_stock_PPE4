@@ -22,7 +22,7 @@ function medic_card(\ppe4\Medicament $medicament, int $i):string
         <p class="description">'.
             $medicament->getDescription()
         .'</p>
-        <form action='.SERVER_URL."index.php?action=ajouter_au_panier_medicament".' method="post" id="formulaire_'.$i.'">
+        <form action="'.SERVER_URL."index.php?action=ajouter_au_panier_medicament".'" method="post" id="formulaire_'.$i.'">
             <div>
                 <label>
                     <input type="number" min="1" value="1" name="qte">
@@ -34,13 +34,13 @@ function medic_card(\ppe4\Medicament $medicament, int $i):string
 </article>
 <script >
     window.onload = function() {
-      document.getElementById("formulaire_'.$i.'").addEventListener("submit", function()){
-          var champCache = document.createElement("input")
+      document.getElementById("formulaire_'.$i.'").addEventListener("submit", function(){
+          let champCache = document.createElement("input")
           champCache.type = "hidden";
           champCache.name = "id";
           champCache.value = '.$medicament->getId().'
           this.appendChild(champCache)
-      }
+      });
     }
 </script>
 </a>

@@ -41,6 +41,9 @@ if (isset($_GET['action']) && $_GET['action'] != '')
                 $nouveau_mdp->modifier_mdp($_SESSION['user_email'], $_POST['ancien_mdp'], $_POST['nouveau_mdp']);
             }
             break;
+        case 'rechercher':
+            header('Location: '.SERVER_URL.'index.php?page=medicaments&recherche='.$_POST['recherche'].'&no_page=1');
+            break;
         default :
             require_once (ROOT.'app/controllers/Error.php');
             $error = new \ppe4\Error();
@@ -70,6 +73,12 @@ if (isset($_GET['page']) && $_GET['page'] != '')
         case 'medicaments' :
             require_once (ROOT.'app/controllers/Medicaments.php');
             $medicament = new \ppe4\Medicaments();
+            if (!isset($_GET['no_page'])){
+                if (isset($_GET['recherche'])){
+                    header('Location: '.SERVER_URL.'index.php?page=medicaments&recherche='.$_GET['recherche'].'&no_page=1');
+                }
+                header('Location: '.SERVER_URL.'index.php?page=medicaments&no_page=1');
+            }
             $medicament->index();
             break;
         case 'materiels' :

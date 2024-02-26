@@ -8,7 +8,7 @@
         <div class="login_card">
             <div class="login_content">
                 <h2>Login</h2>
-                <form action="<?php echo 'index.php?action=login'?>" method="post" id="login">
+                <form action="index.php?action=login" method="post" id="login">
                     <input type="text" name="email" class="text_box">
                     <input type="password" name="password" class="text_box">
                     <input type="submit" value="connect">
