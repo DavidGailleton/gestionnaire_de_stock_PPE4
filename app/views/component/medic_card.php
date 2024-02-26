@@ -11,9 +11,12 @@ function medic_card(\ppe4\Medicament $medicament, int $i):string
     <article class="">
     <div class="haut">
         <div>
-            <h3>' . $medicament->getLibelle().' - CIS : '. $medicament->getCis() .'</h3>
+            <h3>' . $medicament->getLibelle().'</h3>
+            <br>
+            <h4>  - CIS : '. $medicament->getCis() .'</h4>
         </div>
-        <p>'.$medicament->getForme().'</p>
+        ' /* <p>'.$medicament->getForme().'</p> */
+        .'
         <div class="status">
             '.$medicaments->status_a_afficher($medicament->getQteStock()).'
         </div>

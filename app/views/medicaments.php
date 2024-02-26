@@ -10,7 +10,7 @@
 
 
     <div>
-        <form class="search" action="index.php?action=rechercher" method="post">
+        <form class="search" action="index.php?action=recherche" method="post">
             <label>
                 <input type="text" name="recherche" class="searchTextBox" placeholder="Recherche" <?php if (isset($_GET['recherche'])) echo 'value="'.$_GET['recherche'].'"' ?>>
             </label>

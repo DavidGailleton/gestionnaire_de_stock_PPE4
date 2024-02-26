@@ -33,4 +33,9 @@ class Medicaments extends Controller
     };
         $_SESSION['panier']->array_push();*/
     }
+
+    public function rechercher(string $recherche):void
+    {
+        require_once ROOT.'app/views/medicaments.php';
+    }
 }
