@@ -38,9 +38,10 @@ class Materiel extends Produit
 
     public function select_materiels_par_recherche(string $recherche, int $offset):array
     {
-        $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS qte_stock FROM materiels INNER JOIN produits on materiels.id_pro = produits.id_pro WHERE MATCH(produits.libelle_pro) AGAINST (:recherche) LIMIT :no_page, 25";
+        $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS qte_stock FROM materiels INNER JOIN produits on materiels.id_pro = produits.id_pro WHERE produits.libelle_pro LIKE :recherche LIMIT :offset, 25";
         $stmt = $this->pdo->prepare($query);
-        $stmt->bindParam('no_page', $offset, PDO::PARAM_INT);
+        $stmt->bindParam('offset', $offset, PDO::PARAM_INT);
+        $recherche = '%'.$recherche.'%';
         $stmt->bindParam('recherche', $recherche);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_CLASS, '\ppe4\Materiel');
