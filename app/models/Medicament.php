@@ -84,4 +84,22 @@ class Medicament extends Produit
         $stmt->execute(['id' => $id]);
         return $stmt->fetch(PDO::FETCH_CLASS, '\ppe4\Medicament');
     }
+
+    public function count_nb_medicament()
+    {
+        $query = "SELECT COUNT(*) FROM medicaments";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    }
+
+    public function count_nb_medicament_par_recherche(string $recherche)
+    {
+        $query = "SELECT COUNT(*) FROM medicaments INNER JOIN ppe4.produits p on medicaments.id_pro = p.id_pro WHERE libelle_pro LIKE :recherche";
+        $stmt = $this->pdo->prepare($query);
+        $recherche = '%'.$recherche.'%';
+        $stmt->bindParam('recherche', $recherche, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    }
 }

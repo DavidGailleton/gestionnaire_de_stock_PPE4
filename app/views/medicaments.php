@@ -1,8 +1,14 @@
+<?php
+$no_page = $_GET['no_page'];
+$nb_page = 0.0;
+if (isset($_GET['recherche'])){
+    $recherche = $_GET['recherche'];
+}
+?>
 <!doctype html>
 <html lang="fr">
 <head>
     <?php require_once ROOT."app/views/component/head.php" ?>
-
 </head>
 <body>
 <?php include_once ROOT."app/views/component/header.php"; ?>
@@ -15,7 +21,7 @@
                 <input type="text" name="recherche" class="searchTextBox" placeholder="Recherche" <?php if (isset($_GET['recherche'])) echo 'value="'.$_GET['recherche'].'"' ?>>
             </label>
             <button type="submit" class="searchButton">
-                <img src="public/img/loupe.svg" style="width: 3em">
+                <img src="public/img/loupe.svg" alt="rechercher" style="width: 3em">
             </button>
         </form>
     </div>
@@ -23,10 +29,12 @@
     <?php
     require_once ROOT.'app/models/Medicament.php';
     $medicament = new \ppe4\Medicament();
-    if (isset($_GET['recherche'])){
-        $medicaments = $medicament->select_medicaments_par_recherche(($_GET['no_page'] - 1) * 25, $_GET['recherche']);
+    if (isset($recherche)){
+        $medicaments = $medicament->select_medicaments_par_recherche(($no_page - 1) * 25, $recherche);
+        $nb_page = round($medicament->count_nb_medicament_par_recherche($recherche) / 25, 0, PHP_ROUND_HALF_EVEN);
     } else {
-        $medicaments = $medicament->select_medicaments(($_GET['no_page'] - 1) * 25);
+        $medicaments = $medicament->select_medicaments(($no_page - 1) * 25);
+        $nb_page = round($medicament->count_nb_medicament() / 25, 0, PHP_ROUND_HALF_EVEN);
     }
 
     include_once ROOT.'app/views/component/medic_card.php';
@@ -36,6 +44,78 @@
         $i++;
     }
     ?>
+
+    <div class="choix_de_page">
+        <?php
+        if ($no_page != 1 && $nb_page > 9) {
+            echo '<button class=""><</button>';
+        }
+        echo '<button>1</button>';
+        if ($nb_page > 1){
+            if ($nb_page < 10 || $no_page < 4 || $no_page > $nb_page - 3){
+                echo '<button>2</button>';
+            } else {
+              echo '<button>...</button>';
+            }
+        }
+        if ($nb_page  > 2) {
+            if ($nb_page < 10 || $no_page > $nb_page - 3 || $no_page < 4){
+                echo '<button>3</button>';
+            }else{
+                echo '<button>'.$no_page - 2 .'</button>';
+            }
+        }
+        if ($nb_page > 3){
+            if ($nb_page < 10 || $no_page > $nb_page - 3 || $no_page < 4){
+                echo '<button>4</button>';
+            } else {
+                echo '<button>'. $no_page - 1 .'</button>';
+            }
+        }
+        if ($nb_page > 4){
+            if ($nb_page < 10){
+                echo '<button>5</button>';
+            } else if ($no_page < 4 || $no_page > $nb_page - 3){
+                echo '<button>...</button>';
+            } else {
+                echo '<button>'. $no_page .'</button>';
+            }
+        }
+        if ($nb_page > 5){
+            if ($nb_page < 10){
+                echo '<button>6</button>';
+            } else if ($no_page < 4 || $no_page > $nb_page - 3){
+                echo '<button>'.$nb_page - 3 .'</button>';
+            } else {
+                echo '<button>'. $no_page + 1 .'</button>';
+            }
+        }
+        if ($nb_page > 6){
+            if ($nb_page < 10){
+                echo '<button>7</button>';
+            } else if ($no_page < 4 || $no_page > $nb_page - 3){
+                echo '<button>'.$nb_page - 2 .'</button>';
+            } else {
+                echo '<button>'. $no_page + 2 .'</button>';
+            }
+        }
+        if ($nb_page > 7){
+            if ($nb_page < 10){
+                echo '<button>8</button>';
+            } else if ($no_page < 4 || $no_page > $nb_page - 3){
+                echo '<button>'.$nb_page - 1 .'</button>';
+            } else {
+                echo '<button>...</button>';
+            }
+        }
+        if ($nb_page > 8){
+            echo '<button>'. $nb_page .'</button>';
+        }
+        if ($nb_page > 9 && $no_page != $nb_page){
+            echo '<button>></button>';
+        }
+        ?>
+    </div>
 </main>
 <?php include_once ROOT.'app/views/component/footer.php'?>
 </body>

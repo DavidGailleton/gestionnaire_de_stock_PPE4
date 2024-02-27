@@ -250,3 +250,34 @@ footer
 {
     background-color: #e0e0e0;
 }
+
+.choix_de_page
+{
+    width: 15em;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    margin: 2em 0;
+}
+.choix_de_page button
+{
+    width: 3em;
+    height: 3em;
+    border: 1px #8a8a8a solid;
+    margin: 0;
+    background-color: white;
+}
+.choix_de_page button:hover
+{
+    background-color: #f3f3f3;
+}
+.choix_de_page button:first-child
+{
+    border-top-left-radius: 3em;
+    border-bottom-left-radius: 3em;
+}
+.choix_de_page button:last-child
+{
+    border-top-right-radius: 3em;
+    border-bottom-right-radius: 3em;
+}
