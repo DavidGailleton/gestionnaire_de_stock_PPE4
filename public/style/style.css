@@ -153,10 +153,6 @@ footer
     text-decoration: none;
     text-decoration-color: black;
 }
-.product_card:hover
-{
-    background-color: #d6d6d6;
-}
 .product_card article
 {
     display: flex;

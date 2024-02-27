@@ -7,7 +7,7 @@ function medic_card(\ppe4\Medicament $medicament, int $i):string
     $medicaments = new \ppe4\Medicaments();
 
 
-    return '<a href="" class="product_card">
+    return '<div href="" class="product_card">
     <article class="">
     <div class="haut">
         <div>
@@ -46,7 +46,7 @@ function medic_card(\ppe4\Medicament $medicament, int $i):string
       });
     }
 </script>
-</a>
+</div>
     ';
 }
 ?>

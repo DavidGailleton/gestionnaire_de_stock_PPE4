@@ -41,8 +41,11 @@ if (isset($_GET['action']) && $_GET['action'] != '')
                 $nouveau_mdp->modifier_mdp($_SESSION['user_email'], $_POST['ancien_mdp'], $_POST['nouveau_mdp']);
             }
             break;
-        case 'recherche':
+        case 'recherche_medicament':
             header('Location: '.SERVER_URL.'index.php?page=medicaments&recherche='.$_POST['recherche'].'&no_page=1');
+            exit();
+        case 'recherche_materiel':
+            header('Location: '.SERVER_URL.'index.php?page=materiels&recherche='.$_POST['recherche'].'&no_page=1');
             exit();
         default :
             require_once (ROOT.'app/controllers/Error.php');
@@ -86,6 +89,14 @@ if (isset($_GET['page']) && $_GET['page'] != '')
         case 'materiels' :
             require_once (ROOT.'app/controllers/Materiels.php');
             $materiel = new \ppe4\Materiels();
+            if (!isset($_GET['no_page'])){
+                if (isset($_GET['recherche'])){
+                    header('Location: '.SERVER_URL.'index.php?page=materiels&recherche='.$_GET['recherche'].'&no_page=1');
+                    exit();
+                }
+                header('Location: '.SERVER_URL.'index.php?page=materiels&no_page=1');
+                exit();
+            }
             $materiel->index();
             break;
         case 'commande' :

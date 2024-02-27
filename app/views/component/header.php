@@ -30,7 +30,7 @@ $role = $payload['user_role'];
     </ul>
     <div>
         <a href=<?php echo SERVER_URL.'index.php?page=panier' ?>>
-            <img src=<?php echo ROOT.'public/img/panier.svg' ?> alt='panier'>
+            <img src='public/img/panier.svg' alt='panier' style="width: 2em">
         </a>
         <a href=<?php echo SERVER_URL.'index.php?page=profile' ?>>
             <img src='' alt='profile'>
