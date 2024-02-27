@@ -19,11 +19,11 @@ body
 }
 
 header {
-    margin-top: 0px;
+    margin-top: 0;
     width: 100vw;
     height: 5em;
     background: white;
-    box-shadow: 0px 1px 5px black;
+    box-shadow: 0 1px 5px black;
     border-bottom: 1px solid black;
     display: flex;
     justify-content: space-between;
@@ -131,29 +131,29 @@ footer
     font-size: 1em;
 }
 
-.product_card
+.medic_card
 {
     margin: 1em 0;
     border: 1px black solid;
     border-radius: 5px;
     color: black;
 }
-.product_card:link
+.medic_card:link
 {
     text-decoration: none;
     text-decoration-color: black;
 }
-.product_card:visited
+.medic_card:visited
 {
     text-decoration: none;
     text-decoration-color: black;
 }
-.product_card:active
+.medic_card:active
 {
     text-decoration: none;
     text-decoration-color: black;
 }
-.product_card article
+.medic_card article
 {
     display: flex;
     flex-direction: column;
@@ -163,7 +163,7 @@ footer
 
 }
 
-.product_card article .haut
+.medic_card article .haut
 {
     display: flex;
     flex-wrap: wrap;
@@ -172,23 +172,18 @@ footer
     margin-bottom: 1em;
 }
 
-.product_card article .bas
+.medic_card article .bas
 {
     display: grid;
     grid-template-columns: 3fr 1fr 1fr;
 }
-.product_card article .bas .description
+.medic_card article .bas .description
 {
     grid-column-start: 1;
 }
-
-.bouton_ajout_panier
+.medic_card article .bas form
 {
-    height: 2em;
-    width: 10em;
-    border: 1px black solid;
-    border-radius: 2em;
-
+    grid-column-start: -1;
 }
 
 .search
@@ -224,4 +219,34 @@ footer
 .search .searchButton img {
     width: 2em;
     height: 2em;
+}
+
+.ajout_panier
+{
+    position: relative;
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+.ajout_panier .numeric_ajout_panier
+{
+    width: 5em;
+    height: 2em;
+    padding: 0.5em;
+    border: 1px #868686 solid;
+    border-right: none;
+    border-radius: 2em 0 0 2em;
+}
+.ajout_panier .bouton_ajout_panier
+{
+    width: 10em;
+    height: 2em;
+    border: 1px #868686 solid;
+    border-left: none;
+    border-radius: 0 2em 2em 0;
+    background-color: white;
+}
+.ajout_panier .bouton_ajout_panier:hover
+{
+    background-color: #e0e0e0;
 }

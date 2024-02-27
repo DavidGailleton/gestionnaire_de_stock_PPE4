@@ -7,7 +7,7 @@ function medic_card(\ppe4\Medicament $medicament, int $i):string
     $medicaments = new \ppe4\Medicaments();
 
 
-    return '<div href="" class="product_card">
+    return '<div class="medic_card">
     <article class="">
     <div class="haut">
         <div>
@@ -15,8 +15,6 @@ function medic_card(\ppe4\Medicament $medicament, int $i):string
             <br>
             <h4>  - CIS : '. $medicament->getCis() .'</h4>
         </div>
-        ' /* <p>'.$medicament->getForme().'</p> */
-        .'
         <div class="status">
             '.$medicaments->status_a_afficher($medicament->getQteStock()).'
         </div>
@@ -25,10 +23,10 @@ function medic_card(\ppe4\Medicament $medicament, int $i):string
         <p class="description">'.
             $medicament->getDescription()
         .'</p>
-        <form action="'.SERVER_URL."index.php?action=ajouter_au_panier_medicament".'" method="post" id="formulaire_'.$i.'">
-            <div>
+        <form action="index.php?action=ajouter_au_panier_medicament" method="post" id="formulaire_'.$i.'">
+            <div class="ajout_panier">
                 <label>
-                    <input type="number" min="1" value="1" name="qte">
+                    <input type="number" min="1" value="1" name="qte" class="numeric_ajout_panier">
                 </label>
                 <input type="submit" value="Ajouter au panier" class="bouton_ajout_panier">
             </div>

@@ -44,13 +44,21 @@ class Medicament extends Produit
      */
     public function select_medicaments(int $offset):array
     {
-        $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS qte_stock, forme_med AS forme, cis_med AS cis FROM medicaments INNER JOIN produits on medicaments.id_pro = produits.id_pro LIMIT :offset , 25";
+        $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS qte_stock, forme_med AS forme, cis_med AS cis FROM medicaments INNER JOIN produits on medicaments.id_pro = produits.id_pro ORDER BY produits.qte_stock_pro DESC LIMIT :offset , 25";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindValue('offset', $offset, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_CLASS, '\ppe4\Medicament');
     }
 
+    /**
+     * Récupère les médicaments depuis la base de données en fonction d'une recherche.
+     * Retourne un tableau d'objet de la classe Medicament
+     *
+     * @param int $offset
+     * @param string $recherche
+     * @return array
+     */
     public function select_medicaments_par_recherche(int $offset, string $recherche):array
     {
         $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS qte_stock, forme_med AS forme, cis_med AS cis FROM medicaments INNER JOIN produits on medicaments.id_pro = produits.id_pro WHERE produits.libelle_pro LIKE :recherche LIMIT :offset , 25";

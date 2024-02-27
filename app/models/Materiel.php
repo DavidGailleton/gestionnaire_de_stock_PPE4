@@ -36,6 +36,14 @@ class Materiel extends Produit
         return $stmt->fetchAll(PDO::FETCH_CLASS, '\ppe4\Materiel');
     }
 
+    /**
+     * Récupère les matériels depuis la base de données en fonction d'une recherche.
+     *  Retourne un tableau d'objet de la classe Materiel
+     *
+     * @param string $recherche
+     * @param int $offset
+     * @return array
+     */
     public function select_materiels_par_recherche(string $recherche, int $offset):array
     {
         $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS qte_stock FROM materiels INNER JOIN produits on materiels.id_pro = produits.id_pro WHERE produits.libelle_pro LIKE :recherche LIMIT :offset, 25";

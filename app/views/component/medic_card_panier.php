@@ -5,7 +5,7 @@ function medic_card_panier(\ppe4\Medicament $medicament, int $i):string
 {
     $panier = new \ppe4\Panier();
 
-    return '<a href="" class="product_card">
+    return '<a href="" class="medic_card">
     <article class="">
     <div class="haut">
         <div>
