@@ -2,8 +2,12 @@
 require_once 'app/includes/config.php';
 
 session_start();
-
-$_SESSION['panier'] = [];
+if (!isset($_SESSION['panier_medicaments'])){
+    $_SESSION['panier_medicaments'] = [];
+}
+if (!isset($_SESSION['panier_materiels'])){
+    $_SESSION['panier_materiels'] = [];
+}
 
 if (isset($_GET['action']) && $_GET['action'] != '')
 {
@@ -18,11 +22,9 @@ if (isset($_GET['action']) && $_GET['action'] != '')
             }
             break;
         case 'ajouter_au_panier_medicament':
-            if (isset($_POST['id']) && $_POST['id']->is_numeric)
+            if (isset($_POST['id']) && isset($_POST['qte']))
             {
-                require_once ROOT.'app/controllers/Medicaments.php';
-                $medicaments = new \ppe4\Medicaments();
-                $medicaments->ajouter_au_panier_medicament($_POST['id'], $_POST['qte']);
+                array_push($_SESSION['panier_medicaments'], ['id' => $_POST['id'], 'qte' => $_POST['qte']]);
             }
             break;
         case 'ajouter_au_panier_materiel':

@@ -12,7 +12,7 @@ abstract class Model
     private string $host = 'localhost'; // Hôte de la base de données
     private string $db_name = 'ppe4'; // Nom de la base de données
     private string $username = 'root'; // Nom d'utilisateur de la base de données
-    private string $password = '';  // Mot de passe de la base de données
+    private string $password = 'root';  // Mot de passe de la base de données
 
     protected $pdo;
 
