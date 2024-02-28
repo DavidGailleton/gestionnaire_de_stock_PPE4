@@ -31,4 +31,9 @@ class Panier extends Controller
         }
         return $medicaments;
     }
+
+    public function ajouter_au_panier_medicament()
+    {
+
+    }
 }

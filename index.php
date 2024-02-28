@@ -25,14 +25,16 @@ if (isset($_GET['action']) && $_GET['action'] != '')
             if (isset($_POST['id']) && isset($_POST['qte']))
             {
                 array_push($_SESSION['panier_medicaments'], ['id' => $_POST['id'], 'qte' => $_POST['qte']]);
+                header('Location: '.SERVER_URL.'index.php?page=medicaments&no_page=1');
+                exit();
             }
             break;
         case 'ajouter_au_panier_materiel':
-            if (isset($_POST['id']) && $_POST['id']->is_numeric)
+            if (isset($_POST['id']) && isset($_POST['qte']))
             {
-                require_once ROOT.'app/controllers/Page_produit.php';
-                $page_produit = new \ppe4\controllers\Page_produit();
-                $page_produit->ajouter_au_panier_materiel($_POST['id']);
+                array_push($_SESSION['panier_materiels'], ['id' => $_POST['id'], 'qte' => $_POST['qte']]);
+                header('Location: '.SERVER_URL.'index.php?page=materiels&no_page=1');
+                exit();
             }
             break;
         case 'modifier_mdp' :
@@ -49,6 +51,14 @@ if (isset($_GET['action']) && $_GET['action'] != '')
         case 'recherche_materiel':
             header('Location: '.SERVER_URL.'index.php?page=materiels&recherche='.$_POST['recherche'].'&no_page=1');
             exit();
+        case 'supprimer_du_panier_medicament':
+            if (isset($_POST['id']))
+            {
+                array_splice($_SESSION['panier_materiels'], array_search(["id" => $_POST['id']], $_SESSION['panier_materiels']));
+                header('Location: '.SERVER_URL.'index.php?page=materiels&no_page=1');
+                exit();
+            }
+            break;
         default :
             require_once (ROOT.'app/controllers/Error.php');
             $error = new \ppe4\controllers\Error();

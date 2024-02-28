@@ -1,4 +1,7 @@
 <?php
+
+use ppe4\models\Medicament;
+
 $no_page = $_GET['no_page'];
 $nb_page = 0;
 if (isset($_GET['recherche'])){
@@ -28,7 +31,7 @@ if (isset($_GET['recherche'])){
 
     <?php
     require_once ROOT.'app/models/Medicament.php';
-    $medicament = new \ppe4\models\Medicament();
+    $medicament = new Medicament();
     if (isset($recherche)){
         $medicaments = $medicament->select_medicaments_par_recherche(($no_page - 1) * 25, $recherche);
         $nb_page = intval(ceil($medicament->count_nb_medicament_par_recherche($recherche) / 25));

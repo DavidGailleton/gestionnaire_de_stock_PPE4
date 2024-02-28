@@ -1,4 +1,7 @@
 <?php
+
+use ppe4\models\Materiel;
+
 $no_page = $_GET['no_page'];
 $nb_page = 0;
 if (isset($_GET['recherche'])){
@@ -27,7 +30,7 @@ if (isset($_GET['recherche'])){
 
     <?php
     require_once ROOT.'app/models/Materiel.php';
-    $materiel = new \ppe4\models\Materiel();
+    $materiel = new Materiel();
     if (isset($recherche)){
         $materiels = $materiel->select_materiels_par_recherche(($no_page - 1) * 25, $recherche);
         $nb_page = intval(ceil($materiel->count_nb_materiels_par_recherche($recherche) / 25));

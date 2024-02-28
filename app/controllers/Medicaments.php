@@ -38,4 +38,9 @@ class Medicaments extends Controller
     {
         require_once ROOT.'app/views/medicaments.php';
     }
+
+    public function ajouter_au_panier(int $id, int $qte)
+    {
+
+    }
 }
