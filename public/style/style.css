@@ -253,11 +253,10 @@ footer
 
 .choix_de_page
 {
-    width: 15em;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr;
     margin: 2em 0;
+    align-items: center;
 }
 .choix_de_page button
 {
