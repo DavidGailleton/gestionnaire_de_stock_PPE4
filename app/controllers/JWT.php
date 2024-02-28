@@ -1,6 +1,8 @@
 <?php
 
-namespace ppe4;
+namespace ppe4\controllers;
+
+use ppe4\models\Role;
 
 class JWT
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace ppe4;
+namespace ppe4\controllers;
 
 require_once 'Login.php';
 require_once 'Controller.php';

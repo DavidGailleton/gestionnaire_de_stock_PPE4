@@ -1,6 +1,6 @@
 <?php
 require_once ROOT.'app/models/Materiel.php';
-function materiel_card(\ppe4\Materiel $materiel, int $i):string
+function materiel_card(\ppe4\models\Materiel $materiel, int $i):string
 {
     return '<article>
     <div>

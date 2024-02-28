@@ -1,8 +1,10 @@
 <?php
 
-namespace ppe4;
+namespace ppe4\controllers;
 
-use ppe4\Controller;
+use ppe4\controllers\Controller;
+use ppe4\models\Medicament;
+
 require_once 'Controller.php';
 
 class Panier extends Controller

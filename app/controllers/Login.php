@@ -1,7 +1,9 @@
 <?php
-namespace ppe4;
+namespace ppe4\controllers;
 
 use JetBrains\PhpStorm\NoReturn;
+use ppe4\models\Log_connexion;
+use ppe4\models\Utilisateur;
 
 require_once 'Controller.php';
 

@@ -8,7 +8,7 @@
 <main>
     <?php
     require_once ROOT.'app/controllers/Panier.php';
-    $panier = new \ppe4\Panier();
+    $panier = new \ppe4\controllers\Panier();
     $medicaments = $panier->selectionner_medicaments($_SESSION['panier']);
 
     include_once ROOT.'app/views/component/medic_card.php';

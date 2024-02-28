@@ -1,6 +1,6 @@
 <?php
 
-namespace ppe4;
+namespace ppe4\models;
 
 use PDO;
 
@@ -48,7 +48,7 @@ class Medicament extends Produit
         $stmt = $this->pdo->prepare($query);
         $stmt->bindValue('offset', $offset, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_CLASS, '\ppe4\Medicament');
+        return $stmt->fetchAll(PDO::FETCH_CLASS, '\ppe4\models\Medicament');
     }
 
     /**
@@ -67,7 +67,7 @@ class Medicament extends Produit
         $recherche = '%'.$recherche.'%';
         $stmt->bindParam('recherche', $recherche, PDO::PARAM_STR);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_CLASS, '\ppe4\Medicament');
+        return $stmt->fetchAll(PDO::FETCH_CLASS, '\ppe4\models\Medicament');
     }
 
     /**
@@ -82,7 +82,7 @@ class Medicament extends Produit
         $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS qte_stock, forme_med AS forme, cis_med AS cis FROM medicaments INNER JOIN produits on medicaments.id_pro = produits.id_pro WHERE produits.id_pro = :id";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['id' => $id]);
-        return $stmt->fetch(PDO::FETCH_CLASS, '\ppe4\Medicament');
+        return $stmt->fetch(PDO::FETCH_CLASS, '\ppe4\models\Medicament');
     }
 
     /**
@@ -106,7 +106,7 @@ class Medicament extends Produit
      */
     public function count_nb_medicament_par_recherche(string $recherche):int
     {
-        $query = "SELECT COUNT(*) FROM medicaments INNER JOIN ppe4.produits p on medicaments.id_pro = p.id_pro WHERE libelle_pro LIKE :recherche";
+        $query = "SELECT COUNT(*) FROM medicaments INNER JOIN ppe4\models.produits p on medicaments.id_pro = p.id_pro WHERE libelle_pro LIKE :recherche";
         $stmt = $this->pdo->prepare($query);
         $recherche = '%'.$recherche.'%';
         $stmt->bindParam('recherche', $recherche, PDO::PARAM_STR);

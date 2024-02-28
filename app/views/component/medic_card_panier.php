@@ -1,9 +1,9 @@
 <?php
 require_once ROOT.'app/models/Medicament.php';
 require_once ROOT.'app/controllers/Panier.php';
-function medic_card_panier(\ppe4\Medicament $medicament, int $i):string
+function medic_card_panier(\ppe4\models\Medicament $medicament, int $i):string
 {
-    $panier = new \ppe4\Panier();
+    $panier = new \ppe4\controllers\Panier();
 
     return '<a href="" class="medic_card">
     <article class="">

@@ -1,10 +1,10 @@
 <?php
 
-namespace ppe4;
+namespace ppe4\models;
 
 use MongoDB\BSON\Timestamp;
 use PDO;
-use ppe4\Model;
+use ppe4\models\Model;
 
 class Log_connexion extends Model
 {
@@ -45,7 +45,7 @@ class Log_connexion extends Model
         $query = "SELECT id_log_con AS id, date_log_con AS date, email_log_con AS email, echec_log_con AS echec FROM log_connexion WHERE email_log_con = :email ORDER BY date_log_con DESC";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['email' => $email]);
-        return $stmt->fetchAll(PDO::FETCH_CLASS, '\ppe4\Log_connexion');
+        return $stmt->fetchAll(PDO::FETCH_CLASS, '\ppe4\models\Log_connexion');
     }
 
     public function setLog_connexion(int $id, int $date, string $email, bool $echec):void

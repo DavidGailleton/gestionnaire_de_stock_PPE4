@@ -1,6 +1,6 @@
 <?php
 include_once ROOT.'app/controllers/JWT.php';
-$jwt = new \ppe4\JWT();
+$jwt = new \ppe4\controllers\JWT();
 $payload = $jwt->get_payload($_COOKIE['JWT']);
 $role = $payload['user_role'];
 ?>

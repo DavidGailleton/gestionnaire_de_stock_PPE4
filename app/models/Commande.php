@@ -1,6 +1,6 @@
 <?php
 
-namespace ppe4;
+namespace ppe4\models;
 
 require_once "Model.php";
 
@@ -32,7 +32,7 @@ class Commande extends Model
 
     public function getIdCom(): int
     {
-        return $this->id_com;
+        return $this->id;
     }
 
     public function getDateCommande(): \DateTime

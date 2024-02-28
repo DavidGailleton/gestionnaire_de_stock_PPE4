@@ -1,6 +1,6 @@
 <?php
 
-namespace ppe4;
+namespace ppe4\models;
 
 require_once "Model.php";
 

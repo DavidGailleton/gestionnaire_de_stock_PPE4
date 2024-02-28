@@ -2,9 +2,12 @@
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/app/controllers" isTestSource="false" packagePrefix="ppe4" />
-      <sourceFolder url="file://$MODULE_DIR$/app/models" isTestSource="false" packagePrefix="ppe4" />
-      <sourceFolder url="file://$MODULE_DIR$/app/views" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/app/controllers" isTestSource="false" packagePrefix="ppe4\controllers" />
+      <sourceFolder url="file://$MODULE_DIR$/app/models" isTestSource="false" packagePrefix="ppe4\models" />
+      <sourceFolder url="file://$MODULE_DIR$/app" isTestSource="false" packagePrefix="ppe4" />
+      <sourceFolder url="file://$MODULE_DIR$/app/includes" isTestSource="false" packagePrefix="ppe4\includes" />
+      <sourceFolder url="file://$MODULE_DIR$/app/views" isTestSource="false" packagePrefix="ppe4\views" />
+      <sourceFolder url="file://$MODULE_DIR$/app/views/component" isTestSource="false" packagePrefix="ppe4\views\components" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

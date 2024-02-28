@@ -1,6 +1,6 @@
 <?php
 
-namespace ppe4;
+namespace ppe4\models;
 
 use PDO;
 
@@ -33,7 +33,7 @@ class Materiel extends Produit
         $stmt = $this->pdo->prepare($query);
         $stmt->bindParam('no_page', $offset, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_CLASS, '\ppe4\Materiel');
+        return $stmt->fetchAll(PDO::FETCH_CLASS, '\ppe4\models\Materiel');
     }
 
     /**
@@ -52,7 +52,7 @@ class Materiel extends Produit
         $recherche = '%'.$recherche.'%';
         $stmt->bindParam('recherche', $recherche);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_CLASS, '\ppe4\Materiel');
+        return $stmt->fetchAll(PDO::FETCH_CLASS, '\ppe4\models\Materiel');
     }
 
     /**
@@ -67,7 +67,7 @@ class Materiel extends Produit
         $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS qte_stock FROM materiels INNER JOIN produits on materiels.id_pro = produits.id_pro WHERE produits.id_pro = :id";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['id' => $id]);
-        return $stmt->fetch(PDO::FETCH_CLASS, '\ppe4\Materiel');
+        return $stmt->fetch(PDO::FETCH_CLASS, '\ppe4\models\Materiel');
     }
     /**
      * Retourne le nombre de materiels contenu dans la bdd
@@ -90,7 +90,7 @@ class Materiel extends Produit
      */
     public function count_nb_materiels_par_recherche(string $recherche):int
     {
-        $query = "SELECT COUNT(*) FROM materiels INNER JOIN ppe4.produits p on materiels.id_pro = p.id_pro WHERE libelle_pro LIKE :recherche";
+        $query = "SELECT COUNT(*) FROM materiels INNER JOIN ppe4\models.produits p on materiels.id_pro = p.id_pro WHERE libelle_pro LIKE :recherche";
         $stmt = $this->pdo->prepare($query);
         $recherche = '%'.$recherche.'%';
         $stmt->bindParam('recherche', $recherche, PDO::PARAM_STR);

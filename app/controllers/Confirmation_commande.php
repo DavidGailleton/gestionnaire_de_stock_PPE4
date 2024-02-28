@@ -1,8 +1,8 @@
 <?php
 
-namespace ppe4;
+namespace ppe4\controllers;
 
-use ppe4\Controller;
+use ppe4\controllers\Controller;
 
 class Confirmation_commande extends Controller
 {

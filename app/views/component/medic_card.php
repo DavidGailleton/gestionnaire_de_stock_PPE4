@@ -1,10 +1,10 @@
 <?php
 require_once ROOT.'app/models/Medicament.php';
 require_once ROOT.'app/controllers/Medicaments.php';
-function medic_card(\ppe4\Medicament $medicament, int $i):string
+function medic_card(\ppe4\models\Medicament $medicament, int $i):string
 {
     //return ('<div>' . $medicament->getLibelle(). $medicament->getDescription(). $medicament->getQteStock() . $medicament->getForme() . $medicament->getCis() .'</div>');
-    $medicaments = new \ppe4\Medicaments();
+    $medicaments = new \ppe4\controllers\Medicaments();
 
 
     return '<div class="medic_card">
