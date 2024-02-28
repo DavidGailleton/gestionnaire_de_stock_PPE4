@@ -269,6 +269,7 @@ footer
 .choix_de_page button:hover
 {
     background-color: #f3f3f3;
+    cursor: pointer;
 }
 .choix_de_page button:first-child
 {

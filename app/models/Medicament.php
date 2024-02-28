@@ -85,7 +85,12 @@ class Medicament extends Produit
         return $stmt->fetch(PDO::FETCH_CLASS, '\ppe4\Medicament');
     }
 
-    public function count_nb_medicament()
+    /**
+     * Retourne le nombre de médicaments contenu dans la bdd
+     *
+     * @return mixed
+     */
+    public function count_nb_medicament():int
     {
         $query = "SELECT COUNT(*) FROM medicaments";
         $stmt = $this->pdo->prepare($query);
@@ -93,7 +98,13 @@ class Medicament extends Produit
         return $stmt->fetchColumn();
     }
 
-    public function count_nb_medicament_par_recherche(string $recherche)
+    /**
+     * Retourne le nombre de médicaments contenu dans la bdd en fonction d'une recherche
+     *
+     * @param string $recherche
+     * @return mixed
+     */
+    public function count_nb_medicament_par_recherche(string $recherche):int
     {
         $query = "SELECT COUNT(*) FROM medicaments INNER JOIN ppe4.produits p on medicaments.id_pro = p.id_pro WHERE libelle_pro LIKE :recherche";
         $stmt = $this->pdo->prepare($query);

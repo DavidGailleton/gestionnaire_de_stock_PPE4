@@ -69,4 +69,32 @@ class Materiel extends Produit
         $stmt->execute(['id' => $id]);
         return $stmt->fetch(PDO::FETCH_CLASS, '\ppe4\Materiel');
     }
+    /**
+     * Retourne le nombre de materiels contenu dans la bdd
+     *
+     * @return mixed
+     */
+    public function count_nb_materiels():int
+    {
+        $query = "SELECT COUNT(*) FROM materiels";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    }
+
+    /**
+     * Retourne le nombre de materiels contenu dans la bdd en fonction d'une recherche
+     *
+     * @param string $recherche
+     * @return mixed
+     */
+    public function count_nb_materiels_par_recherche(string $recherche):int
+    {
+        $query = "SELECT COUNT(*) FROM materiels INNER JOIN ppe4.produits p on materiels.id_pro = p.id_pro WHERE libelle_pro LIKE :recherche";
+        $stmt = $this->pdo->prepare($query);
+        $recherche = '%'.$recherche.'%';
+        $stmt->bindParam('recherche', $recherche, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    }
 }
