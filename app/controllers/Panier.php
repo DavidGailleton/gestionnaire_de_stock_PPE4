@@ -4,6 +4,7 @@ namespace ppe4\controllers;
 
 use JetBrains\PhpStorm\NoReturn;
 use ppe4\controllers\Controller;
+use ppe4\models\Commande;
 use ppe4\models\Medicament;
 
 require_once 'Controller.php';
@@ -78,5 +79,30 @@ class Panier extends Controller
         require_once ROOT . 'app/models/Panier.php';
         $panier = new \ppe4\models\Panier();
         return $panier->verifier_produit_dans_panier($id_produit, $id_utilisateur);
+    }
+
+    public function confirmer_la_commande(array $produits, int $id_utilisateur):void
+    {
+        require_once ROOT.'app/models/Commande.php';
+        require_once ROOT.'app/models/Ligne_commande.php';
+        $commande = new Commande();
+        $id_commande = $commande->insert_commande($id_utilisateur, true);
+
+        $ligne_commande = new \ppe4\models\Ligne_commande();
+        foreach ($produits as $produit){
+            $ligne_commande->insert_ligne_commande($id_commande, $produit['id'], $produit['qte']);
+        }
+    }
+
+    #[NoReturn] public function modifier_qte_produit_panier(int $id_produit, int $qte): void
+    {
+        require_once ROOT.'app/models/Panier.php';
+        require_once ROOT.'app/controllers/JWT.php';
+        $panier = new \ppe4\models\Panier();
+        $jwt = new \ppe4\controllers\JWT();
+
+        $payload = $jwt->get_payload($_COOKIE['JWT']);
+        $panier->modifier_qte_produit_panier($payload['user_id'], $id_produit, $qte);
+
     }
 }

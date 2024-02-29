@@ -210,9 +210,9 @@ class Panier extends Model
         return $stmt->fetch() !== false;
     }
 
-    public function enlever_qte_produit_panier(int $id_utilisateur, int $id_produit, int $qte):void
+    public function modifier_qte_produit_panier(int $id_utilisateur, int $id_produit, int $qte):void
     {
-        $query = "UPDATE panier SET qte = qte - :qte WHERE id_uti = :id_utilisateur AND id_pro = :id_produit";
+        $query = "UPDATE panier SET qte = :qte WHERE id_uti = :id_utilisateur AND id_pro = :id_produit";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindValue('id_utilisateur', $id_utilisateur, \PDO::PARAM_INT);
         $stmt->bindValue('id_produit', $id_produit, \PDO::PARAM_INT);

@@ -45,6 +45,21 @@ if (isset($_GET['action']) && $_GET['action'] != '')
             }
             header('Location: '.SERVER_URL.'index.php?page=panier');
             exit();
+        case 'confirmation_commande':
+            require_once ROOT.'app/controllers/JWT.php';
+            require_once ROOT.'app/controllers/Panier.php';
+            $panier = new \ppe4\controllers\Panier();
+            $jwt = new \ppe4\controllers\JWT();
+
+            $panier->confirmer_la_commande($_POST['produits'], $jwt->get_payload($_COOKIE['JWT'])['user_id']);
+            break;
+        case 'modifier_qte_produit_panier':
+            if (isset($_POST['id']) && isset($_POST['qte'])){
+                require_once ROOT.'app/controllers/Panier.php';
+                $panier = new \ppe4\controllers\Panier();
+                $panier->modifier_qte_produit_panier($_POST['id'], $_POST['qte']);
+            }
+            break;
         default :
             require_once (ROOT.'app/controllers/Error.php');
             $error = new \ppe4\controllers\Error();

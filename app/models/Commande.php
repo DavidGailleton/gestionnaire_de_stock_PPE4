@@ -9,6 +9,11 @@ use Cassandra\Date;
 class Commande extends Model
 {
     private \DateTime $date_commande;
+
+    /**
+     * True pour une sortie de stock, false pour une entrée
+     * @var bool
+     */
     private bool $mouvement;
     private \DateTime $date_validation;
     private Utilisateur $utilisateur;
@@ -83,5 +88,44 @@ class Commande extends Model
     public function setValidateur(Utilisateur $validateur): void
     {
         $this->validateur = $validateur;
+    }
+
+    public function select_commande_par_utilisateur(int $id_utilisateur):array
+    {
+        $query = "SELECT * FROM commande WHERE id_uti_Utilisateur = :id_utilisateur";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue('id_utilisateur', $id_utilisateur, \PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_CLASS, '\ppe4\models\Commande');
+    }
+
+    public function insert_commande(int $id_utilisateur, bool $mouvement):int
+    {
+        $query = "INSERT INTO commande (commande.date_com, commande.mouvement_com, commande.id_uti_Utilisateur, commande.statut_com) VALUES (NOW(), :mouvement, :id_utilisateur, :statut)";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue('mouvement', $mouvement, \PDO::PARAM_BOOL);
+        $stmt->bindValue('id_utilisateur', $id_utilisateur, \PDO::PARAM_INT);
+        $stmt->bindValue('statut', Statut::En_attente, \PDO::PARAM_STR);
+        $stmt->execute();
+        return $this->pdo->lastInsertId();
+    }
+
+    public function valider_commande(int $id_commande, int $id_validateur):void
+    {
+        $query = "UPDATE commande SET commande.date_val_com = NOW(), commande.id_uti_validateur = :id_validateur, commande.statut_com = :statut WHERE commande.id_com = :id_commande";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue('id_commande', $id_commande, \PDO::PARAM_INT);
+        $stmt->bindValue('id_validateur', $id_validateur, \PDO::PARAM_INT);
+        $stmt->bindValue('statut', Statut::En_cours_prep, \PDO::PARAM_STR);
+        $stmt->execute();
+    }
+
+    public function refuser_commande(int $id_commande):void
+    {
+        $query = "UPDATE commande SET commande.statut_com = :statut WHERE commande.id_com = :id_commande";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue('id_commande', $id_commande, \PDO::PARAM_INT);
+        $stmt->bindValue('statut', Statut::Refuse, \PDO::PARAM_STR);
+        $stmt->execute();
     }
 }

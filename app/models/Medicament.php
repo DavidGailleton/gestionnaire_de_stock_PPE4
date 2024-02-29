@@ -106,7 +106,7 @@ class Medicament extends Produit
      */
     public function count_nb_medicament_par_recherche(string $recherche):int
     {
-        $query = "SELECT COUNT(*) FROM medicaments INNER JOIN ppe4\models.produits p on medicaments.id_pro = p.id_pro WHERE libelle_pro LIKE :recherche";
+        $query = "SELECT COUNT(*) FROM medicaments INNER JOIN produits p on medicaments.id_pro = p.id_pro WHERE libelle_pro LIKE :recherche";
         $stmt = $this->pdo->prepare($query);
         $recherche = '%'.$recherche.'%';
         $stmt->bindParam('recherche', $recherche, PDO::PARAM_STR);
