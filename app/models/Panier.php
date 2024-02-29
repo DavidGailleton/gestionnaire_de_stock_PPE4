@@ -154,4 +154,23 @@ class Panier extends Model
         return $stmt->fetchAll(\PDO::FETCH_CLASS, '\ppe4\models\Materiel');
     }
 
+    /**
+     * Récupère la quantité d'un élément du panier de l'utilisateur dans la base de données.
+     *
+     * @param int $id_utilisateur
+     * @param int $id_produit
+     * @return int
+     */
+    public function select_qte_produits_du_panier(int $id_utilisateur, int $id_produit):int
+    {
+        $query = "SELECT qte FROM panier WHERE id_uti = :id_utilisateur AND id_pro = :id_produit";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue('id_utilisateur', $id_utilisateur, \PDO::PARAM_INT);
+        $stmt->bindValue('id_produit', $id_produit, \PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(\PDO::FETCH_COLUMN);
+    }
+
+
+
 }

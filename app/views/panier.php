@@ -1,7 +1,12 @@
 <!doctype html>
 <html lang="fr">
 <head>
-    <?php use ppe4\controllers\Panier;
+    <?php
+    require_once ROOT.'app/models/Medicament.php';
+    require_once ROOT.'app/models/Panier.php';
+    require_once ROOT.'app/controllers/JWT.php';
+    use ppe4\models\Medicament;
+    use ppe4\models\Panier;
 
     require_once ROOT."app/views/component/head.php" ?>
 </head>
@@ -9,20 +14,16 @@
 <?php include_once ROOT."app/views/component/header.php"; ?>
 <main>
     <?php
-    echo $_SESSION['panier_medicaments'][1]['id'];
+    $medicament = new Medicament();
+    $panier = new Panier();
+    $jwt = new \ppe4\controllers\JWT();
 
-    if (isset($_SESSION['panier_medicaments'])){
-        require_once ROOT.'app/models/Medicament.php';
-        require_once ROOT.'app/views/component/medic_card_panier.php';
-        $medicaments_panier = $_SESSION['panier_medicaments'];
-        $medicament = new \ppe4\models\Medicament();
-        $medicaments = [];
-        for ($i = 0; $i < count($_SESSION['panier_medicaments']); $i++){
-            $medic = $medicament->select_medicament($medicament[$i]['id']);
-
-            echo medic_card_panier($medic, $i, $medicament[$i]['qte']);
-        }
-
+    $medicaments = $panier->select_medicaments_du_panier($jwt->get_payload($_COOKIE['JWT'])[0]);
+    include_once ROOT.'app/views/component/medic_card_panier.php';
+    $i = 0;
+    foreach ($medicaments as $item){
+        echo medic_card_panier($item, $i, $panier->select_qte_produits_du_panier($_COOKIE['JWT']->get_payload($_COOKIE['JWT'])[0], $item->getId()));
+        $i++;
     }
 
     ?>

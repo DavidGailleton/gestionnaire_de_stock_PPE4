@@ -25,7 +25,7 @@ function medic_card_panier(Medicament $medicament, int $i, int $qte):string
         <p class="description">'.
         $medicament->getDescription()
         .'</p>
-        <form action="index.php?action=supprimer_du_panier_medicament" method="post" id="formulaire_'.$i.'">
+        <form action="index.php?action=supprimer_du_panier" method="post" id="formulaire_'.$i.'">
             <div class="ajout_panier">
                 <label>
                     <input type="number" min="1" value="'.$qte.'" name="qte" class="numeric_ajout_panier">

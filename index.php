@@ -2,12 +2,6 @@
 require_once 'app/includes/config.php';
 
 session_start();
-if (!isset($_SESSION['panier_medicaments'])){
-    $_SESSION['panier_medicaments'] = [];
-}
-if (!isset($_SESSION['panier_materiels'])){
-    $_SESSION['panier_materiels'] = [];
-}
 
 if (isset($_GET['action']) && $_GET['action'] != '')
 {
@@ -21,21 +15,14 @@ if (isset($_GET['action']) && $_GET['action'] != '')
                 echo 'nope';
             }
             break;
-        case 'ajouter_au_panier_medicament':
-            if (isset($_POST['id']) && isset($_POST['qte']))
-            {
-                array_push($_SESSION['panier_medicaments'], ['id' => $_POST['id'], 'qte' => $_POST['qte']]);
-                header('Location: '.SERVER_URL.'index.php?page=medicaments&no_page=1');
-                exit();
+        case 'ajouter_au_panier':
+            if (isset($_POST['id']) && isset($_POST['qte'])){
+                $panier = new \ppe4\models\Panier();
+                $jwt = new \ppe4\controllers\JWT();
+                $id_utilisateur = $jwt->get_payload($_COOKIE['JWT'])[0];
+                $panier->ajouter_au_panier($id_utilisateur, $_POST['id'], $_POST['qte']);
             }
-            break;
-        case 'ajouter_au_panier_materiel':
-            if (isset($_POST['id']) && isset($_POST['qte']))
-            {
-                array_push($_SESSION['panier_materiels'], ['id' => $_POST['id'], 'qte' => $_POST['qte']]);
-                header('Location: '.SERVER_URL.'index.php?page=materiels&no_page=1');
-                exit();
-            }
+            header('Location: '.SERVER_URL.'index.php?page=panier');
             break;
         case 'modifier_mdp' :
             if (isset($_SESSION['user_email']) && isset($_POST['ancien_mdp']) && isset($_POST['nouveau_mdp']))
@@ -51,12 +38,12 @@ if (isset($_GET['action']) && $_GET['action'] != '')
         case 'recherche_materiel':
             header('Location: '.SERVER_URL.'index.php?page=materiels&recherche='.$_POST['recherche'].'&no_page=1');
             exit();
-        case 'supprimer_du_panier_medicament':
-            if (isset($_POST['id']))
-            {
-                array_splice($_SESSION['panier_materiels'], array_search(["id" => $_POST['id']], $_SESSION['panier_materiels']));
-                header('Location: '.SERVER_URL.'index.php?page=materiels&no_page=1');
-                exit();
+        case 'supprimer_du_panier':
+            if (isset($_POST['id'])){
+                $panier = new \ppe4\models\Panier();
+                $jwt = new \ppe4\controllers\JWT();
+                $id_utilisateur = $jwt->get_payload($_COOKIE['JWT'])[0];
+                $panier->supprimer_du_panier($id_utilisateur, $_POST['id']);
             }
             break;
         default :

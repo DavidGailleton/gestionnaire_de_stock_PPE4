@@ -3,7 +3,6 @@ require_once ROOT.'app/models/Medicament.php';
 require_once ROOT.'app/controllers/Medicaments.php';
 function medic_card(\ppe4\models\Medicament $medicament, int $i):string
 {
-    //return ('<div>' . $medicament->getLibelle(). $medicament->getDescription(). $medicament->getQteStock() . $medicament->getForme() . $medicament->getCis() .'</div>');
     $medicaments = new \ppe4\controllers\Medicaments();
 
 
@@ -23,7 +22,7 @@ function medic_card(\ppe4\models\Medicament $medicament, int $i):string
         <p class="description">'.
             $medicament->getDescription()
         .'</p>
-        <form action="index.php?action=ajouter_au_panier_medicament" method="post" id="formulaire_'.$i.'">
+        <form action="index.php?action=ajouter_au_panier" method="post" id="formulaire_'.$i.'">
             <div class="ajout_panier">
                 <label>
                     <input type="number" min="1" value="1" name="qte" class="numeric_ajout_panier">

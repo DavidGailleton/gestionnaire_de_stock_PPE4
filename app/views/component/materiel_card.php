@@ -12,7 +12,7 @@ function materiel_card(\ppe4\models\Materiel $materiel, int $i):string
     <div>
         <p>'.$materiel->getDescription().'</p>
 
-        <form action="'.SERVER_URL."index.php?action=ajouter_au_panier_materiel".'" method="post" id="formulaire_'.$i.'">
+        <form action="'.SERVER_URL."index.php?action=ajouter_au_panier".'" method="post" id="formulaire_'.$i.'">
             <div>
                 <label>
                     <input type="number" min="1" value="1" name="qte">
