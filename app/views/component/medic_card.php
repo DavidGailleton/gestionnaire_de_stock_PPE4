@@ -6,12 +6,11 @@ function medic_card(\ppe4\models\Medicament $medicament, int $i):string
     $medicaments = new \ppe4\controllers\Medicaments();
 
 
-    return '<div class="medic_card">
-    <article class="">
+    return '<div class="product_card">
+    <article class="medic_card">
     <div class="haut">
         <div>
             <h3>' . $medicament->getLibelle().'</h3>
-            <br>
             <h4>  - CIS : '. $medicament->getCis() .'</h4>
         </div>
         <div class="status">

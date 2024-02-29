@@ -149,6 +149,8 @@ class Panier extends Model
      */
     public function select_materiels_du_panier(int $id_utilisateur):array
     {
+        require_once 'Materiel.php';
+
         $query = "SELECT materiels.id_pro AS id, produits.libelle_pro AS libelle, produits.description_pro AS description, produits.qte_stock_pro AS qte_stock FROM panier INNER JOIN materiels on panier.id_pro = materiels.id_pro INNER JOIN ppe4.produits on panier.id_pro = produits.id_pro WHERE id_uti = :id_utilisateur";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindValue('id_utilisateur', $id_utilisateur, \PDO::PARAM_INT);
@@ -173,6 +175,48 @@ class Panier extends Model
         return $stmt->fetch(\PDO::FETCH_COLUMN);
     }
 
+    /**
+     * Ajoute de la quantité à un produit dans le panier de l'utilisateur dans la base de données.
+     *
+     * @param int $id_utilisateur
+     * @param int $id_produit
+     * @param int $qte
+     * @return void
+     */
+    public function ajouter_qte_produit_panier(int $id_utilisateur, int $id_produit, int $qte):void
+    {
+        $query = "UPDATE panier SET qte = qte + :qte WHERE id_uti = :id_utilisateur AND id_pro = :id_produit";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue('id_utilisateur', $id_utilisateur, \PDO::PARAM_INT);
+        $stmt->bindValue('id_produit', $id_produit, \PDO::PARAM_INT);
+        $stmt->bindValue('qte', $qte, \PDO::PARAM_INT);
+        $stmt->execute();
+    }
 
+    /**
+     * Vérifie si un produit est déjà dans le panier de l'utilisateur dans la base de données.
+     *
+     * @param int $id_produit
+     * @param int $id_utilisateur
+     * @return bool
+     */
+    public function verifier_produit_dans_panier(int $id_produit, int $id_utilisateur):bool
+    {
+        $query = "SELECT * FROM panier WHERE id_uti = :id_utilisateur AND id_pro = :id_produit";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue('id_utilisateur', $id_utilisateur, \PDO::PARAM_INT);
+        $stmt->bindValue('id_produit', $id_produit, \PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch() !== false;
+    }
 
+    public function enlever_qte_produit_panier(int $id_utilisateur, int $id_produit, int $qte):void
+    {
+        $query = "UPDATE panier SET qte = qte - :qte WHERE id_uti = :id_utilisateur AND id_pro = :id_produit";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue('id_utilisateur', $id_utilisateur, \PDO::PARAM_INT);
+        $stmt->bindValue('id_produit', $id_produit, \PDO::PARAM_INT);
+        $stmt->bindValue('qte', $qte, \PDO::PARAM_INT);
+        $stmt->execute();
+    }
 }

@@ -17,15 +17,9 @@ if (isset($_GET['action']) && $_GET['action'] != '')
             break;
         case 'ajouter_au_panier':
             if (isset($_POST['id']) && isset($_POST['qte'])){
-                require_once ROOT.'app/models/Panier.php';
-                require_once ROOT.'app/controllers/JWT.php';
-                $panier = new \ppe4\models\Panier();
-                $jwt = new \ppe4\controllers\JWT();
-
-                $payload = $jwt->get_payload($_COOKIE['JWT']);
-                $panier->ajouter_au_panier($payload['user_id'], $_POST['id'], $_POST['qte']);
-                header('Location: '.SERVER_URL.'index.php?page=panier');
-                exit();
+                require_once ROOT.'app/controllers/Panier.php';
+                $panier = new \ppe4\controllers\Panier();
+                $panier->ajouter_au_panier($_POST['id'], $_POST['qte']);
             }
             header('Location: '.SERVER_URL.'index.php?page=error');
             exit();
@@ -45,13 +39,9 @@ if (isset($_GET['action']) && $_GET['action'] != '')
             exit();
         case 'supprimer_du_panier':
             if (isset($_POST['id'])){
-                require_once ROOT.'app/models/Panier.php';
-                require_once ROOT.'app/controllers/JWT.php';
-                $panier = new \ppe4\models\Panier();
-                $jwt = new \ppe4\controllers\JWT();
-
-                $payload = $jwt->get_payload($_COOKIE['JWT']);
-                $panier->supprimer_du_panier($payload['user_id'], $_POST['id']);
+                require_once ROOT.'app/controllers/Panier.php';
+                $panier = new \ppe4\controllers\Panier();
+                $panier->supprimer_du_panier($_POST['id']);
             }
             header('Location: '.SERVER_URL.'index.php?page=panier');
             exit();

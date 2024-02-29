@@ -11,8 +11,8 @@ function medic_card_panier(Medicament $medicament, int $i, int $qte):string
     $medicaments = new \ppe4\controllers\Medicaments();
 
 
-    return '<div class="medic_card">
-    <article class="">
+    return '<div class="product_card">
+    <article class="medic_card">
     <div class="haut">
         <div>
             <h3>' . $medicament->getLibelle().'</h3>

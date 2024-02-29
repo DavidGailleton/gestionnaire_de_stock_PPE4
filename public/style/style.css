@@ -131,29 +131,29 @@ footer
     font-size: 1em;
 }
 
-.medic_card
+.product_card
 {
     margin: 1em 0;
     border: 1px black solid;
     border-radius: 5px;
     color: black;
 }
-.medic_card:link
+.product_card:link
 {
     text-decoration: none;
     text-decoration-color: black;
 }
-.medic_card:visited
+.product_card:visited
 {
     text-decoration: none;
     text-decoration-color: black;
 }
-.medic_card:active
+.product_card:active
 {
     text-decoration: none;
     text-decoration-color: black;
 }
-.medic_card article
+.product_card article
 {
     display: flex;
     flex-direction: column;
@@ -163,7 +163,7 @@ footer
 
 }
 
-.medic_card article .haut
+.product_card .materiel_card .haut
 {
     display: flex;
     flex-wrap: wrap;
@@ -171,17 +171,22 @@ footer
     justify-content: space-between;
     margin-bottom: 1em;
 }
-
-.medic_card article .bas
+.product_card .medic_card .haut:first-child
 {
     display: grid;
-    grid-template-columns: 3fr 1fr 1fr;
+    grid-template-columns: 80% 20%;
 }
-.medic_card article .bas .description
+
+.product_card article .bas
+{
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+}
+.product_card article .bas .description
 {
     grid-column-start: 1;
 }
-.medic_card article .bas form
+.product_card article .bas form
 {
     grid-column-start: -1;
 }
