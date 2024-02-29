@@ -15,7 +15,15 @@ class Nouveau_mdp
         require_once ROOT.'app/views/nouveau_mdp.php';
     }
 
-    public function modifier_mdp(string $email,string $ancien_mdp, string $nouveau_mdp):void
+    /**
+     * Modifie le mot de passe de l'utilisateur dans la vue nouveau_mdp
+     *
+     * @param string $email
+     * @param string $ancien_mdp
+     * @param string $nouveau_mdp
+     * @return void
+     */
+    public function modifier_mdp(string $email, string $ancien_mdp, string $nouveau_mdp):void
     {
         if ($ancien_mdp == $nouveau_mdp){
             require_once ROOT.'app/views/nouveau_mdp.php';
@@ -49,6 +57,14 @@ class Nouveau_mdp
         return password_verify($mdp, $import_password);
     }
 
+    /**
+     * Vérifie si le mot de passe mis en paramètre est valide.
+     * Un mot de passe est valide s'il contient au moins 8 caractères, 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial.
+     * Retourne true si le mot de passe est valide, false sinon.
+     *
+     * @param $mdp
+     * @return bool
+     */
     public function mot_de_passe_est_valide($mdp): bool
     {
         if (
