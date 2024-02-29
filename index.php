@@ -51,7 +51,9 @@ if (isset($_GET['action']) && $_GET['action'] != '')
             $panier = new \ppe4\controllers\Panier();
             $jwt = new \ppe4\controllers\JWT();
 
-            $panier->confirmer_la_commande($_POST['produits'], $jwt->get_payload($_COOKIE['JWT'])['user_id']);
+            $produits = json_decode($_POST['produits'], true);
+
+            $panier->confirmer_la_commande($produits, $jwt->get_payload($_COOKIE['JWT'])['user_id']);
             break;
         case 'modifier_qte_produit_panier':
             if (isset($_POST['id']) && isset($_POST['qte'])){

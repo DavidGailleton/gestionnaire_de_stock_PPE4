@@ -12,7 +12,27 @@
 <html lang="fr">
 <head>
     <?php require_once ROOT."app/views/component/head.php" ?>
-
+    <script>
+        function confirmer_commande() {
+            let produits = document.querySelectorAll('.product_card');
+            let tab_produits = [];
+            for (let i = 0; i < produits.length; i++){
+                let id = produits[i].querySelector('input[name="id"]').value;
+                let qte = produits[i].querySelector('input[name="qte"]').value;
+                tab_produits.push({id: id, qte: qte});
+            }
+            let form = document.createElement('form');
+            form.method = 'post';
+            form.action = 'index.php?action=confirmation_commande';
+            let input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'produits';
+            input.value = JSON.stringify(tab_produits);
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
 </head>
 <body>
 <?php include_once ROOT."app/views/component/header.php"; ?>
@@ -49,9 +69,7 @@
 
         echo '</div>';
         echo '<div class="confirmation_commande">
-                <form action="'.SERVER_URL.'index.php?action=confirmation_commande" method="post">
-                    <input type="submit" value="Confirmer la commande">
-                </form>
+                <input type="button" value="Confirmer la commande" onclick="confirmer_commande()">
               </div>
 
     ';

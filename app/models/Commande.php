@@ -90,6 +90,13 @@ class Commande extends Model
         $this->validateur = $validateur;
     }
 
+    /**
+     * Extrait les commandes de la base de données.
+     * Retourne un tableau d'objet de la classe Commande
+     *
+     * @param int $id_utilisateur
+     * @return array
+     */
     public function select_commande_par_utilisateur(int $id_utilisateur):array
     {
         $query = "SELECT * FROM commande WHERE id_uti_Utilisateur = :id_utilisateur";
@@ -99,19 +106,38 @@ class Commande extends Model
         return $stmt->fetchAll(\PDO::FETCH_CLASS, '\ppe4\models\Commande');
     }
 
+    /**
+     * Ajoute une commande à la base de données.
+     * Retourne l'id de la commande ajoutée
+     *
+     * @param int $id_utilisateur
+     * @param bool $mouvement
+     * @return int
+     */
     public function insert_commande(int $id_utilisateur, bool $mouvement):int
     {
+        require_once "Statut.php";
+
         $query = "INSERT INTO commande (commande.date_com, commande.mouvement_com, commande.id_uti_Utilisateur, commande.statut_com) VALUES (NOW(), :mouvement, :id_utilisateur, :statut)";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindValue('mouvement', $mouvement, \PDO::PARAM_BOOL);
         $stmt->bindValue('id_utilisateur', $id_utilisateur, \PDO::PARAM_INT);
-        $stmt->bindValue('statut', Statut::En_attente, \PDO::PARAM_STR);
+        $stmt->bindValue('statut', Statut::En_attente->value, \PDO::PARAM_STR);
         $stmt->execute();
         return $this->pdo->lastInsertId();
     }
 
+    /**
+     * Valide une commande
+     *
+     * @param int $id_commande
+     * @param int $id_validateur
+     * @return void
+     */
     public function valider_commande(int $id_commande, int $id_validateur):void
     {
+        require_once "Statut.php";
+
         $query = "UPDATE commande SET commande.date_val_com = NOW(), commande.id_uti_validateur = :id_validateur, commande.statut_com = :statut WHERE commande.id_com = :id_commande";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindValue('id_commande', $id_commande, \PDO::PARAM_INT);
@@ -120,6 +146,12 @@ class Commande extends Model
         $stmt->execute();
     }
 
+    /**
+     * Refuse une commande
+     *
+     * @param int $id_commande
+     * @return void
+     */
     public function refuser_commande(int $id_commande):void
     {
         $query = "UPDATE commande SET commande.statut_com = :statut WHERE commande.id_com = :id_commande";
