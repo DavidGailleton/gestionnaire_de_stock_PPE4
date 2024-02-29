@@ -17,13 +17,18 @@ if (isset($_GET['action']) && $_GET['action'] != '')
             break;
         case 'ajouter_au_panier':
             if (isset($_POST['id']) && isset($_POST['qte'])){
+                require_once ROOT.'app/models/Panier.php';
+                require_once ROOT.'app/controllers/JWT.php';
                 $panier = new \ppe4\models\Panier();
                 $jwt = new \ppe4\controllers\JWT();
-                $id_utilisateur = $jwt->get_payload($_COOKIE['JWT'])[0];
-                $panier->ajouter_au_panier($id_utilisateur, $_POST['id'], $_POST['qte']);
+
+                $payload = $jwt->get_payload($_COOKIE['JWT']);
+                $panier->ajouter_au_panier($payload['user_id'], $_POST['id'], $_POST['qte']);
+                header('Location: '.SERVER_URL.'index.php?page=panier');
+                exit();
             }
-            header('Location: '.SERVER_URL.'index.php?page=panier');
-            break;
+            header('Location: '.SERVER_URL.'index.php?page=error');
+            exit();
         case 'modifier_mdp' :
             if (isset($_SESSION['user_email']) && isset($_POST['ancien_mdp']) && isset($_POST['nouveau_mdp']))
             {
@@ -40,12 +45,16 @@ if (isset($_GET['action']) && $_GET['action'] != '')
             exit();
         case 'supprimer_du_panier':
             if (isset($_POST['id'])){
+                require_once ROOT.'app/models/Panier.php';
+                require_once ROOT.'app/controllers/JWT.php';
                 $panier = new \ppe4\models\Panier();
                 $jwt = new \ppe4\controllers\JWT();
-                $id_utilisateur = $jwt->get_payload($_COOKIE['JWT'])[0];
-                $panier->supprimer_du_panier($id_utilisateur, $_POST['id']);
+
+                $payload = $jwt->get_payload($_COOKIE['JWT']);
+                $panier->supprimer_du_panier($payload['user_id'], $_POST['id']);
             }
-            break;
+            header('Location: '.SERVER_URL.'index.php?page=panier');
+            exit();
         default :
             require_once (ROOT.'app/controllers/Error.php');
             $error = new \ppe4\controllers\Error();

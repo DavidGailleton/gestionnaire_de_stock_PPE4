@@ -2,11 +2,13 @@
 <html lang="fr">
 <head>
     <?php
+
+    use ppe4\models\Medicament;
+    use ppe4\models\Panier;
+
     require_once ROOT.'app/models/Medicament.php';
     require_once ROOT.'app/models/Panier.php';
     require_once ROOT.'app/controllers/JWT.php';
-    use ppe4\models\Medicament;
-    use ppe4\models\Panier;
 
     require_once ROOT."app/views/component/head.php" ?>
 </head>
@@ -18,12 +20,20 @@
     $panier = new Panier();
     $jwt = new \ppe4\controllers\JWT();
 
-    $medicaments = $panier->select_medicaments_du_panier($jwt->get_payload($_COOKIE['JWT'])[0]);
+    $payload = $jwt->get_payload($_COOKIE['JWT']);
+
+    $medicaments = $panier->select_medicaments_du_panier($payload['user_id']);
     include_once ROOT.'app/views/component/medic_card_panier.php';
     $i = 0;
-    foreach ($medicaments as $item){
-        echo medic_card_panier($item, $i, $panier->select_qte_produits_du_panier($_COOKIE['JWT']->get_payload($_COOKIE['JWT'])[0], $item->getId()));
-        $i++;
+
+    if (empty($medicaments)){
+        echo '<h2>Votre panier est vide</h2>';
+    }else{
+
+        foreach ($medicaments as $item){
+            echo medic_card_panier($item, $i, $panier->select_qte_produits_du_panier($payload['user_id'], $item->getId()));
+            $i++;
+        }
     }
 
     ?>

@@ -2,6 +2,8 @@
 
 namespace ppe4\models;
 
+require_once 'Model.php';
+
 use ppe4\models\Model;
 use ppe4\models\Medicament;
 use ppe4\models\Materiel;

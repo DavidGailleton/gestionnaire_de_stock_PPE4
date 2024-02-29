@@ -4,6 +4,8 @@ use ppe4\models\Medicament;
 
 require_once ROOT.'app/models/Medicament.php';
 require_once ROOT.'app/controllers/Panier.php';
+require_once ROOT.'app/controllers/Medicaments.php';
+
 function medic_card_panier(Medicament $medicament, int $i, int $qte):string
 {
     $medicaments = new \ppe4\controllers\Medicaments();
@@ -29,23 +31,13 @@ function medic_card_panier(Medicament $medicament, int $i, int $qte):string
             <div class="ajout_panier">
                 <label>
                     <input type="number" min="1" value="'.$qte.'" name="qte" class="numeric_ajout_panier">
+                    <input type="hidden" name="id" value="'.$medicament->getId().'">
                 </label>
                 <input type="submit" value="Supprimer" class="bouton_ajout_panier">
             </div>
         </form>
     </div>
 </article>
-<script >
-    window.onload = function() {
-      document.getElementById("formulaire_'.$i.'").addEventListener("submit", function(){
-          let champCache = document.createElement("input")
-          champCache.type = "hidden";
-          champCache.name = "id";
-          champCache.value = '.$medicament->getId().'
-          this.appendChild(champCache)
-      });
-    }
-</script>
 </div>
     ';
 }

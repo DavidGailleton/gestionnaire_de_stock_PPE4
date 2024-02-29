@@ -26,23 +26,13 @@ function medic_card(\ppe4\models\Medicament $medicament, int $i):string
             <div class="ajout_panier">
                 <label>
                     <input type="number" min="1" value="1" name="qte" class="numeric_ajout_panier">
+                    <input type="hidden" name="id" value="'.$medicament->getId().'">
                 </label>
                 <input type="submit" value="Ajouter au panier" class="bouton_ajout_panier">
             </div>
         </form>
     </div>
 </article>
-<script >
-    window.onload = function() {
-      document.getElementById("formulaire_'.$i.'").addEventListener("submit", function(){
-          let champCache = document.createElement("input")
-          champCache.type = "hidden";
-          champCache.name = "id";
-          champCache.value = '.$medicament->getId().'
-          this.appendChild(champCache)
-      });
-    }
-</script>
 </div>
     ';
 }
