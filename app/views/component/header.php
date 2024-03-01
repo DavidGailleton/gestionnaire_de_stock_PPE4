@@ -8,7 +8,7 @@ $role = $payload['user_role'];
     <div class="logo">
         <img src='public/img/gsb_logo.png' alt='Logo de GSB' id='gsb_logo'>
     </div>
-    <ul>
+    <ul class="menu_principal">
         <li><a href="index.php?page=dashboard">Accueil</a></li>
 
 
@@ -28,12 +28,16 @@ $role = $payload['user_role'];
             <li><a href="index.php?page=gestion_utilisateur">Gestion des utilisateurs</a></li>
         <?php endif; ?>
     </ul>
-    <div>
+    <div class="end">
         <a href=<?php echo SERVER_URL.'index.php?page=panier' ?>>
             <img src='public/img/panier.svg' alt='panier' style="width: 2em">
         </a>
-        <a href=<?php echo SERVER_URL.'index.php?page=profile' ?>>
-            <img src='' alt='profile'>
-        </a>
+        <div class="profile">
+            <img src='public/img/profile.svg' alt='profile' style="width: 2em">
+            <ul class="menu_deroulant">
+                <li><a href="">Vos commandes</a></li>
+                <li><a href="">Deconnexion</a></li>
+            </ul>
+        </div>
     </div>
 </header>
