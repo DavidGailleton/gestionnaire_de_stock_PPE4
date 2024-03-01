@@ -17,30 +17,43 @@ class Medicaments extends Controller
         require_once ROOT.'app/views/medicaments.php';
     }
 
-
     /**
-     * Ajoute un médicament au panier
+     * Affiche la vue d'un médicament
      *
-     * @param int $id
      * @return void
      */
-    public function ajouter_au_panier_medicament(int $id, int $qte):void
+    public function show():void
     {
-        /*require_once ROOT.'app/models/Medicament.php';
-        $medicament = new Medicament();
-        $medicament_a_ajouter = {
-            id => $id;
-    };
-        $_SESSION['panier']->array_push();*/
+        require_once ROOT.'app/views/medicaments_vue.php';
     }
 
-    public function rechercher(string $recherche):void
+    /**
+     * Affiche les cartes des médicaments.
+     * Retourne le nombre de page.
+     *
+     * @param int $no_page
+     * @param string|null $recherche
+     * @return int
+     */
+    public function show_medicaments_card(int $no_page, ?string $recherche):int
     {
-        require_once ROOT.'app/views/medicaments.php';
-    }
+        require_once ROOT.'app/models/Medicament.php';
+        $medicament = new \ppe4\models\Medicament();
+        if (isset($recherche)){
+            $medicaments = $medicament->select_medicaments_par_recherche(($no_page - 1) * 25, $recherche);
+            $nb_page = intval(ceil($medicament->count_nb_medicament_par_recherche($recherche) / 25));
+        } else {
+            $medicaments = $medicament->select_medicaments(($no_page - 1) * 25);
+            $nb_page = intval(ceil($medicament->count_nb_medicament() / 25));
+        }
 
-    public function ajouter_au_panier(int $id, int $qte)
-    {
+        include_once ROOT.'app/views/component/medic_card.php';
+        $i = 0;
+        foreach ($medicaments as $item){
+            echo medic_card($item, $i);
+            $i++;
+        }
 
+        return $nb_page;
     }
 }

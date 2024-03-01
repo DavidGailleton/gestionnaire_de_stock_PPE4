@@ -1,6 +1,5 @@
 <?php
-
-use ppe4\models\Materiel;
+require_once ROOT.'app/controllers/Materiels.php';
 
 $no_page = $_GET['no_page'];
 $nb_page = 0;
@@ -23,27 +22,17 @@ if (isset($_GET['recherche'])){
                 <input type="text" name="recherche" class="searchTextBox" placeholder="Recherche" <?php if (isset($_GET['recherche'])) echo 'value="'.$_GET['recherche'].'"' ?>>
             </label>
             <button type="submit" class="searchButton">
-                <img src="public/img/loupe.svg" style="width: 3em">
+                <img src="public/img/loupe.svg" alt="Recherche" style="width: 3em">
             </button>
         </form>
     </div>
 
     <?php
-    require_once ROOT.'app/models/Materiel.php';
-    $materiel = new Materiel();
+    $materiels = new \ppe4\controllers\Materiels();
     if (isset($recherche)){
-        $materiels = $materiel->select_materiels_par_recherche(($no_page - 1) * 25, $recherche);
-        $nb_page = intval(ceil($materiel->count_nb_materiels_par_recherche($recherche) / 25));
+        $nb_page = $materiels->show_materiels_card($no_page, $recherche);
     } else {
-        $materiels = $materiel->select_materiels(($no_page - 1) * 25);
-        $nb_page = intval(ceil($materiel->count_nb_materiels() / 25));
-    }
-
-    include_once ROOT.'app/views/component/materiel_card.php';
-    $i =0;
-    foreach ($materiels as $item){
-        echo materiel_card($item, $i);
-        $i++;
+        $nb_page = $materiels->show_materiels_card($no_page, null);
     }
     ?>
 

@@ -18,6 +18,8 @@ class Panier extends Model
     {
         $this->table = "panier";
         $this->get_connection();
+        require_once 'Medicament.php';
+        require_once 'Materiel.php';
     }
 
     public function set_panier(int $id_utilisateur, int $id_produit, int $qte): void

@@ -92,6 +92,10 @@ class Panier extends Controller
         foreach ($produits as $produit){
             $ligne_commande->insert_ligne_commande($id_commande, $produit['id'], $produit['qte']);
         }
+
+        require_once ROOT.'app/models/Panier.php';
+        $panier = new \ppe4\models\Panier();
+        $panier->vider_le_panier($id_utilisateur);
     }
 
     #[NoReturn] public function modifier_qte_produit_panier(int $id_produit, int $qte): void
@@ -104,5 +108,37 @@ class Panier extends Controller
         $payload = $jwt->get_payload($_COOKIE['JWT']);
         $panier->modifier_qte_produit_panier($payload['user_id'], $id_produit, $qte);
 
+    }
+
+    public function afficher_produits_panier(int $id_utilisateur):void
+    {
+        require_once ROOT.'app/models/Panier.php';
+        $panier = new \ppe4\models\Panier();
+
+        $medicaments = $panier->select_medicaments_du_panier($id_utilisateur);
+        $materiels = $panier->select_materiels_du_panier($id_utilisateur);
+
+        if (empty($medicaments) && empty($materiels)){
+            echo '<h2>Votre panier est vide</h2>';
+        } else {
+            echo '<div class="element_panier">';
+
+            require_once ROOT.'app/views/component/medic_card_panier.php';
+            require_once ROOT.'app/views/component/materiel_card_panier.php';
+            $i = 0;
+            foreach ($medicaments as $item){
+                echo medic_card_panier($item, $i, $panier->select_qte_produits_du_panier($id_utilisateur, $item->getId()));
+                $i++;
+            }
+            foreach ($materiels as $item){
+                echo materiel_card_panier($item, $i, $panier->select_qte_produits_du_panier($id_utilisateur, $item->getId()));
+                $i++;
+            }
+
+            echo '</div>';
+            echo '<div class="confirmation_commande">
+                <input type="button" value="Confirmer la commande" onclick="confirmer_commande()">
+              </div>';
+        }
     }
 }

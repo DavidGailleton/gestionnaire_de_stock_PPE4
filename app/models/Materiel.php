@@ -90,7 +90,7 @@ class Materiel extends Produit
      */
     public function count_nb_materiels_par_recherche(string $recherche):int
     {
-        $query = "SELECT COUNT(*) FROM materiels INNER JOIN ppe4\models.produits p on materiels.id_pro = p.id_pro WHERE libelle_pro LIKE :recherche";
+        $query = "SELECT COUNT(*) FROM materiels INNER JOIN produits p on materiels.id_pro = p.id_pro WHERE libelle_pro LIKE :recherche";
         $stmt = $this->pdo->prepare($query);
         $recherche = '%'.$recherche.'%';
         $stmt->bindParam('recherche', $recherche, PDO::PARAM_STR);
