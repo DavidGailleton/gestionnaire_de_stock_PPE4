@@ -12,7 +12,7 @@ class Gestion_utilisateurs extends Controller
      *
      * @return void
      */
-    public function index():void
+    public function afficher():void
     {
         require_once ROOT.'app/views/gestion_utilisateurs.php';
     }

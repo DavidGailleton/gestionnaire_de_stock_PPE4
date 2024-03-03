@@ -8,7 +8,7 @@ use ppe4\models\Materiel;
 class Page_produit extends Controller
 {
 
-    public function index():void
+    public function afficher():void
     {
         require_once ROOT.'app/views/page_produit.php';
     }

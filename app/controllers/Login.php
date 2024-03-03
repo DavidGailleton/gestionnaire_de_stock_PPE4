@@ -29,7 +29,7 @@ class Login
      *
      * @return void
      */
-    public function index():void
+    public function afficher():void
     {
         require_once (ROOT."./app/views/login.php");
     }
@@ -39,36 +39,36 @@ class Login
      * Si valide, ajoute le token JWT dans les cookies de l'utilisateur puis le redirige sur le dashboard
      *
      * @param string $email
-     * @param string $mdp
+     * @param string $mot_de_passe
      * @return void
      */
-    #[NoReturn] public function connect(string $email, string $mdp):void
+    #[NoReturn] public function connecter(string $email, string $mot_de_passe):void
     {
         require_once ROOT.'app/models/Log_connexion.php';
         $log_connexion = new Log_connexion();
         $utilisateur = new Utilisateur();
         $jwt = new JWT();
 
-        $user = $utilisateur->select_utilisateur($email);
+        $utilisateur_a_connecter = $utilisateur->selectionner_utilisateur_par_email($email);
 
-        if ($user && $this->compte_non_bloque($user) && $this->verifier_mot_de_passe($email, $mdp)){
-            if ($this->mdp_a_changer($email)){
+        if ($utilisateur_a_connecter && $this->compte_non_bloque($utilisateur_a_connecter) && $this->verifier_mot_de_passe($email, $mot_de_passe)){
+            if ($this->mot_de_passe_a_changer($email)){
                 $_SESSION['user_email'] = $email;
                 header('Location: '.SERVER_URL.'index.php?page=nouveau_mdp');
                 exit();
             }
 
-            $id = $user->getId();
-            $role = $user->getRole();
+            $id = $utilisateur_a_connecter->getId();
+            $role = $utilisateur_a_connecter->getRole();
 
-            $payload = $jwt->generate_payload($id, $email, $role);
-            setcookie('JWT', $jwt->generate($payload), time() + 14400);
+            $payload = $jwt->generer_payload($id, $email, $role);
+            setcookie('JWT', $jwt->generer_jwt($payload), time() + 14400);
 
-            $log_connexion->insert_log_connexion($email, false);
+            $log_connexion->inserer_log_connexion($email, false);
 
             header('Location: '.SERVER_URL.'index.php?page=dashboard');
         } else {
-            $log_connexion->insert_log_connexion($email, true);
+            $log_connexion->inserer_log_connexion($email, true);
             header('Location: '.SERVER_URL.'index.php?page=login');
         }
         exit();
@@ -84,12 +84,12 @@ class Login
         $jwt = new JWT();
         $token = $_COOKIE['JWT'];
 
-        if ($jwt->est_valide($token) && !$jwt->est_expire($token) && $jwt->check($token)) {
+        if ($jwt->est_valide($token) && !$jwt->est_expire($token) && $jwt->verifier_validite($token)) {
             header('Location: '.SERVER_URL.'index.php?page=dashboard');
             exit();
         }
 
-        $this->index();
+        $this->afficher();
     }
 
 
@@ -98,16 +98,16 @@ class Login
      * Vérifie si le mot de passe mis en paramètre est le bon mot de passe, retourne true si c'est le cas, false sinon
      *
      * @param string $email
-     * @param string $mdp
+     * @param string $mot_de_passe
      * @return bool
      */
-    public function verifier_mot_de_passe(string $email, string $mdp):bool
+    public function verifier_mot_de_passe(string $email, string $mot_de_passe):bool
     {
         $utilisateur = new Utilisateur();
 
-        $import_password = $utilisateur->select_mot_de_passe($email);
+        $mot_de_passe_importe = $utilisateur->selectionner_mot_de_passe($email);
 
-        return password_verify($mdp, $import_password);
+        return password_verify($mot_de_passe, $mot_de_passe_importe);
     }
 
     /**
@@ -116,12 +116,12 @@ class Login
      * @param string $email
      * @return int
      */
-    public function nb_echec_connexion_d_affile(string $email):int
+    public function nombre_echec_connexion_d_affile(string $email):int
     {
         require_once ROOT.'app/models/Log_connexion.php';
 
         $log_connexion = new Log_connexion();
-        $logs = $log_connexion->select_logs_utilisateur($email);
+        $logs = $log_connexion->selectionner_logs_utilisateur($email);
 
         $i = 0;
         foreach ($logs as $log){
@@ -141,10 +141,10 @@ class Login
      */
     public function compte_non_bloque(Utilisateur $utilisateur):bool
     {
-        if (!$utilisateur->select_statut_activation_utilisateur($utilisateur->getId())){
-            $nb_echec_connexion = $this->nb_echec_connexion_d_affile($utilisateur->getEmail());
+        if (!$utilisateur->selectionner_statut_activation_utilisateur($utilisateur->getId())){
+            $nombre_echec_connexion = $this->nombre_echec_connexion_d_affile($utilisateur->getEmail());
 
-            if ($nb_echec_connexion == 4){
+            if ($nombre_echec_connexion >= 4){
                 $utilisateur->desactiver_utilisateur($utilisateur->getId());
                 return false;
             }
@@ -159,9 +159,9 @@ class Login
      * @param string $email
      * @return bool
      */
-    public function mdp_a_changer(string $email):bool
+    public function mot_de_passe_a_changer(string $email):bool
     {
         $utilisateur = new Utilisateur();
-        return $utilisateur->select_mdp_a_changer($email);
+        return $utilisateur->selectionner_mdp_a_changer($email);
     }
 }

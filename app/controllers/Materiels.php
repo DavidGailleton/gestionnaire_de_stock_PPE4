@@ -19,22 +19,22 @@ class Materiels extends Controller
 
     /**
      * Affiche les cartes des materiels.
-     * Retourne le nombre de page.
+     * Retourne le nombre de pages.
      *
-     * @param int $no_page
+     * @param int $numero_page
      * @param string|null $recherche
      * @return int
      */
-    public function show_materiels_card(int $no_page, ?string $recherche):int
+    public function afficher_materiels_card(int $numero_page, ?string $recherche):int
     {
         require_once ROOT.'app/models/Materiel.php';
         $materiel = new Materiel();
         if (isset($recherche)){
-            $materiels = $materiel->select_materiels_par_recherche($recherche, ($no_page - 1) * 25);
-            $nb_page = intval(ceil($materiel->count_nb_materiels_par_recherche($recherche) / 25));
+            $materiels = $materiel->selectionner_materiels_par_recherche($recherche, ($numero_page - 1) * 25);
+            $nombre_page = intval(ceil($materiel->compter_nombre_materiels_par_recherche($recherche) / 25));
         } else {
-            $materiels = $materiel->select_materiels(($no_page - 1) * 25);
-            $nb_page = intval(ceil($materiel->count_nb_materiels() / 25));
+            $materiels = $materiel->selectionner_materiels(($numero_page - 1) * 25);
+            $nombre_page = intval(ceil($materiel->compter_nombre_materiels() / 25));
         }
 
         include_once ROOT.'app/views/component/materiel_card.php';
@@ -44,6 +44,6 @@ class Materiels extends Controller
             $i++;
         }
 
-        return $nb_page;
+        return $nombre_page;
     }
 }

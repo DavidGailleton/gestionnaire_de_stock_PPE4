@@ -42,7 +42,7 @@ class Utilisateur extends Model
      * @param string $email
      * @return Utilisateur|null
      */
-    public function select_utilisateur(string $email):Utilisateur | null
+    public function selectionner_utilisateur_par_email(string $email):Utilisateur | null
     {
         $query = "SELECT id_uti, email_uti, nom_uti, prenom_uti, compte_desactive_uti, mdp_a_changer_uti FROM utilisateur WHERE email_uti = :email";
         $stmt = $this->pdo->prepare($query);
@@ -53,7 +53,28 @@ class Utilisateur extends Model
         if ($fetch){
             require_once 'Role.php';
             $role_model = new Role();
-            $role = $role_model->select_role($email);
+            $role = $role_model->selectionner_role($email);
+
+            $user = new Utilisateur();
+            $user->set_utilisateur($fetch['id_uti'], $fetch['email_uti'], $fetch['nom_uti'], $fetch['prenom_uti'], $role, $fetch['compte_desactive_uti'], $fetch['mdp_a_changer_uti']);
+
+            return $user;
+        } else {
+            return null;
+        }
+    }
+
+    public function selectionner_utilisateur_par_id(int $id_utilisateur):Utilisateur | null
+    {
+        $query = "SELECT id_uti, email_uti, nom_uti, prenom_uti, compte_desactive_uti, mdp_a_changer_uti FROM utilisateur WHERE id_uti = :id";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute(['id' => $id_utilisateur]);
+        $fetch = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($fetch){
+            require_once 'Role.php';
+            $role_model = new Role();
+            $role = $role_model->selectionner_role($fetch['email_uti']);
 
             $user = new Utilisateur();
             $user->set_utilisateur($fetch['id_uti'], $fetch['email_uti'], $fetch['nom_uti'], $fetch['prenom_uti'], $role, $fetch['compte_desactive_uti'], $fetch['mdp_a_changer_uti']);
@@ -70,7 +91,7 @@ class Utilisateur extends Model
      * @param string $email
      * @return string
      */
-    public function select_mot_de_passe(string $email):string
+    public function selectionner_mot_de_passe(string $email):string
     {
         $query = "SELECT password_uti FROM utilisateur WHERE email_uti = :email";
         $stmt = $this->pdo->prepare($query);
@@ -112,7 +133,7 @@ class Utilisateur extends Model
      * @param int $id
      * @return bool
      */
-    public function select_statut_activation_utilisateur(int $id):bool
+    public function selectionner_statut_activation_utilisateur(int $id):bool
     {
         $query = "SELECT compte_desactive_uti FROM utilisateur WHERE id_uti = :id";
         $stmt = $this->pdo->prepare($query);
@@ -129,7 +150,7 @@ class Utilisateur extends Model
      * @param string $nouveau_mdp
      * @return void
      */
-    public function update_mdp_utilisateur(string $email, string $nouveau_mdp): void
+    public function changer_mdp_utilisateur(string $email, string $nouveau_mdp): void
     {
         $query = "UPDATE utilisateur SET mdp_a_changer_uti = false, password_uti = :nouveau_mdp WHERE email_uti = :email";
         $stmt = $this->pdo->prepare($query);
@@ -137,7 +158,7 @@ class Utilisateur extends Model
         $stmt->fetch();
     }
 
-    public function select_mdp_a_changer(string $email):bool
+    public function selectionner_mdp_a_changer(string $email):bool
     {
         $query = "SELECT mdp_a_changer_uti FROM utilisateur WHERE email_uti = :email";
         $stmt = $this->pdo->prepare($query);

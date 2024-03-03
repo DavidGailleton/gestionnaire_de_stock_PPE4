@@ -1,6 +1,7 @@
 <?php
 if (!$_SESSION['user_email'] && !isset($_COOKIE['JWT'])){
     header('Location: '.SERVER_URL.'index.php?page=login');
+    exit();
 }
 require_once ROOT.'app/includes/config.php'
 ?>
@@ -13,8 +14,8 @@ require_once ROOT.'app/includes/config.php'
 <body>
 <?php
 require_once ROOT.'app/controllers/JWT.php';
-$jwt = new \ppe4\JWT();
-if (isset($_COOKIE['JWT']) && $jwt->check($_COOKIE['JWT']))
+$jwt = new \ppe4\controllers\JWT();
+if (isset($_COOKIE['JWT']) && $jwt->verifier_validite($_COOKIE['JWT']))
 {
     include_once ROOT.'app/views/component/header.php';
 }
@@ -22,7 +23,7 @@ else echo '<div></div>'
 ?>
 <main>
     <p id="message_d_erreur" style="display: none">Les nouveaux mdp fournie ne sont pas les mêmes</p>
-    <form method="post" action="<?php echo SERVER_URL."index.php?action=modifier_mdp" ?>" id="formulaire_nouveau_mdp" onsubmit="return verifier_mdp()">
+    <form method="post" action="index.php?action=modifier_mdp" id="formulaire_nouveau_mdp" onsubmit="return verifier_mdp()">
         <label for="ancien_mdp">Ancien mot de passe :</label><br>
         <input type="password" id="ancien_mdp" name="ancien_mdp"><br>
 
@@ -70,6 +71,9 @@ else echo '<div></div>'
                     return false;
                 }
                 return true;
+            }
+            function ancien_mot_de_passe_correct(mdp){
+
             }
         </script>
     </form>

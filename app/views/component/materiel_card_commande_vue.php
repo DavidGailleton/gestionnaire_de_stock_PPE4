@@ -16,15 +16,9 @@ function materiel_card(\ppe4\models\Materiel $materiel, int $i):string
     <div class="bas">
         <p class="description">'.$materiel->getDescription().'</p>
 
-        <form action="index.php?action=ajouter_au_panier" method="post" id="formulaire_'.$i.'">
-            <div class="ajout_panier">
-                <label>
-                    <input type="number" min="1" value="1" name="qte" class="numeric_ajout_panier">
-                    <input type="hidden" name="id" value="'.$materiel->getId().'">
-                </label>
-                <input type="submit" value="Ajouter au panier" class="bouton_ajout_panier">
-            </div>
-        </form>
+        <div>
+            
+        </div>
     </div>
     </article>
 </div>';

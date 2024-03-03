@@ -2,6 +2,8 @@
   <code_scheme name="Project" version="173">
     <PHPCodeStyleSettings>
       <option name="PHPDOC_BLANK_LINE_BEFORE_TAGS" value="true" />
+      <option name="GETTERS_SETTERS_NAMING_STYLE" value="SNAKE_CASE" />
+      <option name="VARIABLE_NAMING_STYLE" value="SNAKE_CASE" />
     </PHPCodeStyleSettings>
   </code_scheme>
 </component>

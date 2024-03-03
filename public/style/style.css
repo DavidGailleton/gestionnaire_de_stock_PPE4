@@ -54,6 +54,27 @@ header .end
     display: flex;
     align-items: end;
     flex-direction: row;
+    margin: auto  2em;
+}
+header .end a
+{
+    margin: 0 1em;
+    width: 3em;
+}
+header .menu_deroulant
+{
+    display: none;
+    position: absolute;
+    border: 1px #7a7a7a solid;
+    border-radius: 5px;
+    background: white;
+    flex-direction: column;
+    gap: 1em;
+    padding: 1em;
+    top: 5em;
+    right: 0;
+    z-index: 1000;
+    list-style: none;
 }
 
 main
@@ -125,29 +146,29 @@ footer
     font-size: 1em;
 }
 
-.product_card
+.card
 {
     margin: 1em 0;
     border: 1px black solid;
     border-radius: 5px;
     color: black;
 }
-.product_card:link
+.card:link
 {
     text-decoration: none;
     text-decoration-color: black;
 }
-.product_card:visited
+.card:visited
 {
     text-decoration: none;
     text-decoration-color: black;
 }
-.product_card:active
+.card:active
 {
     text-decoration: none;
     text-decoration-color: black;
 }
-.product_card article
+.card article
 {
     display: flex;
     flex-direction: column;
@@ -157,7 +178,7 @@ footer
 
 }
 
-.product_card .materiel_card .haut
+.card .materiel_card .haut
 {
     display: flex;
     flex-wrap: wrap;
@@ -165,22 +186,22 @@ footer
     justify-content: space-between;
     margin-bottom: 1em;
 }
-.product_card .medic_card .haut:first-child
+.card .medic_card .haut:first-child
 {
     display: grid;
     grid-template-columns: 80% 20%;
 }
 
-.product_card article .bas
+.card article .bas
 {
     display: grid;
     grid-template-columns: 5fr 1fr;
 }
-.product_card article .bas .description
+.card article .bas .description
 {
     grid-column-start: 1;
 }
-.product_card article .bas form
+.card article .bas form
 {
     grid-column-start: -1;
 }

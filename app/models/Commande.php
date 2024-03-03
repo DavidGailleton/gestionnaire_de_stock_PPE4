@@ -5,6 +5,7 @@ namespace ppe4\models;
 require_once "Model.php";
 
 use Cassandra\Date;
+require_once "Statut.php";
 
 class Commande extends Model
 {
@@ -15,13 +16,15 @@ class Commande extends Model
      * @var bool
      */
     private bool $mouvement;
+    private Statut $statut;
     private \DateTime $date_validation;
     private Utilisateur $utilisateur;
     private Utilisateur $validateur;
 
-    public function set_commande(int $id, \DateTime $date_commande, bool $mouvement, \DateTime $date_validation, Utilisateur $utilisateur, Utilisateur $validateur):void
+    public function set_commande(int $id, Statut $statut, \DateTime $date_commande, bool $mouvement, \DateTime $date_validation, Utilisateur $utilisateur, Utilisateur $validateur):void
     {
         $this->id = $id;
+        $this->statut = $statut;
         $this->date_commande = $date_commande;
         $this->mouvement = $mouvement;
         $this->date_validation = $date_validation;
@@ -35,75 +38,43 @@ class Commande extends Model
         $this->get_connection();
     }
 
-    public function getIdCom(): int
-    {
-        return $this->id;
-    }
-
-    public function getDateCommande(): \DateTime
-    {
-        return $this->date_commande;
-    }
-
-    public function setDateCommande(\DateTime $date_commande): void
-    {
-        $this->date_commande = $date_commande;
-    }
-
-    public function isMouvement(): bool
-    {
-        return $this->mouvement;
-    }
-
-    public function setMouvement(bool $mouvement): void
-    {
-        $this->mouvement = $mouvement;
-    }
-
-    public function getDateValidation(): \DateTime
-    {
-        return $this->date_validation;
-    }
-
-    public function setDateValidation(\DateTime $date_validation): void
-    {
-        $this->date_validation = $date_validation;
-    }
-
-    public function getUtilisateur(): Utilisateur
-    {
-        return $this->utilisateur;
-    }
-
-    public function setUtilisateur(Utilisateur $utilisateur): void
-    {
-        $this->utilisateur = $utilisateur;
-    }
-
-    public function getValidateur(): Utilisateur
-    {
-        return $this->validateur;
-    }
-
-    public function setValidateur(Utilisateur $validateur): void
-    {
-        $this->validateur = $validateur;
-    }
 
     /**
      * Extrait les commandes de la base de données.
      * Retourne un tableau d'objet de la classe Commande
      *
      * @param int $id_utilisateur
-     * @return array
+     * @return array | null
      */
-    public function select_commande_par_utilisateur(int $id_utilisateur):array
+    public function recuperer_commande_par_utilisateur(int $id_utilisateur):array | null
     {
-        $query = "SELECT * FROM commande WHERE id_uti_Utilisateur = :id_utilisateur";
+        //Extrait les commandes ayant des validateurs
+
+        $query = "SELECT id_validateur FROM commande WHERE id_uti_Utilisateur = :id_utilisateur";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindValue('id_utilisateur', $id_utilisateur, \PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetchAll(\PDO::FETCH_CLASS, '\ppe4\models\Commande');
+        $commandes_non_valide = $stmt->fetchAll();
+
+        $query = "SELECT id_com as id, statut_com as statut, date_com as date_commande, date_val_com as date_validation, mouvement_com as mouvement, id_uti_Utilisateur, id_uti_Validateur FROM commande WHERE id_uti_Utilisateur = :id_utilisateur AND id_uti_Validateur IS NOT NULL ORDER BY date_com DESC";        $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue('id_utilisateur', $id_utilisateur, \PDO::PARAM_INT);
+        $stmt->execute();
+        $commande_valide = $stmt->fetchAll();
+
+        if (!$commande_valide && !$commandes_non_valide){
+            return null;
+        }
+
+        $utilisateur = new Utilisateur();
+        $validteur = $commande_valide['id_uti_Validateur'] ? $utilisateur->selectionner_utilisateur_par_email($commande_valide['id_uti_Validateur']) : null;
+        $utilisateur = $utilisateur->selectionner_utilisateur_par_email($commande_valide['id_uti_Utilisateur']);
+
+        $commandes = [];
+        foreach ($commande_valide as $commande){
+            array_push($commandes, $this->set_commande($commande['id'], $commande['statut'], $commande['date_commande'], $commande['mouvement'], $commande['date_validation'], $utilisateur->selectionner_utilisateur_par_id($commande_valide['id_uti_Utilisateur']), $utilisateur->selectionner_utilisateur_par_id($commande_valide['id_uti_Validateur'])));
+        }
+
+        return $commandes;
     }
 
     /**
@@ -114,7 +85,7 @@ class Commande extends Model
      * @param bool $mouvement
      * @return int
      */
-    public function insert_commande(int $id_utilisateur, bool $mouvement):int
+    public function inserer_commande(int $id_utilisateur, bool $mouvement):int
     {
         require_once "Statut.php";
 

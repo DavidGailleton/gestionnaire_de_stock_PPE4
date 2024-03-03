@@ -52,7 +52,7 @@ class Ligne_commande extends Model
         return $this->qte;
     }
 
-    public function select_lignes_commande_par_commande(int $id_commande):array
+    public function selectionner_lignes_commande(int $id_commande):array
     {
         $query = "SELECT * FROM ligne_commande WHERE id_com = :id_commande";
         $stmt = $this->pdo->prepare($query);
@@ -61,7 +61,7 @@ class Ligne_commande extends Model
         return $stmt->fetchAll(\PDO::FETCH_CLASS, '\ppe4\models\Ligne_commande');
     }
 
-    public function insert_ligne_commande(int $id_commande, int $id_medicament, int $qte):void
+    public function inserer_ligne_commande(int $id_commande, int $id_medicament, int $qte):void
     {
         $query = "INSERT INTO ligne_commande (id_com, id_pro, qte) VALUES (:id_commande, :id_produit, :qte)";
         $stmt = $this->pdo->prepare($query);

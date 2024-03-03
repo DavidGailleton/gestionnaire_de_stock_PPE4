@@ -1,8 +1,8 @@
 <?php
 require_once ROOT.'app/controllers/Materiels.php';
 
-$no_page = $_GET['no_page'];
-$nb_page = 0;
+$numero_page = $_GET['no_page'];
+$nombre_page = 0;
 if (isset($_GET['recherche'])){
     $recherche = $_GET['recherche'];
 }
@@ -30,15 +30,15 @@ if (isset($_GET['recherche'])){
     <?php
     $materiels = new \ppe4\controllers\Materiels();
     if (isset($recherche)){
-        $nb_page = $materiels->show_materiels_card($no_page, $recherche);
+        $nombre_page = $materiels->afficher_materiels_card($numero_page, $recherche);
     } else {
-        $nb_page = $materiels->show_materiels_card($no_page, null);
+        $nombre_page = $materiels->afficher_materiels_card($numero_page, null);
     }
     ?>
 
     <?php
     include_once ROOT.'app/views/component/choix_de_page.php';
-    choix_de_page($no_page, $nb_page, 'materiels');
+    choix_de_page($numero_page, $nombre_page, 'materiels');
     ?>
 </main>
 <?php include_once ROOT.'app/views/component/footer.php'?>

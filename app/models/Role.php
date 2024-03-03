@@ -11,7 +11,7 @@ class Role extends Model
     private string $libelle;
     private string $description;
 
-    public function new_role(int $id, string $libelle, string $description):void
+    public function setRole(int $id, string $libelle, string $description):void
     {
         $this->id = $id;
         $this->libelle = $libelle;
@@ -31,7 +31,7 @@ class Role extends Model
      * @param string $email
      * @return Role
      */
-    public function select_role(string $email):Role
+    public function selectionner_role(string $email):Role
     {
         $query = "SELECT role.id_rol, libelle_rol, description_rol FROM utilisateur INNER JOIN role ON role.id_rol = utilisateur.id_rol WHERE email_uti = :email";
         $stmt = $this->pdo->prepare($query);
@@ -40,7 +40,7 @@ class Role extends Model
         $role = $stmt->fetch(PDO::FETCH_ASSOC);
 
         $result = new Role();
-        $result->new_role($role['id_rol'], $role['libelle_rol'], $role['description_rol']);
+        $result->setRole($role['id_rol'], $role['libelle_rol'], $role['description_rol']);
 
         return $result;
     }

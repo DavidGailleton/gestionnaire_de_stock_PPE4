@@ -18,11 +18,11 @@ abstract class Controller
             $jwt = new JWT();
             $token = $_COOKIE['JWT'];
 
-            if (!$jwt->est_valide($token) || $jwt->est_expire($token) || !$jwt->check($token)) {
-                $this->redirect('login');
+            if (!$jwt->est_valide($token) || $jwt->est_expire($token) || !$jwt->verifier_validite($token)) {
+                $this->rediriger('login');
             }
         } else {
-            $this->redirect('login');
+            $this->rediriger('login');
         }
     }
 
@@ -32,7 +32,7 @@ abstract class Controller
      * @param string $model
      * @return object
      */
-    public function loadModel(string $model):object
+    public function charger_model(string $model):object
     {
         require_once ROOT.'app/models/'.$model.'.php';
         $this->$model = new $model();
@@ -45,7 +45,7 @@ abstract class Controller
      * @param string $page
      * @return void
      */
-    #[NoReturn] public function redirect(string $page):void
+    #[NoReturn] public function rediriger(string $page):void
     {
         header('Location: '.SERVER_URL.'index.php?page='.$page);
         exit();
@@ -54,17 +54,17 @@ abstract class Controller
     /**
      * Affiche l'état du stock d'un produit
      *
-     * @param int $nb_stock
+     * @param int $nombre_en_stock
      * @return string
      */
-    public function status_a_afficher(int $nb_stock):string
+    public function status_a_afficher(int $nombre_en_stock):string
     {
-        if ($nb_stock >= 50){
+        if ($nombre_en_stock >= 50){
             return 'En stock';
-        } elseif ($nb_stock == 0){
+        } elseif ($nombre_en_stock == 0){
             return 'Hors stock';
         } else {
-            return $nb_stock.' en stock';
+            return $nombre_en_stock.' en stock';
         }
     }
 }

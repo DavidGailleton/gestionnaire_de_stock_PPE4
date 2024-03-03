@@ -12,7 +12,7 @@ require_once ROOT.'app/controllers/JWT.php';
     <?php require_once ROOT."app/views/component/head.php" ?>
     <script>
         function confirmer_commande() {
-            let produits = document.querySelectorAll('.product_card');
+            let produits = document.querySelectorAll('.card');
             let tab_produits = [];
             for (let i = 0; i < produits.length; i++){
                 let id = produits[i].querySelector('input[name="id"]').value;

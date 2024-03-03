@@ -12,7 +12,7 @@ class Liste_utilisateur extends Controller
      *
      * @return void
      */
-    public function index():void
+    public function afficher():void
     {
         require_once ROOT.'app/views/liste_utilisateur.php';
     }

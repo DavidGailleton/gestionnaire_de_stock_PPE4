@@ -10,7 +10,7 @@ class Nouveau_mdp
     {
         require_once ROOT.'app/models/Utilisateur.php';
     }
-    public function index():void
+    public function afficher():void
     {
         require_once ROOT.'app/views/nouveau_mdp.php';
     }
@@ -19,25 +19,23 @@ class Nouveau_mdp
      * Modifie le mot de passe de l'utilisateur dans la vue nouveau_mdp
      *
      * @param string $email
-     * @param string $ancien_mdp
-     * @param string $nouveau_mdp
-     * @return void
+     * @param string $ancien_mot_de_passe
+     * @param string $nouveau_mot_de_passe
+     * @return string
      */
-    public function modifier_mdp(string $email, string $ancien_mdp, string $nouveau_mdp):void
+    public function modifier_mot_de_passe(string $email, string $ancien_mot_de_passe, string $nouveau_mot_de_passe):string
     {
-        if ($ancien_mdp == $nouveau_mdp){
-            require_once ROOT.'app/views/nouveau_mdp.php';
-            echo '<script>alert("L\'ancien et le nouveau mdp sont les mêmes")</script>';
+        if ($ancien_mot_de_passe == $nouveau_mot_de_passe){
+            return 'L\'ancien et le nouveau mdp sont les mêmes';
         }
 
         $utilisateur = new Utilisateur();
-        if ($this->verifier_mot_de_passe($_SESSION['user_email'], $ancien_mdp) && $this->mot_de_passe_est_valide($nouveau_mdp)){
-            $nouveau_mdp_crypte = $this->crypt_mot_de_passe($nouveau_mdp);
-            $utilisateur->update_mdp_utilisateur($email, $nouveau_mdp_crypte);
-            header('Location: '.SERVER_URL.'index.php?page=login');
+        if ($this->mot_de_passe_utilisateur_valide($_SESSION['user_email'], $ancien_mot_de_passe) && $this->mot_de_passe_respecte_regle($nouveau_mot_de_passe)){
+            $nouveau_mdp_crypte = $this->crypter_mot_de_passe($nouveau_mot_de_passe);
+            $utilisateur->changer_mdp_utilisateur($email, $nouveau_mdp_crypte);
+            return 'succes';
         } else {
-            require_once ROOT.'app/views/nouveau_mdp.php';
-            echo '<script>alert("Une erreur s\'est produite")</script>';
+            return 'L\'ancien mot de passe est incorrect';
         }
     }
 
@@ -45,16 +43,16 @@ class Nouveau_mdp
      * Vérifie si le mot de passe mis en paramètre est le bon mot de passe, retourne true si c'est le cas, false sinon
      *
      * @param string $email
-     * @param string $mdp
+     * @param string $mot_de_passe
      * @return bool
      */
-    public function verifier_mot_de_passe(string $email, string $mdp):bool
+    public function mot_de_passe_utilisateur_valide(string $email, string $mot_de_passe):bool
     {
         $utilisateur = new Utilisateur();
 
-        $import_password = $utilisateur->select_mot_de_passe($email);
+        $mot_de_passe_importe = $utilisateur->selectionner_mot_de_passe($email);
 
-        return password_verify($mdp, $import_password);
+        return password_verify($mot_de_passe, $mot_de_passe_importe);
     }
 
     /**
@@ -65,7 +63,7 @@ class Nouveau_mdp
      * @param $mdp
      * @return bool
      */
-    public function mot_de_passe_est_valide($mdp): bool
+    public function mot_de_passe_respecte_regle($mdp): bool
     {
         if (
             preg_match_all('/[#?!@%&\-_.]/', $mdp) < SPE_CHAR_MIN ||
@@ -81,12 +79,12 @@ class Nouveau_mdp
     /**
      * Crypt le mot de passe mis en paramètre puis retourne son hash
      *
-     * @param string $mdp
+     * @param string $mot_de_passe
      * @return string
      */
-    public function crypt_mot_de_passe(string $mdp):string
+    public function crypter_mot_de_passe(string $mot_de_passe):string
     {
-        return password_hash($mdp, PASSWORD_BCRYPT, ['cost' => 13]);
+        return password_hash($mot_de_passe, PASSWORD_BCRYPT, ['cost' => 13]);
     }
 
 }

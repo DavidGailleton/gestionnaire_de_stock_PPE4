@@ -6,12 +6,12 @@ require_once ROOT.'app/models/Medicament.php';
 require_once ROOT.'app/controllers/Panier.php';
 require_once ROOT.'app/controllers/Medicaments.php';
 
-function medic_card_panier(Medicament $medicament, int $i, int $qte):string
+function medic_card_panier(Medicament $medicament, int $i, int $quantite):string
 {
     $medicaments = new \ppe4\controllers\Medicaments();
 
 
-    return '<div class="product_card">
+    return '<div class="card">
     <article class="medic_card">
     <div class="haut">
         <div>
@@ -30,7 +30,7 @@ function medic_card_panier(Medicament $medicament, int $i, int $qte):string
         <form action="index.php?action=supprimer_du_panier" method="post" id="formulaire_'.$i.'">
             <div class="ajout_panier">
                 <label>
-                    <input type="number" min="1" value="'.$qte.'" name="qte" class="numeric_ajout_panier">
+                    <input type="number" min="1" value="'.$quantite.'" name="qte" class="numeric_ajout_panier">
                     <input type="hidden" name="id" value="'.$medicament->getId().'">
                 </label>
                 <input type="submit" value="Supprimer" class="bouton_ajout_panier">

@@ -6,10 +6,10 @@
 <body>
  <?php include_once ROOT."app/views/component/header.php"; ?>
 <main>
-    <a href=<?php echo SERVER_URL.'index.php?page=medicaments' ?>>
+    <a href="index.php?page=medicaments">
         Medicaments
     </a>
-    <a href=<?php echo SERVER_URL.'index.php?page=materiels' ?>>
+    <a href="index.php?page=materiels">
         Materiels
     </a>
 </main>

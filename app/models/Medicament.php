@@ -42,7 +42,7 @@ class Medicament extends Produit
      *
      * @return array
      */
-    public function select_medicaments(int $offset):array
+    public function selectionner_medicaments(int $offset):array
     {
         $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS qte_stock, forme_med AS forme, cis_med AS cis FROM medicaments INNER JOIN produits on medicaments.id_pro = produits.id_pro ORDER BY produits.qte_stock_pro DESC LIMIT :offset , 25";
         $stmt = $this->pdo->prepare($query);
@@ -59,7 +59,7 @@ class Medicament extends Produit
      * @param string $recherche
      * @return array
      */
-    public function select_medicaments_par_recherche(int $offset, string $recherche):array
+    public function selectionner_medicaments_par_recherche(int $offset, string $recherche):array
     {
         $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS qte_stock, forme_med AS forme, cis_med AS cis FROM medicaments INNER JOIN produits on medicaments.id_pro = produits.id_pro WHERE produits.libelle_pro LIKE :recherche LIMIT :offset , 25";
         $stmt = $this->pdo->prepare($query);
@@ -77,7 +77,7 @@ class Medicament extends Produit
      * @param int $id
      * @return Medicament
      */
-    public function select_medicament(int $id):Medicament
+    public function selectionner_medicament(int $id):Medicament
     {
         $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS qte_stock, forme_med AS forme, cis_med AS cis FROM medicaments INNER JOIN produits on medicaments.id_pro = produits.id_pro WHERE produits.id_pro = :id";
         $stmt = $this->pdo->prepare($query);
@@ -90,7 +90,7 @@ class Medicament extends Produit
      *
      * @return mixed
      */
-    public function count_nb_medicament():int
+    public function compter_nb_medicament():int
     {
         $query = "SELECT COUNT(*) FROM medicaments";
         $stmt = $this->pdo->prepare($query);
@@ -104,7 +104,7 @@ class Medicament extends Produit
      * @param string $recherche
      * @return mixed
      */
-    public function count_nb_medicament_par_recherche(string $recherche):int
+    public function compter_nb_medicament_par_recherche(string $recherche):int
     {
         $query = "SELECT COUNT(*) FROM medicaments INNER JOIN produits p on medicaments.id_pro = p.id_pro WHERE libelle_pro LIKE :recherche";
         $stmt = $this->pdo->prepare($query);

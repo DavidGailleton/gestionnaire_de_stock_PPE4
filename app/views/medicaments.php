@@ -3,8 +3,8 @@
 use ppe4\controllers\Medicaments;
 use ppe4\models\Medicament;
 
-$no_page = $_GET['no_page'];
-$nb_page = 0;
+$numero_page = $_GET['no_page'];
+$nombre_page = 0;
 if (isset($_GET['recherche'])){
     $recherche = $_GET['recherche'];
 }
@@ -34,15 +34,15 @@ if (isset($_GET['recherche'])){
     require_once ROOT.'app/controllers/Medicaments.php';
     $medicaments = new Medicaments();
     if (isset($recherche)){
-        $nb_page = $medicaments->show_medicaments_card($no_page, $recherche);
+        $nombre_page = $medicaments->afficher_medicaments_card($numero_page, $recherche);
     } else {
-        $nb_page = $medicaments->show_medicaments_card($no_page, null);
+        $nombre_page = $medicaments->afficher_medicaments_card($numero_page, null);
     }
     ?>
 
     <?php
     include_once ROOT.'app/views/component/choix_de_page.php';
-    choix_de_page($no_page, $nb_page, 'medicaments');
+    choix_de_page($numero_page, $nombre_page, 'medicaments');
     ?>
 
 </main>

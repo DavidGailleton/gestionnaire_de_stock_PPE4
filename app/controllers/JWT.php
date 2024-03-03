@@ -14,7 +14,7 @@ class JWT
      * @param Role $role
      * @return array
      */
-    public function generate_payload(string $id, string $email, Role $role):array
+    public function generer_payload(string $id, string $email, Role $role):array
     {
         return [
             'user_id' => $id,
@@ -27,15 +27,15 @@ class JWT
      * Génère le JWT sous forme de chaine de caractère
      *
      * @param array $payload
-     * @param int $validity
+     * @param int $validite
      * @return string
      */
-    public function generate(array $payload, int $validity = 14400):string
+    public function generer_jwt(array $payload, int $validite = 14400):string
     {
 
-        if($validity > 0){
+        if($validite > 0){
             $now = new \DateTime();
-            $expiration = $now->getTimestamp() + $validity;
+            $expiration = $now->getTimestamp() + $validite;
             $payload['iat'] = $now->getTimestamp();
             $payload['exp'] = $expiration;
         }
@@ -66,13 +66,13 @@ class JWT
      * @param string $token
      * @return bool
      */
-    public function check(string $token):bool
+    public function verifier_validite(string $token):bool
     {
         $payload = $this->get_payload($token);
 
-        $verif_token = $this->generate((array)$payload, 0);
+        $token_verifie = $this->generer_jwt((array)$payload, 0);
 
-        return $token === $verif_token;
+        return $token === $token_verifie;
     }
 
     /**

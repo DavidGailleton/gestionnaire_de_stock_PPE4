@@ -27,7 +27,7 @@ class Materiel extends Produit
      *
      * @return array
      */
-    public function select_materiels(int $offset):array
+    public function selectionner_materiels(int $offset):array
     {
         $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS qte_stock FROM materiels INNER JOIN produits on materiels.id_pro = produits.id_pro LIMIT :no_page, 25";
         $stmt = $this->pdo->prepare($query);
@@ -44,7 +44,7 @@ class Materiel extends Produit
      * @param int $offset
      * @return array
      */
-    public function select_materiels_par_recherche(string $recherche, int $offset):array
+    public function selectionner_materiels_par_recherche(string $recherche, int $offset):array
     {
         $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS qte_stock FROM materiels INNER JOIN produits on materiels.id_pro = produits.id_pro WHERE produits.libelle_pro LIKE :recherche LIMIT :offset, 25";
         $stmt = $this->pdo->prepare($query);
@@ -62,7 +62,7 @@ class Materiel extends Produit
      * @param int $id
      * @return Materiel
      */
-    public function select_materiel(int $id):Materiel
+    public function selectionner_materiel(int $id):Materiel
     {
         $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS qte_stock FROM materiels INNER JOIN produits on materiels.id_pro = produits.id_pro WHERE produits.id_pro = :id";
         $stmt = $this->pdo->prepare($query);
@@ -74,7 +74,7 @@ class Materiel extends Produit
      *
      * @return mixed
      */
-    public function count_nb_materiels():int
+    public function compter_nombre_materiels():int
     {
         $query = "SELECT COUNT(*) FROM materiels";
         $stmt = $this->pdo->prepare($query);
@@ -88,7 +88,7 @@ class Materiel extends Produit
      * @param string $recherche
      * @return mixed
      */
-    public function count_nb_materiels_par_recherche(string $recherche):int
+    public function compter_nombre_materiels_par_recherche(string $recherche):int
     {
         $query = "SELECT COUNT(*) FROM materiels INNER JOIN produits p on materiels.id_pro = p.id_pro WHERE libelle_pro LIKE :recherche";
         $stmt = $this->pdo->prepare($query);

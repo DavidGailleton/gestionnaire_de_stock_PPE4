@@ -51,7 +51,7 @@ class Panier extends Model
      * @param int $id_utilisateur
      * @return array
      */
-    public function elements_du_panier(int $id_utilisateur):array
+    public function selectionner_elements_du_panier(int $id_utilisateur):array
     {
         $query = "SELECT * FROM panier WHERE id_uti = :id_utilisateur";
         $stmt = $this->pdo->prepare($query);
@@ -102,7 +102,7 @@ class Panier extends Model
      * @param int $qte
      * @return void
      */
-    public function modifier_qte_du_panier(int $id_utilisateur, int $id_produit, int $qte):void
+    public function modifier_quantite_du_panier(int $id_utilisateur, int $id_produit, int $qte):void
     {
         $query = "UPDATE panier SET qte = :qte WHERE id_uti = :id_utilisateur AND id_pro = :id_produit";
         $stmt = $this->pdo->prepare($query);
@@ -133,7 +133,7 @@ class Panier extends Model
      * @param int $id_utilisateur
      * @return array
      */
-    public function select_medicaments_du_panier(int $id_utilisateur):array
+    public function selectionner_medicaments_du_panier(int $id_utilisateur):array
     {
         $query = "SELECT produits.id_pro AS id, produits.libelle_pro AS libelle, produits.description_pro AS description, produits.qte_stock_pro AS qte_stock, medicaments.forme_med AS forme, medicaments.cis_med AS cis FROM panier INNER JOIN medicaments on panier.id_pro = medicaments.id_pro INNER JOIN produits on medicaments.id_pro = produits.id_pro WHERE id_uti = :id_utilisateur";
         $stmt = $this->pdo->prepare($query);
@@ -149,7 +149,7 @@ class Panier extends Model
      * @param int $id_utilisateur
      * @return array
      */
-    public function select_materiels_du_panier(int $id_utilisateur):array
+    public function selectionner_materiels_du_panier(int $id_utilisateur):array
     {
         require_once 'Materiel.php';
 
@@ -167,7 +167,7 @@ class Panier extends Model
      * @param int $id_produit
      * @return int
      */
-    public function select_qte_produits_du_panier(int $id_utilisateur, int $id_produit):int
+    public function selectionner_quantite_produits_du_panier(int $id_utilisateur, int $id_produit):int
     {
         $query = "SELECT qte FROM panier WHERE id_uti = :id_utilisateur AND id_pro = :id_produit";
         $stmt = $this->pdo->prepare($query);
@@ -185,7 +185,7 @@ class Panier extends Model
      * @param int $qte
      * @return void
      */
-    public function ajouter_qte_produit_panier(int $id_utilisateur, int $id_produit, int $qte):void
+    public function ajouter_quantite_produit_panier(int $id_utilisateur, int $id_produit, int $qte):void
     {
         $query = "UPDATE panier SET qte = qte + :qte WHERE id_uti = :id_utilisateur AND id_pro = :id_produit";
         $stmt = $this->pdo->prepare($query);
@@ -212,7 +212,7 @@ class Panier extends Model
         return $stmt->fetch() !== false;
     }
 
-    public function modifier_qte_produit_panier(int $id_utilisateur, int $id_produit, int $qte):void
+    public function modifier_quantite_produit_panier(int $id_utilisateur, int $id_produit, int $qte):void
     {
         $query = "UPDATE panier SET qte = :qte WHERE id_uti = :id_utilisateur AND id_pro = :id_produit";
         $stmt = $this->pdo->prepare($query);

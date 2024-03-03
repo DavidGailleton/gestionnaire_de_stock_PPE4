@@ -6,15 +6,15 @@ require_once ROOT.'app/models/Materiel.php';
 require_once ROOT.'app/controllers/Panier.php';
 require_once ROOT.'app/controllers/Materiels.php';
 
-function materiel_card_panier(\ppe4\models\Materiel $materiel, int $i, int $qte):string
+function materiel_card_panier(\ppe4\models\Materiel $materiel, int $i, int $quantite):string
 {
     $materiels = new \ppe4\controllers\Materiels();
 
 
-    return '<div class="product_card">
+    return '<div class="card">
     <article class="materiel_card">
     <div class="haut">
-        <h3>'.$materiel->getLibelle().'</h3>
+        <h3>' .$materiel->getLibelle().'</h3>
         <div class="status">
             '.$materiels->status_a_afficher($materiel->getQteStock()).'
         </div>
@@ -26,7 +26,7 @@ function materiel_card_panier(\ppe4\models\Materiel $materiel, int $i, int $qte)
         <form action="index.php?action=supprimer_du_panier" method="post" id="formulaire_'.$i.'">
             <div class="ajout_panier">
                 <label>
-                    <input type="number" min="1" value="'.$qte.'" name="qte" class="numeric_ajout_panier">
+                    <input type="number" min="1" value="'.$quantite.'" name="qte" class="numeric_ajout_panier">
                     <input type="hidden" name="id" value="'.$materiel->getId().'">
                 </label>
                 <input type="submit" value="Supprimer" class="bouton_ajout_panier">

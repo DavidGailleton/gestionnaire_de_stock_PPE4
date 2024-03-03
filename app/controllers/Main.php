@@ -13,7 +13,7 @@ class Main extends Controller
             $login = new Login();
             $login->verifier_validite_JWT();
         } else {
-            $this->redirect('login');
+            $this->rediriger('login');
         }
     }
 }

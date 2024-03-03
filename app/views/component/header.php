@@ -29,15 +29,29 @@ $role = $payload['user_role'];
         <?php endif; ?>
     </ul>
     <div class="end">
-        <a href=<?php echo SERVER_URL.'index.php?page=panier' ?>>
+        <a href="index.php?page=panier">
             <img src='public/img/panier.svg' alt='panier' style="width: 2em">
         </a>
         <div class="profile">
             <img src='public/img/profile.svg' alt='profile' style="width: 2em">
             <ul class="menu_deroulant">
-                <li><a href="">Vos commandes</a></li>
+                <li><a href="index.php?page=commande">Vos commandes</a></li>
                 <li><a href="">Deconnexion</a></li>
             </ul>
         </div>
     </div>
+    <script>
+        let profile = document.querySelector('.profile');
+        let menu_deroulant = document.querySelector('.menu_deroulant');
+        let menu_deroulant_style = window.getComputedStyle(menu_deroulant);
+
+        profile.addEventListener('click', function () {
+            if (menu_deroulant_style.display === 'none') {
+                menu_deroulant.style.display = 'flex';
+            } else {
+                menu_deroulant.style.display = 'none';
+            }
+        });
+    </script>
+
 </header>

@@ -6,7 +6,7 @@ function medic_card(\ppe4\models\Medicament $medicament, int $i):string
     $medicaments = new \ppe4\controllers\Medicaments();
 
 
-    return '<div class="product_card">
+    return '<div class="card">
     <article class="medic_card">
     <div class="haut">
         <div>
