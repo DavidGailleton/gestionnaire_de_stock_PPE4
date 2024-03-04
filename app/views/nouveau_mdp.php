@@ -24,8 +24,8 @@ else echo '<div></div>'
 <main>
     <p id="message_d_erreur" style="display: none">Les nouveaux mdp fournie ne sont pas les mêmes</p>
     <form method="post" action="index.php?action=modifier_mdp" id="formulaire_nouveau_mdp" onsubmit="return verifier_mdp()">
-        <label for="ancien_mdp">Ancien mot de passe :</label><br>
-        <input type="password" id="ancien_mdp" name="ancien_mdp"><br>
+        <label for="ancien_mot_de_passe">Ancien mot de passe :</label><br>
+        <input type="password" id="ancien_mot_de_passe" name="ancien_mdp"><br>
 
         <label for="nouveau_mdp">Nouveau mot de passe :</label><br>
         <input type="password" id="nouveau_mdp" name="nouveau_mdp"><br>
@@ -37,10 +37,13 @@ else echo '<div></div>'
         <script>
             function verifier_mdp() {
                 const nouveau_mdp = document.getElementById('nouveau_mdp').value;
-                const ancien_mdp = document.getElementById('ancien_mdp').value;
+                const ancien_mdp = document.getElementById('ancien_mot_de_passe').value;
                 const confirmation_nouveau_mdp = document.getElementById('confirmation_nouveau_mdp').value;
 
-                if (nouveau_mdp !== confirmation_nouveau_mdp){
+                if (!ancien_mot_de_passe_correct()){
+                    alert("Le mot de passe original n'est pas correct");
+                    return false
+                } else if (nouveau_mdp !== confirmation_nouveau_mdp){
                     alert("Les nouveaux mdp fournie ne sont pas les mêmes");
                     return false
                 } else if (nouveau_mdp === ancien_mdp){
@@ -58,22 +61,30 @@ else echo '<div></div>'
                     return true
                 }
             }
-            function mot_de_passe_valide(mdp){
-                if (mdp.length < <?php echo CHAR_MIN ?>) {
+            function mot_de_passe_valide(mot_de_passe){
+                if (mot_de_passe.length < <?php echo CHAR_MIN ?>) {
                     return false;
-                } else if (!mdp.match(/[A-Z]/g) || mdp.match(/[A-Z]/g).length < <?php echo UPPER_MIN ?>) {
+                } else if (!mot_de_passe.match(/[A-Z]/g) || mot_de_passe.match(/[A-Z]/g).length < <?php echo UPPER_MIN ?>) {
                     return false;
-                } else if (!mdp.match(/[a-z]/g) || mdp.match(/[a-z]/g).length < <?php echo LOWER_MIN ?>) {
+                } else if (!mot_de_passe.match(/[a-z]/g) || mot_de_passe.match(/[a-z]/g).length < <?php echo LOWER_MIN ?>) {
                     return false;
-                } else if (!mdp.match(/[0-9]/g) || mdp.match(/[0-9]/g).length < <?php echo NUM_MIN ?>) {
+                } else if (!mot_de_passe.match(/[0-9]/g) || mot_de_passe.match(/[0-9]/g).length < <?php echo NUM_MIN ?>) {
                     return false;
-                } else if (!mdp.match(/[#?!@%&\-_.]/g) || mdp.match(/[#?!@%&\-_.]/g).length < <?php echo SPE_CHAR_MIN ?>) {
+                } else if (!mot_de_passe.match(/[#?!@%&\-_.]/g) || mot_de_passe.match(/[#?!@%&\-_.]/g).length < <?php echo SPE_CHAR_MIN ?>) {
                     return false;
                 }
                 return true;
             }
-            function ancien_mot_de_passe_correct(mdp){
-
+            function ancien_mot_de_passe_correct(){
+                let form = document.getElementById("ancien_mot_de_passe");
+                let formData = new FormData(form);
+                fetch("index.php?action=verifier_ancien_mot_de_passe", {
+                    method: "POST",
+                    body: formData
+                }) .then(response => response.text())
+                    .then(data => {
+                        return data === true;
+                    });
             }
         </script>
     </form>

@@ -31,6 +31,13 @@ if (isset($_GET['action']) && $_GET['action'] != '')
                 $nouveau_mdp->modifier_mot_de_passe($_SESSION['user_email'], $_POST['ancien_mdp'], $_POST['nouveau_mdp']);
             }
             break;
+        case 'verifier_ancien_mot_de_passe' :
+            if (isset($_SESSION['user_email']) && isset($_POST['ancien_mdp'])){
+                require_once ROOT.'app/controllers/Nouveau_mdp.php';
+                $nouveau_mdp = new \ppe4\controllers\Nouveau_mdp();
+                $nouveau_mdp->mot_de_passe_utilisateur_valide($_SESSION['user_email'], $_POST['ancien_mdp']);
+            }
+            break;
         case 'recherche_medicament':
             header('Location: '.SERVER_URL.'index.php?page=medicaments&recherche='.$_POST['recherche'].'&no_page=1');
             exit();
@@ -62,6 +69,12 @@ if (isset($_GET['action']) && $_GET['action'] != '')
                 $panier->modifier_quantite_produit_panier($_POST['id'], $_POST['qte']);
             }
             break;
+        case 'deconnecter' :
+            require_once ROOT.'app/controllers/Action.php';
+            $action = new \ppe4\controllers\Action();
+            $action->deconnecter();
+            header('Location: index.php');
+            exit();
         default :
             require_once (ROOT.'app/controllers/Error.php');
             $error = new \ppe4\controllers\Error();
@@ -117,7 +130,7 @@ if (isset($_GET['page']) && $_GET['page'] != '')
         case 'commande' :
             require_once(ROOT . 'app/controllers/Commande_vue.php');
             $commande = new \ppe4\controllers\Commande_vue();
-            $commande->index();
+            $commande->afficher($_GET['id']);
             break;
         case 'confirmation_commande' :
             require_once (ROOT.'app/controllers/Confirmation_commande.php');
@@ -164,6 +177,3 @@ if (isset($_GET['page']) && $_GET['page'] != '')
     header('Location: '.SERVER_URL.'index.php?page=login');
     exit();
 }
-
-
-?>

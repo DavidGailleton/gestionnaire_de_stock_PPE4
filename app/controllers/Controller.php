@@ -67,4 +67,6 @@ abstract class Controller
             return $nombre_en_stock.' en stock';
         }
     }
+
+
 }

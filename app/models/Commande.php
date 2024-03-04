@@ -32,6 +32,15 @@ class Commande extends Model
         $this->validateur = $validateur;
     }
 
+    public function set_commande_non_valide(int $id, bool $mouvement, Statut $statut, Utilisateur $utilisateur, \DateTime $date_commande)
+    {
+        $this->id = $id;
+        $this->statut = $statut;
+        $this->date_commande = $date_commande;
+        $this->mouvement = $mouvement;
+        $this->utilisateur = $utilisateur;
+    }
+
     public function __construct()
     {
         $this->table = "commande";
@@ -46,35 +55,97 @@ class Commande extends Model
      * @param int $id_utilisateur
      * @return array | null
      */
-    public function recuperer_commande_par_utilisateur(int $id_utilisateur):array | null
+    public function recuperer_commande_non_valide_par_utilisateur(int $id_utilisateur):array | null
     {
-        //Extrait les commandes ayant des validateurs
-
-        $query = "SELECT id_validateur FROM commande WHERE id_uti_Utilisateur = :id_utilisateur";
+        $query = "SELECT id_com as id, date_com as date_commande, statut_com as statut, mouvement_com as mouvement FROM commande WHERE id_uti_Utilisateur = :id_utilisateur AND statut_com = :statut ORDER BY date_com DESC";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindValue('id_utilisateur', $id_utilisateur, \PDO::PARAM_INT);
+        $stmt->bindValue('statut', Statut::En_attente->value, \PDO::PARAM_STR);
         $stmt->execute();
-        $commandes_non_valide = $stmt->fetchAll();
+        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-        $query = "SELECT id_com as id, statut_com as statut, date_com as date_commande, date_val_com as date_validation, mouvement_com as mouvement, id_uti_Utilisateur, id_uti_Validateur FROM commande WHERE id_uti_Utilisateur = :id_utilisateur AND id_uti_Validateur IS NOT NULL ORDER BY date_com DESC";        $stmt = $this->pdo->prepare($query);
-        $stmt->bindValue('id_utilisateur', $id_utilisateur, \PDO::PARAM_INT);
-        $stmt->execute();
-        $commande_valide = $stmt->fetchAll();
-
-        if (!$commande_valide && !$commandes_non_valide){
+        if (empty($result)){
             return null;
         }
 
-        $utilisateur = new Utilisateur();
-        $validteur = $commande_valide['id_uti_Validateur'] ? $utilisateur->selectionner_utilisateur_par_email($commande_valide['id_uti_Validateur']) : null;
-        $utilisateur = $utilisateur->selectionner_utilisateur_par_email($commande_valide['id_uti_Utilisateur']);
+        require_once 'Utilisateur.php';
+        $utilisateur_model = new Utilisateur();
+        $utilisateur = $utilisateur_model->selectionner_utilisateur_par_id($id_utilisateur);
 
         $commandes = [];
-        foreach ($commande_valide as $commande){
-            array_push($commandes, $this->set_commande($commande['id'], $commande['statut'], $commande['date_commande'], $commande['mouvement'], $commande['date_validation'], $utilisateur->selectionner_utilisateur_par_id($commande_valide['id_uti_Utilisateur']), $utilisateur->selectionner_utilisateur_par_id($commande_valide['id_uti_Validateur'])));
+        foreach ($result as $row) {
+            $commande = new self(); // Crée une nouvelle instance de la classe Commande.
+            $commande->set_commande_non_valide(
+                $row['id'],
+                $row['mouvement'],
+                Statut::En_attente,
+                $utilisateur,
+                new \DateTime($row['date_commande'])
+            );
+            $commandes[] = $commande;
         }
 
         return $commandes;
+    }
+
+    public function recuperer_commande_valide_par_utilisateur(int $id_utilisateur):array | null
+    {
+        $query = "SELECT id_com as id, date_com as date_commande, statut_com as statut, mouvement_com as mouvement, date_val_com as date_validation, id_uti_Validateur as id_validateur FROM commande WHERE id_uti_Utilisateur = :id_utilisateur AND statut_com != :statut ORDER BY date_com DESC";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue('id_utilisateur', $id_utilisateur, \PDO::PARAM_INT);
+        $stmt->bindValue('statut', Statut::En_attente->value, \PDO::PARAM_STR);
+        $stmt->execute();
+        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        if (empty($result)){
+            return null;
+        }
+
+        require_once 'Utilisateur.php';
+        $utilisateur_model = new Utilisateur();
+        $utilisateur = $utilisateur_model->selectionner_utilisateur_par_id($id_utilisateur);
+
+        $commandes = [];
+        foreach ($result as $row) {
+            $validateur = $utilisateur_model->selectionner_utilisateur_par_id($row['id_validateur']);
+            $commande = new self(); // Crée une nouvelle instance de la classe Commande.
+            $commande->set_commande(
+                $row['id'],
+                Statut::En_attente,
+                new \DateTime($row['date_commande']),
+                $row['mouvement'],
+                new \DateTime($row['date_validation']),
+                $utilisateur,
+                $validateur
+            );
+            $commandes[] = $commande;
+        }
+
+        return $commandes;
+    }
+
+    public function recuperer_commande_par_utilisateur(int $id_utilisateur):array | null
+    {
+        $commandes_non_valide = $this->recuperer_commande_non_valide_par_utilisateur($id_utilisateur);
+        $commandes_valide = $this->recuperer_commande_valide_par_utilisateur($id_utilisateur);
+
+        if (isset($commandes_valide) && isset($commandes_non_valide)){
+            $commandes = array_merge($commandes_valide, $commandes_non_valide);
+
+            if ($commandes){
+                arsort($commandes, [
+                    $this->date_commande
+                ]);
+
+                return $commandes;
+            }
+        } if (isset($commandes_non_valide)){
+            return $commandes_non_valide;
+        }
+        elseif (isset($commandes_valide)){
+            return $commandes_valide;
+        }
+        return null;
     }
 
     /**
@@ -130,5 +201,15 @@ class Commande extends Model
         $stmt->bindValue('id_commande', $id_commande, \PDO::PARAM_INT);
         $stmt->bindValue('statut', Statut::Refuse, \PDO::PARAM_STR);
         $stmt->execute();
+    }
+
+    public function get_statut(): Statut
+    {
+        return $this->statut;
+    }
+
+    public function get_date_commande(): \DateTime
+    {
+        return $this->date_commande;
     }
 }

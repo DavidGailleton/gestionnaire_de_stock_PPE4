@@ -35,8 +35,8 @@ $role = $payload['user_role'];
         <div class="profile">
             <img src='public/img/profile.svg' alt='profile' style="width: 2em">
             <ul class="menu_deroulant">
-                <li><a href="index.php?page=commande">Vos commandes</a></li>
-                <li><a href="">Deconnexion</a></li>
+                <li><a href="index.php?page=liste_commande">Vos commandes</a></li>
+                <li><a href="index.php?action=deconnecter">Deconnexion</a></li>
             </ul>
         </div>
     </div>
