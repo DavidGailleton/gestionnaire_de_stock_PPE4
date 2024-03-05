@@ -20,7 +20,7 @@ function medic_card_panier(Medicament $medicament, int $i, int $quantite):string
             <h4>  - CIS : '. $medicament->getCis() .'</h4>
         </div>
         <div class="status">
-            '.$medicaments->status_a_afficher($medicament->getQteStock()).'
+            '.$medicaments->status_a_afficher($medicament->getQuantiteStock()).'
         </div>
     </div>
     <div class="bas">

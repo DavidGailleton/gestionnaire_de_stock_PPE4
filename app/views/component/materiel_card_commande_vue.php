@@ -10,7 +10,7 @@ function materiel_card(\ppe4\models\Materiel $materiel, int $i):string
     <div class="haut">
         <h3>' .$materiel->getLibelle().'</h3>
         <div class="status">
-            '.$materiels->status_a_afficher($materiel->getQteStock()).'
+            '.$materiels->status_a_afficher($materiel->getQuantiteStock()).'
         </div>
     </div>
     <div class="bas">

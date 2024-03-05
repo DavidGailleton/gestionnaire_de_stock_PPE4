@@ -16,7 +16,7 @@ function materiel_card_panier(\ppe4\models\Materiel $materiel, int $i, int $quan
     <div class="haut">
         <h3>' .$materiel->getLibelle().'</h3>
         <div class="status">
-            '.$materiels->status_a_afficher($materiel->getQteStock()).'
+            '.$materiels->status_a_afficher($materiel->getQuantiteStock()).'
         </div>
     </div>
     <div class="bas">

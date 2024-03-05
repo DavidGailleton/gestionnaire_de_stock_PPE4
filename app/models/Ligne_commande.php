@@ -8,7 +8,7 @@ class Ligne_commande extends Model
 {
     private Commande $commande;
     private Medicament $medicament;
-    private Materiel $materiel;
+    private Produit $produit;
     private int $qte;
 
     public function set_ligne_commande_med(int $id, Commande $commande, Medicament $medicament, int $qte):void
@@ -22,13 +22,15 @@ class Ligne_commande extends Model
     {
         $this->table = "ligne_commande";
         $this->get_connection();
+        require_once ROOT.'app/models/Materiel.php';
+        require_once ROOT.'app/models/Medicament.php';
     }
 
-    public function set_ligne_commande_mat(int $id, Commande $commande, Materiel $materiel, int $qte):void
+    public function set_ligne_commande_mat(int $id, Commande $commande, Produit $produit, int $qte):void
     {
         $this->id = $id;
         $this->commande = $commande;
-        $this->materiel = $materiel;
+        $this->produit = $produit;
         $this->qte = $qte;
     }
 
@@ -54,11 +56,31 @@ class Ligne_commande extends Model
 
     public function selectionner_lignes_commande(int $id_commande):array
     {
-        $query = "SELECT * FROM ligne_commande WHERE id_com = :id_commande";
+        $query = "SELECT id_pro as id_produit, qte as quantite FROM ligne_commande WHERE id_com = :id_commande";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindValue('id_commande', $id_commande, \PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetchAll(\PDO::FETCH_CLASS, '\ppe4\models\Ligne_commande');
+        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        $materiel = new Materiel();
+        $medicament = new Medicament();
+
+        if (!empty($result)){
+            $produits = [];
+            foreach ($result as $row) {
+                $r = $materiel->selectionner_materiel($row['id_produit']);
+                if ($r == null){
+                    $r = $medicament->selectionner_medicament($row['id_produit']);
+                }
+                $produits = [
+                    'produit' => $r,
+                    'quantite' => $row['quantite']
+                ];
+                $r = null;
+            }
+
+            return $produits;
+        }
     }
 
     public function inserer_ligne_commande(int $id_commande, int $id_medicament, int $qte):void

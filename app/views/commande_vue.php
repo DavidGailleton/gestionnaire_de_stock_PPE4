@@ -1,5 +1,6 @@
 <?php
-
+    require_once ROOT.'app/controllers/Commande_vue.php';
+    $commande_vue = new \ppe4\controllers\Commande_vue();
 ?>
 
 <!doctype html>
@@ -10,6 +11,11 @@
 <body>
 <?php include_once ROOT."app/views/component/header.php"; ?>
 <main>
+    <?php
+    if (isset($_POST['id_commande'])) {
+        $commande_vue->afficher_commande_card($_POST['id_commande']);
+    }
+    ?>
 </main>
 <?php include_once ROOT.'app/views/component/footer.php'?>
 </body>

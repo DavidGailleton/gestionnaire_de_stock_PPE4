@@ -128,9 +128,13 @@ if (isset($_GET['page']) && $_GET['page'] != '')
             $materiel->index();
             break;
         case 'commande' :
-            require_once(ROOT . 'app/controllers/Commande_vue.php');
-            $commande = new \ppe4\controllers\Commande_vue();
-            $commande->afficher($_GET['id']);
+            if (isset($_POST['id_commande'])){
+                require_once(ROOT . 'app/controllers/Commande_vue.php');
+                $commande = new \ppe4\controllers\Commande_vue();
+                $commande->afficher($_POST['id_commande']);
+            } else {
+                header('Location : index.php?page=error');
+            }
             break;
         case 'confirmation_commande' :
             require_once (ROOT.'app/controllers/Confirmation_commande.php');

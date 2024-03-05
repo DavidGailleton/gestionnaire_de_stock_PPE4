@@ -16,7 +16,7 @@ class Medicament extends Produit
         $this->id = $id;
         $this->libelle = $libelle;
         $this->description = $description;
-        $this->qte_stock = $qte;
+        $this->quantite_stock = $qte;
         $this->cis = $cis;
         $this->forme = $forme;
     }

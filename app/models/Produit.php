@@ -8,7 +8,7 @@ class Produit extends Model
 {
     protected string $libelle;
     protected string $description;
-    protected int $qte_stock;
+    protected int $quantite_stock;
 
     public function getLibelle(): string
     {
@@ -20,9 +20,9 @@ class Produit extends Model
         return $this->description;
     }
 
-    public function getQteStock(): int
+    public function getQuantiteStock(): int
     {
-        return $this->qte_stock;
+        return $this->quantite_stock;
     }
 
 }

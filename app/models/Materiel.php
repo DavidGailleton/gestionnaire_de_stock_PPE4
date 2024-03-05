@@ -12,7 +12,7 @@ class Materiel extends Produit
         $this->id = $id;
         $this->libelle = $libelle;
         $this->description = $description;
-        $this->qte_stock = $qte;
+        $this->quantite_stock = $qte;
     }
 
     public function __construct()
@@ -29,7 +29,7 @@ class Materiel extends Produit
      */
     public function selectionner_materiels(int $offset):array
     {
-        $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS qte_stock FROM materiels INNER JOIN produits on materiels.id_pro = produits.id_pro LIMIT :no_page, 25";
+        $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS quantite_stock FROM materiels INNER JOIN produits on materiels.id_pro = produits.id_pro LIMIT :no_page, 25";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindParam('no_page', $offset, PDO::PARAM_INT);
         $stmt->execute();
@@ -46,7 +46,7 @@ class Materiel extends Produit
      */
     public function selectionner_materiels_par_recherche(string $recherche, int $offset):array
     {
-        $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS qte_stock FROM materiels INNER JOIN produits on materiels.id_pro = produits.id_pro WHERE produits.libelle_pro LIKE :recherche LIMIT :offset, 25";
+        $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS quantite_stock FROM materiels INNER JOIN produits on materiels.id_pro = produits.id_pro WHERE produits.libelle_pro LIKE :recherche LIMIT :offset, 25";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindParam('offset', $offset, PDO::PARAM_INT);
         $recherche = '%'.$recherche.'%';
@@ -59,16 +59,23 @@ class Materiel extends Produit
      * Récupère un matériel depuis la base de données en fonction de l'id fournie.
      * Retourne un objet de la classe Materiel
      *
-     * @param int $id
-     * @return Materiel
+     * @param int $id_materiel
+     * @return Materiel | null
      */
-    public function selectionner_materiel(int $id):Materiel
+    public function selectionner_materiel(int $id_materiel):Materiel | null
     {
-        $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS qte_stock FROM materiels INNER JOIN produits on materiels.id_pro = produits.id_pro WHERE produits.id_pro = :id";
+        $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS quantite_stock FROM materiels INNER JOIN produits on materiels.id_pro = produits.id_pro WHERE produits.id_pro = :id";
         $stmt = $this->pdo->prepare($query);
-        $stmt->execute(['id' => $id]);
-        return $stmt->fetch(PDO::FETCH_CLASS, '\ppe4\models\Materiel');
+        $stmt->bindValue('id', $id_materiel, \PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_CLASS, '\ppe4\models\Materiel');
+
+        if ($result){
+            return $result;
+        }
+        return null;
     }
+
     /**
      * Retourne le nombre de materiels contenu dans la bdd
      *

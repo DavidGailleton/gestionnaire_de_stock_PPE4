@@ -14,7 +14,7 @@ function medic_card_commande_vue(\ppe4\models\Medicament $medicament, int $i):st
             <h4>  - CIS : '. $medicament->getCis() .'</h4>
         </div>
         <div class="status">
-            '.$medicaments->status_a_afficher($medicament->getQteStock()).'
+            '.$medicaments->status_a_afficher($medicament->getQuantiteStock()).'
         </div>
     </div>
     <div class="bas">
