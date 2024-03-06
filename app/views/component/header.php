@@ -36,7 +36,7 @@ $role = $payload['user_role'];
             <img src='public/img/profile.svg' alt='profile' style="width: 2em">
             <ul class="menu_deroulant">
                 <li><a href="index.php?page=liste_commande">Vos commandes</a></li>
-                <li><a href="index.php?action=deconnecter">Deconnexion</a></li>
+                <li><a href="index.php?page?login" onclick="return deconnecter()">Deconnexion</a></li>
             </ul>
         </div>
     </div>
@@ -52,6 +52,12 @@ $role = $payload['user_role'];
                 menu_deroulant.style.display = 'none';
             }
         });
+
+        function deconnecter(){
+            document.cookie = "JWT=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+            return true;
+
+        }
     </script>
 
 </header>

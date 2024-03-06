@@ -8,6 +8,7 @@ class Ligne_commande extends Model
 {
     private Commande $commande;
     private Medicament $medicament;
+    private Materiel $materiel;
     private Produit $produit;
     private int $qte;
 
@@ -54,7 +55,7 @@ class Ligne_commande extends Model
         return $this->qte;
     }
 
-    public function selectionner_lignes_commande(int $id_commande):array
+    public function selectionner_lignes_commande(int $id_commande):array | null
     {
         $query = "SELECT id_pro as id_produit, qte as quantite FROM ligne_commande WHERE id_com = :id_commande";
         $stmt = $this->pdo->prepare($query);
@@ -81,6 +82,8 @@ class Ligne_commande extends Model
 
             return $produits;
         }
+
+        return null;
     }
 
     public function inserer_ligne_commande(int $id_commande, int $id_medicament, int $qte):void

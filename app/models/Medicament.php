@@ -36,15 +36,17 @@ class Medicament extends Produit
     {
         return $this->forme;
     }
+
     /**
      * Récupère les médicaments depuis la base de données.
      * Retourne un tableau d'objet de la classe Medicament
      *
+     * @param int $offset
      * @return array
      */
     public function selectionner_medicaments(int $offset):array
     {
-        $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS qte_stock, forme_med AS forme, cis_med AS cis FROM medicaments INNER JOIN produits on medicaments.id_pro = produits.id_pro ORDER BY produits.qte_stock_pro DESC LIMIT :offset , 25";
+        $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS quantite_stock, forme_med AS forme, cis_med AS cis FROM medicaments INNER JOIN produits on medicaments.id_pro = produits.id_pro ORDER BY produits.qte_stock_pro DESC LIMIT :offset , 25";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindValue('offset', $offset, PDO::PARAM_INT);
         $stmt->execute();
@@ -81,7 +83,8 @@ class Medicament extends Produit
     {
         $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS qte_stock, forme_med AS forme, cis_med AS cis FROM medicaments INNER JOIN produits on medicaments.id_pro = produits.id_pro WHERE produits.id_pro = :id";
         $stmt = $this->pdo->prepare($query);
-        $stmt->execute(['id' => $id]);
+        $stmt->bindValue('id', $id, PDO::PARAM_INT);
+        $stmt->execute();
         return $stmt->fetch(PDO::FETCH_CLASS, '\ppe4\models\Medicament');
     }
 

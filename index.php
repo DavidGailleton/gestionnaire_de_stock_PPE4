@@ -1,4 +1,7 @@
 <?php
+
+use ppe4\controllers\Action;
+
 require_once 'app/includes/config.php';
 
 session_start();
@@ -71,9 +74,9 @@ if (isset($_GET['action']) && $_GET['action'] != '')
             break;
         case 'deconnecter' :
             require_once ROOT.'app/controllers/Action.php';
-            $action = new \ppe4\controllers\Action();
+            $action = new Action();
             $action->deconnecter();
-            header('Location: index.php');
+            header('Location: '.SERVER_URL.'index.php?page=login');
             exit();
         default :
             require_once (ROOT.'app/controllers/Error.php');

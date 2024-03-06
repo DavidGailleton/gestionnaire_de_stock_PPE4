@@ -25,6 +25,7 @@ class Materiel extends Produit
      * Récupère les matériels depuis la base de données.
      * Retourne un tableau d'objet de la classe Materiel
      *
+     * @param int $offset
      * @return array
      */
     public function selectionner_materiels(int $offset):array
@@ -66,7 +67,7 @@ class Materiel extends Produit
     {
         $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS quantite_stock FROM materiels INNER JOIN produits on materiels.id_pro = produits.id_pro WHERE produits.id_pro = :id";
         $stmt = $this->pdo->prepare($query);
-        $stmt->bindValue('id', $id_materiel, \PDO::PARAM_INT);
+        $stmt->bindValue('id', $id_materiel, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_CLASS, '\ppe4\models\Materiel');
 

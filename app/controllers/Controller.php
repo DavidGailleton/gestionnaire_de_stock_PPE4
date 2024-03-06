@@ -21,6 +21,8 @@ abstract class Controller
             if (!$jwt->est_valide($token) || $jwt->est_expire($token) || !$jwt->verifier_validite($token)) {
                 $this->rediriger('login');
             }
+
+
         } else {
             $this->rediriger('login');
         }
