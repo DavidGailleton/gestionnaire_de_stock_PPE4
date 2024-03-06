@@ -33,6 +33,37 @@ class Utilisateur extends Model
         $this->mdp_a_changer = $mdp_a_changer;
     }
 
+    public function selectionner_utilisateurs():array | null
+    {
+        $query = "SELECT id_uti as id, email_uti as email, nom_uti as nom, prenom_uti as prenom, id_rol, compte_desactive_uti as compte_desactiver, mdp_a_changer_uti as mdp_a_changer FROM utilisateur";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        if (!empty($result)){
+            require_once ROOT.'app/models/Role.php';
+            $role = new Role();
+            $utilisateurs = [];
+            foreach ($result as $row){
+                $role_utilisateur = $role->selectionner_role_par_id($row['id_rol']);
+                $utilisateur = new self();
+                $utilisateur->set_utilisateur(
+                    $row['id'],
+                    $row['email'],
+                    $row['nom'],
+                    $row['prenom'],
+                    $role_utilisateur,
+                    $row['compte_desactiver'],
+                    $row['mdp_a_changer']
+                );
+
+                $utilisateurs = $utilisateur;
+                $utilisateur = null;
+            }
+            return $utilisateurs;
+        }
+        return null;
+    }
 
     /**
      * Récupère un utilisateur depuis la base de données s'il existe.

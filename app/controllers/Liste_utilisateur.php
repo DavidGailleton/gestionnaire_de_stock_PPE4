@@ -16,4 +16,9 @@ class Liste_utilisateur extends Controller
     {
         require_once ROOT.'app/views/liste_utilisateur.php';
     }
+
+    public function afficher_utilisateur_cards():void
+    {
+
+    }
 }
