@@ -69,7 +69,8 @@ class Materiel extends Produit
         $stmt = $this->pdo->prepare($query);
         $stmt->bindValue('id', $id_materiel, PDO::PARAM_INT);
         $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_CLASS, '\ppe4\models\Materiel');
+        $stmt->setFetchMode(\PDO::FETCH_CLASS, 'ppe4\models\Materiel');
+        $result = $stmt->fetch();
 
         if ($result){
             return $result;

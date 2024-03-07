@@ -3,9 +3,6 @@ require_once ROOT.'app/models/Medicament.php';
 require_once ROOT.'app/controllers/Medicaments.php';
 function medic_card_commande_vue(\ppe4\models\Medicament $medicament, int $i):string
 {
-    $medicaments = new \ppe4\controllers\Medicaments();
-
-
     return '<div class="card">
     <article class="medic_card">
     <div class="haut">
@@ -14,7 +11,7 @@ function medic_card_commande_vue(\ppe4\models\Medicament $medicament, int $i):st
             <h4>  - CIS : '. $medicament->getCis() .'</h4>
         </div>
         <div class="status">
-            '.$medicaments->status_a_afficher($medicament->getQuantiteStock()).'
+            '.$i.'
         </div>
     </div>
     <div class="bas">

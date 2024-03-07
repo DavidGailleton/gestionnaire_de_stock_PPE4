@@ -15,20 +15,24 @@ class Commande_vue extends Controller
         require_once ROOT.'app/views/commande_vue.php';
     }
 
-    public function afficher_commande_card(int $id_commande): void
+    public function afficher_produits_commande(int $id_commande): void
     {
         $ligne_commande = new Ligne_commande();
         $produits = $ligne_commande->selectionner_lignes_commande($id_commande);
 
-        if ($produits){
+        if (!empty($produits)){
             require_once ROOT.'app/views/component/medicament_card_commande_vue.php';
             require_once ROOT.'app/views/component/materiel_card_commande_vue.php';
             foreach ($produits as $produit){
                 $class = get_class($produit['produit']);
-                if ($class == 'Medicament'){
+                if ($class == 'ppe4\models\Medicament'){
                     medic_card_commande_vue($produit['produit'], $produit['quantite']);
-                } elseif ($class == 'Materiel'){
-                    medic_card_commande_vue($produit['produit'], $produit['quantite']);
+                    echo 'medicament';
+                } elseif ($class == 'ppe4\models\Materiel'){
+                    materiel_card_commande_vue($produit['produit'], $produit['quantite']);
+                    echo 'materiel';
+                } else {
+                    echo $class.'error';
                 }
             }
         } else {

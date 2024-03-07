@@ -13,7 +13,7 @@
 <main>
     <?php
     if (isset($_POST['id_commande'])) {
-        $commande_vue->afficher_commande_card($_POST['id_commande']);
+        $commande_vue->afficher_produits_commande($_POST['id_commande']);
     }
     ?>
 </main>

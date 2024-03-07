@@ -85,7 +85,8 @@ class Medicament extends Produit
         $stmt = $this->pdo->prepare($query);
         $stmt->bindValue('id', $id, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_CLASS, '\ppe4\models\Medicament');
+        $stmt->setFetchMode(\PDO::FETCH_CLASS, 'ppe4\models\Medicament');
+        return $stmt->fetch();
     }
 
     /**

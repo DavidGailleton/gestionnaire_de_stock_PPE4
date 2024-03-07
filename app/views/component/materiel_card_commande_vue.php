@@ -1,7 +1,7 @@
 <?php
 require_once ROOT.'app/models/Materiel.php';
 require_once ROOT.'app/controllers/Materiels.php';
-function materiel_card(\ppe4\models\Materiel $materiel, int $i):string
+function materiel_card_commande_vue(\ppe4\models\Materiel $materiel, int $i):string
 {
     $materiels = new \ppe4\controllers\Materiels();
 
@@ -10,7 +10,7 @@ function materiel_card(\ppe4\models\Materiel $materiel, int $i):string
     <div class="haut">
         <h3>' .$materiel->getLibelle().'</h3>
         <div class="status">
-            '.$materiels->status_a_afficher($materiel->getQuantiteStock()).'
+            '.$i.'
         </div>
     </div>
     <div class="bas">

@@ -61,7 +61,8 @@ class Ligne_commande extends Model
         $stmt = $this->pdo->prepare($query);
         $stmt->bindValue('id_commande', $id_commande, \PDO::PARAM_INT);
         $stmt->execute();
-        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $stmt->setFetchMode(\PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll();
 
         $materiel = new Materiel();
         $medicament = new Medicament();
@@ -73,10 +74,11 @@ class Ligne_commande extends Model
                 if ($r == null){
                     $r = $medicament->selectionner_medicament($row['id_produit']);
                 }
-                $produits = [
+
+                array_push($produits, [
                     'produit' => $r,
                     'quantite' => $row['quantite']
-                ];
+                ]);
                 $r = null;
             }
 
