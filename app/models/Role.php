@@ -50,7 +50,8 @@ class Role extends Model
         $stmt = $this->pdo->prepare($query);
         $stmt->bindValue('id', $id_role, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_CLASS, 'Role');
+        $stmt->setFetchMode(\PDO::FETCH_CLASS, 'ppe4\models\Role');
+        return $stmt->fetch();
     }
 
     public function getLibelle(): string

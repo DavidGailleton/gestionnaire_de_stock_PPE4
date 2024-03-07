@@ -38,7 +38,7 @@ class Utilisateur extends Model
         $query = "SELECT id_uti as id, email_uti as email, nom_uti as nom, prenom_uti as prenom, id_rol, compte_desactive_uti as compte_desactiver, mdp_a_changer_uti as mdp_a_changer FROM utilisateur";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute();
-        $result = $stmt->fetchAll();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if (!empty($result)){
             require_once ROOT.'app/models/Role.php';
@@ -57,7 +57,7 @@ class Utilisateur extends Model
                     $row['mdp_a_changer']
                 );
 
-                $utilisateurs = $utilisateur;
+                array_push($utilisateurs, $utilisateur);
                 $utilisateur = null;
             }
             return $utilisateurs;

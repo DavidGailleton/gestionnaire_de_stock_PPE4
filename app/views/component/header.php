@@ -25,7 +25,7 @@ $role = $payload['user_role'];
             <li><a href="index.php?page=confirmation_commande">Valider une commande</a></li>
         <?php endif; ?>
         <?php if ($role == 'admin'): ?>
-            <li><a href="index.php?page=gestion_utilisateur">Gestion des utilisateurs</a></li>
+            <li><a href="index.php?page=liste_utilisateur">Gestion des utilisateurs</a></li>
         <?php endif; ?>
     </ul>
     <div class="end">
