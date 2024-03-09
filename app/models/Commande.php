@@ -5,6 +5,8 @@ namespace ppe4\models;
 require_once "Model.php";
 
 use Cassandra\Date;
+use PDO;
+
 require_once "Statut.php";
 
 class Commande extends Model
@@ -201,6 +203,17 @@ class Commande extends Model
         $stmt->bindValue('id_commande', $id_commande, \PDO::PARAM_INT);
         $stmt->bindValue('statut', Statut::Refuse, \PDO::PARAM_STR);
         $stmt->execute();
+    }
+
+    public function selectionner_statut_commande(int $id_commande):string
+    {
+        $query = "SELECT statut_com FROM commande WHERE commande.id_com = :id_commande";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue('id_commande', $id_commande, \PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result['statut_com'];
     }
 
     public function get_statut(): Statut

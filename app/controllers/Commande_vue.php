@@ -6,6 +6,7 @@ use ppe4\models\Commande;
 use ppe4\models\Ligne_commande;
 
 require_once ROOT.'app/controllers/Controller.php';
+require_once ROOT.'app/models/Commande.php';
 require_once ROOT.'app/models/Ligne_commande.php';
 
 class Commande_vue extends Controller
@@ -26,11 +27,9 @@ class Commande_vue extends Controller
             foreach ($produits as $produit){
                 $class = get_class($produit['produit']);
                 if ($class == 'ppe4\models\Medicament'){
-                    medic_card_commande_vue($produit['produit'], $produit['quantite']);
-                    echo 'medicament';
+                    echo medic_card_commande_vue($produit['produit'], $produit['quantite']);
                 } elseif ($class == 'ppe4\models\Materiel'){
-                    materiel_card_commande_vue($produit['produit'], $produit['quantite']);
-                    echo 'materiel';
+                    echo materiel_card_commande_vue($produit['produit'], $produit['quantite']);
                 } else {
                     echo $class.'error';
                 }
@@ -38,5 +37,15 @@ class Commande_vue extends Controller
         } else {
             echo '<p>Aucun produits dans cette commande</p>';
         }
+    }
+
+    public function afficher_statut_commande(int $id_commande):void
+    {
+        $command_model = new Commande();
+        $statut = $command_model->selectionner_statut_commande($id_commande);
+
+        echo '
+        <div>'.$statut.'</div>
+        ';
     }
 }
