@@ -10,23 +10,27 @@ function utilisateur_card(\ppe4\models\Utilisateur $utilisateur):void
 
     echo '
     <article class="card">
-        <div>
+        <a href="#" onclick="document.getElementById(\'form_'.$utilisateur->getId().'\').submit();">
             <div>
-                <p>'.$utilisateur->getNom().' '.$utilisateur->getPrenom().'</p>
-                <br>
-                <p>'.$utilisateur->getEmail().'</p> 
+                <div>
+                    <p>'.$utilisateur->getNom().' '.$utilisateur->getPrenom().'</p>
+                    <br>
+                    <p>'.$utilisateur->getEmail().'</p> 
+                </div>
+                <div>
+                    <p>'.$utilisateur->getRole()->getLibelle().'</p>
+                </div>
             </div>
             <div>
-                <p>'.$utilisateur->getRole()->getLibelle().'</p>
+                <div>
+                    <p>'.$etat_compte.'</p>
+                </div>
             </div>
-            
-        </div>
-        <div>
-            <div>
-                <p>'.$etat_compte.'</p>
-            </div>
-        </div>
+        </a>
+        
+        <form action="index.php?page=profile_vue_admin" method="post" id="form_'.$utilisateur->getId().'" style="display: none;">
+            <input type="hidden" name="id_commande" value="'.$utilisateur->getId().'">
+        </form>
     </article>
-    
     ';
 }

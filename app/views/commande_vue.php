@@ -17,6 +17,13 @@
         $commande_vue->afficher_produits_commande($_POST['id_commande']);
     }
     ?>
+
+    <script>
+        function pageUtilisateur(id_commande)
+        {
+            document.getElementById(id_commande).submit();
+        }
+    </script>
 </main>
 <?php include_once ROOT.'app/views/component/footer.php'?>
 </body>
