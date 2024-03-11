@@ -206,6 +206,11 @@ footer
     grid-column-start: -1;
 }
 
+.card .utilisateur_card
+{
+    width: 20rem;
+}
+
 .search
 {
     width: 100%;

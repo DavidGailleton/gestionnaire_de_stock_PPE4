@@ -78,6 +78,14 @@ if (isset($_GET['action']) && $_GET['action'] != '')
             $action->deconnecter();
             header('Location: '.SERVER_URL.'index.php?page=login');
             exit();
+        case 'modifier_utilisateur':
+            require_once ROOT.'app/controllers/Action.php';
+            $action = new Action();
+            $action->modifier_utilisateur($_POST['id_utilisateur'], $_POST['email'], $_POST['prenom'], $_POST['nom'], $_POST['libelle_role']);
+            header('Location: '.SERVER_URL.'index.php?page=liste_utilisateur');
+            exit;
+        case 'creer_utilisateur':
+
         default :
             require_once (ROOT.'app/controllers/Error.php');
             $error = new \ppe4\controllers\Error();
@@ -173,6 +181,11 @@ if (isset($_GET['page']) && $_GET['page'] != '')
             require_once (ROOT.'app/controllers/Panier.php');
             $panier = new \ppe4\controllers\Panier();
             $panier->afficher();
+            break;
+        case 'creation_utilisateur':
+            require_once ROOT.'app/controllers/Creation_utilisateur.php';
+            $creation_utilisateur = new \ppe4\controllers\Creation_utilisateur();
+            $creation_utilisateur->afficher();
             break;
         default :
             require_once (ROOT.'app/controllers/Error.php');

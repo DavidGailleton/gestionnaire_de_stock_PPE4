@@ -174,6 +174,42 @@ class Utilisateur extends Model
         return $fetch['compte_desactive_uti'];
     }
 
+    public function modifier_utilisateur(int $id_utilisateur, string $email, string $prenom, string $nom, string $libelle_role):bool
+    {
+        require_once ROOT.'app/models/Role.php';
+        $role_model = new Role();
+        $role = $role_model->selectionner_role_par_libelle($libelle_role);
+        $id_role = $role_model->selectionner_id_role($role);
+
+        $query = "UPDATE utilisateur SET email_uti = :email, prenom_uti = :prenom, nom_uti = :nom, id_rol = :id_role WHERE id_uti = :id_utilisateur";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue('email', $email, PDO::PARAM_STR);
+        $stmt->bindValue('prenom', $prenom, PDO::PARAM_STR);
+        $stmt->bindValue('nom', $nom, PDO::PARAM_STR);
+        $stmt->bindValue('id_role', $id_role, PDO::PARAM_INT);
+        $stmt->bindValue('id_utilisateur', $id_utilisateur, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
+
+    public function creer_utilisateur(string $mot_de_passe_crypte, string $email, string $prenom, string $nom, string $libelle_role):bool
+    {
+        require_once ROOT.'app/models/Role.php';
+        $role_model = new Role();
+        $role = $role_model->selectionner_role_par_libelle($libelle_role);
+        $id_role = $role_model->selectionner_id_role($role);
+
+        $query = "INSERT INTO utilisateur (email_uti, password_uti, nom_uti, prenom_uti, id_rol) VALUES (:email, :mot_de_passe, :nom, :prenom, :id_role)";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue('email', $email, PDO::PARAM_STR);
+        $stmt->bindValue('prenom', $prenom, PDO::PARAM_STR);
+        $stmt->bindValue('nom', $nom, PDO::PARAM_STR);
+        $stmt->bindValue('mot_de_passe', $mot_de_passe_crypte, PDO::PARAM_STR);
+        $stmt->bindValue('id_role', $id_role, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
+
     /**
      * Met à jour le mot de passe de l'utilisateur
      *
