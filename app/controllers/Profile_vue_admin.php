@@ -43,5 +43,12 @@ class Profile_vue_admin extends Controller
         return ob_get_clean();
     }
 
+    public function modifier_utilisateur(int $id_utilisateur, string $email, string $prenom, string $nom, string $libelle_role):bool
+    {
+        require_once ROOT.'app/models/Utilisateur.php';
+        $utilisateur_model = new Utilisateur();
+        return $utilisateur_model->modifier_utilisateur($id_utilisateur, $email, $prenom, $nom, $libelle_role);
+    }
+
 
 }

@@ -35,7 +35,7 @@ require_once ROOT.'app/controllers/Creation_utilisateur.php';
         <div>
             <p>Mot de passe temporaire</p>
             <label>
-                <input type="text" name="password">
+                <input type="password" name="motdepasse">
             </label>
         </div>
         <div>

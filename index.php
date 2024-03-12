@@ -24,7 +24,7 @@ if (isset($_GET['action']) && $_GET['action'] != '')
                 $panier = new \ppe4\controllers\Panier();
                 $panier->ajouter_au_panier($_POST['id'], $_POST['qte']);
             }
-            header('Location: '.SERVER_URL.'index.php?page=error');
+            header('Location: index.php?page=error');
             exit();
         case 'modifier_mdp' :
             if (isset($_SESSION['user_email']) && isset($_POST['ancien_mdp']) && isset($_POST['nouveau_mdp']))
@@ -42,10 +42,13 @@ if (isset($_GET['action']) && $_GET['action'] != '')
             }
             break;
         case 'recherche_medicament':
-            header('Location: '.SERVER_URL.'index.php?page=medicaments&recherche='.$_POST['recherche'].'&no_page=1');
+            header('Location: index.php?page=medicaments&recherche='.$_POST['recherche'].'&no_page=1');
             exit();
         case 'recherche_materiel':
-            header('Location: '.SERVER_URL.'index.php?page=materiels&recherche='.$_POST['recherche'].'&no_page=1');
+            header('Location: index.php?page=materiels&recherche='.$_POST['recherche'].'&no_page=1');
+            exit();
+        case 'recherche_utilisateur':
+            header('Location: index.php?page=materiels&recherche='.$_POST['recherche'].'&no_page=1');
             exit();
         case 'supprimer_du_panier':
             if (isset($_POST['id'])){
@@ -53,7 +56,7 @@ if (isset($_GET['action']) && $_GET['action'] != '')
                 $panier = new \ppe4\controllers\Panier();
                 $panier->supprimer_du_panier($_POST['id']);
             }
-            header('Location: '.SERVER_URL.'index.php?page=panier');
+            header('Location: index.php?page=panier');
             exit();
         case 'confirmation_commande':
             require_once ROOT.'app/controllers/JWT.php';
@@ -76,16 +79,20 @@ if (isset($_GET['action']) && $_GET['action'] != '')
             require_once ROOT.'app/controllers/Action.php';
             $action = new Action();
             $action->deconnecter();
-            header('Location: '.SERVER_URL.'index.php?page=login');
+            header('Location: index.php?page=login');
             exit();
         case 'modifier_utilisateur':
-            require_once ROOT.'app/controllers/Action.php';
-            $action = new Action();
-            $action->modifier_utilisateur($_POST['id_utilisateur'], $_POST['email'], $_POST['prenom'], $_POST['nom'], $_POST['libelle_role']);
-            header('Location: '.SERVER_URL.'index.php?page=liste_utilisateur');
+            require_once ROOT.'app/controllers/Profile_vue_admin.php';
+            $profile_vue_admin_model = new \ppe4\controllers\Profile_vue_admin();
+            $profile_vue_admin_model->modifier_utilisateur($_POST['id_utilisateur'], $_POST['email'], $_POST['prenom'], $_POST['nom'], $_POST['libelle_role']);
+            header('Location: index.php?page=liste_utilisateur');
             exit;
         case 'creer_utilisateur':
-
+            require_once ROOT.'app/controllers/Creation_utilisateur.php';
+            $creation_utilisateur = new \ppe4\controllers\Creation_utilisateur();
+            $creation_utilisateur->creer_utilisateur($_POST['motdepasse'], $_POST['email'], $_POST['prenom'], $_POST['nom'], $_POST['libelle_role']);
+            header('Location: index.php?page=liste_utilisateur');
+            exit;
         default :
             require_once (ROOT.'app/controllers/Error.php');
             $error = new \ppe4\controllers\Error();
@@ -117,10 +124,10 @@ if (isset($_GET['page']) && $_GET['page'] != '')
             $medicament = new \ppe4\controllers\Medicaments();
             if (!isset($_GET['no_page'])){
                 if (isset($_GET['recherche'])){
-                    header('Location: '.SERVER_URL.'index.php?page=medicaments&recherche='.$_GET['recherche'].'&no_page=1');
+                    header('Location: index.php?page=medicaments&recherche='.$_GET['recherche'].'&no_page=1');
                     exit();
                 }
-                header('Location: '.SERVER_URL.'index.php?page=medicaments&no_page=1');
+                header('Location: index.php?page=medicaments&no_page=1');
                 exit();
             }
             $medicament->afficher();
@@ -130,10 +137,10 @@ if (isset($_GET['page']) && $_GET['page'] != '')
             $materiel = new \ppe4\controllers\Materiels();
             if (!isset($_GET['no_page'])){
                 if (isset($_GET['recherche'])){
-                    header('Location: '.SERVER_URL.'index.php?page=materiels&recherche='.$_GET['recherche'].'&no_page=1');
+                    header('Location: index.php?page=materiels&recherche='.$_GET['recherche'].'&no_page=1');
                     exit();
                 }
-                header('Location: '.SERVER_URL.'index.php?page=materiels&no_page=1');
+                header('Location: index.php?page=materiels&no_page=1');
                 exit();
             }
             $materiel->index();
@@ -194,6 +201,6 @@ if (isset($_GET['page']) && $_GET['page'] != '')
             break;
     endswitch;
 } else {
-    header('Location: '.SERVER_URL.'index.php?page=login');
+    header('Location: index.php?page=login');
     exit();
 }

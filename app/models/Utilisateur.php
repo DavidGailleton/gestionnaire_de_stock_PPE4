@@ -192,13 +192,8 @@ class Utilisateur extends Model
         return $stmt->rowCount();
     }
 
-    public function creer_utilisateur(string $mot_de_passe_crypte, string $email, string $prenom, string $nom, string $libelle_role):bool
+    public function creer_utilisateur(string $mot_de_passe_crypte, string $email, string $prenom, string $nom, int $id_role):bool
     {
-        require_once ROOT.'app/models/Role.php';
-        $role_model = new Role();
-        $role = $role_model->selectionner_role_par_libelle($libelle_role);
-        $id_role = $role_model->selectionner_id_role($role);
-
         $query = "INSERT INTO utilisateur (email_uti, password_uti, nom_uti, prenom_uti, id_rol) VALUES (:email, :mot_de_passe, :nom, :prenom, :id_role)";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindValue('email', $email, PDO::PARAM_STR);

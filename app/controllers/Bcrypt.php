@@ -2,6 +2,8 @@
 
 namespace ppe4\controllers;
 
+use ppe4\models\Utilisateur;
+
 class Bcrypt
 {
     /**
@@ -24,6 +26,7 @@ class Bcrypt
      */
     public function verifier_mot_de_passe(string $email, string $mot_de_passe):bool
     {
+        require_once ROOT.'app/models/Utilisateur.php';
         $utilisateur = new Utilisateur();
 
         $mot_de_passe_importe = $utilisateur->selectionner_mot_de_passe($email);

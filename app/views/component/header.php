@@ -27,6 +27,9 @@ $role = $payload['user_role'];
         <?php if ($role == 'admin'): ?>
             <li><a href="index.php?page=liste_utilisateur">Gestion des utilisateurs</a></li>
         <?php endif; ?>
+        <?php if ($role == 'admin'): ?>
+            <li><a href="index.php?page=creation_utilisateur">Créer un utilisateur</a></li>
+        <?php endif; ?>
     </ul>
     <div class="end">
         <a href="index.php?page=panier">
