@@ -25,13 +25,15 @@ class Nouveau_mdp
      */
     public function modifier_mot_de_passe(string $email, string $ancien_mot_de_passe, string $nouveau_mot_de_passe):string
     {
+        require_once ROOT.'app/controllers/Bcrypt.php';
+        $bcrypt = new Bcrypt();
         if ($ancien_mot_de_passe == $nouveau_mot_de_passe){
             return 'L\'ancien et le nouveau mdp sont les mêmes';
         }
 
         $utilisateur = new Utilisateur();
         if ($this->mot_de_passe_utilisateur_valide($_SESSION['user_email'], $ancien_mot_de_passe) && $this->mot_de_passe_respecte_regle($nouveau_mot_de_passe)){
-            $nouveau_mdp_crypte = $this->crypter_mot_de_passe($nouveau_mot_de_passe);
+            $nouveau_mdp_crypte = $bcrypt->crypter_mot_de_passe($nouveau_mot_de_passe);
             $utilisateur->changer_mdp_utilisateur($email, $nouveau_mdp_crypte);
             return 'succes';
         } else {
@@ -74,17 +76,6 @@ class Nouveau_mdp
             return false;
         }
         return true;
-    }
-
-    /**
-     * Crypt le mot de passe mis en paramètre puis retourne son hash
-     *
-     * @param string $mot_de_passe
-     * @return string
-     */
-    public function crypter_mot_de_passe(string $mot_de_passe):string
-    {
-        return password_hash($mot_de_passe, PASSWORD_BCRYPT, ['cost' => 13]);
     }
 
 }

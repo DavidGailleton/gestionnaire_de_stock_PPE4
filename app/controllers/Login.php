@@ -49,9 +49,12 @@ class Login
         $utilisateur = new Utilisateur();
         $jwt = new JWT();
 
+        require_once ROOT.'app/controllers/Bcrypt.php';
+        $bcrypt = new Bcrypt();
+
         $utilisateur_a_connecter = $utilisateur->selectionner_utilisateur_par_email($email);
 
-        if ($utilisateur_a_connecter && $this->compte_non_bloque($utilisateur_a_connecter) && $this->verifier_mot_de_passe($email, $mot_de_passe)){
+        if ($utilisateur_a_connecter && $this->compte_non_bloque($utilisateur_a_connecter) && $bcrypt->verifier_mot_de_passe($email, $mot_de_passe)){
             if ($this->mot_de_passe_a_changer($email)){
                 $_SESSION['user_email'] = $email;
                 header('Location: '.SERVER_URL.'index.php?page=nouveau_mdp');
@@ -90,24 +93,6 @@ class Login
         }
 
         $this->afficher();
-    }
-
-
-
-    /**
-     * Vérifie si le mot de passe mis en paramètre est le bon mot de passe, retourne true si c'est le cas, false sinon
-     *
-     * @param string $email
-     * @param string $mot_de_passe
-     * @return bool
-     */
-    public function verifier_mot_de_passe(string $email, string $mot_de_passe):bool
-    {
-        $utilisateur = new Utilisateur();
-
-        $mot_de_passe_importe = $utilisateur->selectionner_mot_de_passe($email);
-
-        return password_verify($mot_de_passe, $mot_de_passe_importe);
     }
 
     /**
