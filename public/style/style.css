@@ -306,3 +306,12 @@ footer
     border-top-right-radius: 3em;
     border-bottom-right-radius: 3em;
 }
+
+.mainListUtilisateur
+{
+    width: 95vh;
+    min-height: 85vh;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}

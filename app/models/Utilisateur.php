@@ -116,6 +116,93 @@ class Utilisateur extends Model
         }
     }
 
+    public function selectionner_utilisateurs_par_recherche(int $offset, string $recherche):array | null
+    {
+        $query = "SELECT id_uti as id, email_uti as email, nom_uti as nom, prenom_uti as prenom, id_rol, compte_desactive_uti as compte_desactiver, mdp_a_changer_uti as mdp_a_changer FROM utilisateur WHERE (nom_uti LIKE :recherche OR prenom_uti LIKE :recherche OR email_uti LIKE :recherche) LIMIT :offset, 25";
+        $stmt = $this->pdo->prepare($query);
+        $recherche_sql = '%'.$recherche.'%';
+        $stmt->bindValue('recherche', $recherche_sql, PDO::PARAM_STR);
+        $stmt->bindValue('offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if (!empty($result)){
+            require_once ROOT.'app/models/Role.php';
+            $role = new Role();
+            $utilisateurs = [];
+            foreach ($result as $row){
+                $role_utilisateur = $role->selectionner_role_par_id($row['id_rol']);
+                $utilisateur = new self();
+                $utilisateur->set_utilisateur(
+                    $row['id'],
+                    $row['email'],
+                    $row['nom'],
+                    $row['prenom'],
+                    $role_utilisateur,
+                    $row['compte_desactiver'],
+                    $row['mdp_a_changer']
+                );
+
+                array_push($utilisateurs, $utilisateur);
+                $utilisateur = null;
+            }
+            return $utilisateurs;
+        } else {
+            return null;
+        }
+    }
+    public function selectionner_utilisateurs_avec_offset($offset):array | null
+    {
+        $query = "SELECT id_uti as id, email_uti as email, nom_uti as nom, prenom_uti as prenom, id_rol, compte_desactive_uti as compte_desactiver, mdp_a_changer_uti as mdp_a_changer FROM utilisateur LIMIT :offset, 25";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue('offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if (!empty($result)){
+            require_once ROOT.'app/models/Role.php';
+            $role = new Role();
+            $utilisateurs = [];
+            foreach ($result as $row){
+                $role_utilisateur = $role->selectionner_role_par_id($row['id_rol']);
+                $utilisateur = new self();
+                $utilisateur->set_utilisateur(
+                    $row['id'],
+                    $row['email'],
+                    $row['nom'],
+                    $row['prenom'],
+                    $role_utilisateur,
+                    $row['compte_desactiver'],
+                    $row['mdp_a_changer']
+                );
+
+                array_push($utilisateurs, $utilisateur);
+                $utilisateur = null;
+            }
+            return $utilisateurs;
+        }
+        return null;
+    }
+
+    public function compter_nb_utilisateur():int
+    {
+        $query = "SELECT COUNT(*) FROM utilisateur";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    }
+
+    public function compter_nb_medicament_par_recherche(string $recherche):int
+    {
+        $query = "SELECT COUNT(*) FROM utilisateur WHERE nom_uti LIKE :recherche OR prenom_uti LIKE :recherche OR email_uti LIKE :recherche";
+        $stmt = $this->pdo->prepare($query);
+        $recherche = '%'.$recherche.'%';
+        $stmt->bindParam('recherche', $recherche, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    }
+
+
     /**
      * Récupère le mot de passe d'un utilisateur
      *

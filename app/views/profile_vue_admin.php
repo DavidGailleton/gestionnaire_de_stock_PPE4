@@ -48,6 +48,15 @@ if (isset($_POST['id_utilisateur'])){
                 </label>
             </div>
             <button type="submit">Modifier l\'utilisateur</button>
+            <form action="">
+                <button type="submit">Supprimer l\'utilisateur</button>
+            </form>
+            <form action="">
+                <button type="submit">Désactiver l\'utilisateur</button>
+            </form>
+            <form action="">
+                <button type="submit">Reinitialiser mot de passe</button>
+            </form>
         </form>
         ';
     } else {

@@ -25,11 +25,11 @@ class Medicaments extends Controller
      * @param string|null $recherche
      * @return int
      */
-    public function afficher_medicaments_card(int $numero_page, ?string $recherche):int
+    public function afficher_medicaments_card(int $numero_page, string $recherche):int
     {
         require_once ROOT.'app/models/Medicament.php';
         $medicament = new \ppe4\models\Medicament();
-        if (isset($recherche)){
+        if ($recherche){
             $medicaments = $medicament->selectionner_medicaments_par_recherche(($numero_page - 1) * 25, $recherche);
             $nombre_page = intval(ceil($medicament->compter_nb_medicament_par_recherche($recherche) / 25));
         } else {

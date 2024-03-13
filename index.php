@@ -48,7 +48,7 @@ if (isset($_GET['action']) && $_GET['action'] != '')
             header('Location: index.php?page=materiels&recherche='.$_POST['recherche'].'&no_page=1');
             exit();
         case 'recherche_utilisateur':
-            header('Location: index.php?page=materiels&recherche='.$_POST['recherche'].'&no_page=1');
+            header('Location: index.php?page=liste_utilisateur&recherche='.$_POST['recherche'].'&no_page=1');
             exit();
         case 'supprimer_du_panier':
             if (isset($_POST['id'])){
@@ -167,6 +167,14 @@ if (isset($_GET['page']) && $_GET['page'] != '')
         case 'liste_utilisateur' :
             require_once (ROOT.'app/controllers/Liste_utilisateur.php');
             $liste_utilisateur = new \ppe4\controllers\Liste_utilisateur();
+            if (!isset($_GET['no_page'])){
+                if (isset($_GET['recherche'])){
+                    header('Location: index.php?page=liste_utilisateur&recherche='.$_GET['recherche'].'&no_page=1');
+                    exit();
+                }
+                header('Location: index.php?page=liste_utilisateur&no_page=1');
+                exit();
+            }
             $liste_utilisateur->afficher();
             break;
         case 'page_produit' :
