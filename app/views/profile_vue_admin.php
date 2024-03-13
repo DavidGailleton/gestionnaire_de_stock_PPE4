@@ -48,14 +48,15 @@ if (isset($_POST['id_utilisateur'])){
                 </label>
             </div>
             <button type="submit">Modifier l\'utilisateur</button>
-            <form action="">
-                <button type="submit">Supprimer l\'utilisateur</button>
+            <form action="index.php?action=supprimer_utilisateur" method="post">
+                <input type="number" name="id_utilisateur" style="display: none" value="'.$utilisateur->getId().'">
+                <button id="boutton_supprimer" type="submit" onclick="return confirmer_suppression()">Supprimer l\'utilisateur</button>
             </form>
             <form action="">
-                <button type="submit">Désactiver l\'utilisateur</button>
+                <button id="boutton_desactiver" type="submit">Désactiver l\'utilisateur</button>
             </form>
             <form action="">
-                <button type="submit">Reinitialiser mot de passe</button>
+                <button id="boutton_reinitialiser_mot_de_passe" type="submit">Reinitialiser mot de passe</button>
             </form>
         </form>
         ';
@@ -65,6 +66,19 @@ if (isset($_POST['id_utilisateur'])){
         ';
     }
     ?>
+    <script>
+        function confirmer_suppression() {
+            let confirmation = confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?");
+
+            if (confirmation) {
+                console.log("L'utilisateur a confirmé l'action.");
+                return true;
+            } else {
+                console.log("L'utilisateur a annulé l'action.");
+                return false;
+            }
+        }
+    </script>
 </main>
 <?php include_once ROOT.'app/views/component/footer.php'?>
 </body>

@@ -50,5 +50,17 @@ class Profile_vue_admin extends Controller
         return $utilisateur_model->modifier_utilisateur($id_utilisateur, $email, $prenom, $nom, $libelle_role);
     }
 
+    public function archiver_utilisateur($id_utilisateur):void
+    {
+        require_once ROOT.'app/models/Utilisateur.php';
+        $utilisateur_model = new Utilisateur();
+        $utilisateur_model->archiver_utilisateur($id_utilisateur);
+    }
 
+    public function desactiver_utilisateur($id_utilisateur):void
+    {
+        require_once ROOT.'app/models/Utilisateur.php';
+        $utilisateur_model = new Utilisateur();
+        $utilisateur_model->desactiver_utilisateur($id_utilisateur);
+    }
 }

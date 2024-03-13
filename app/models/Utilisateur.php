@@ -35,7 +35,7 @@ class Utilisateur extends Model
 
     public function selectionner_utilisateurs():array | null
     {
-        $query = "SELECT id_uti as id, email_uti as email, nom_uti as nom, prenom_uti as prenom, id_rol, compte_desactive_uti as compte_desactiver, mdp_a_changer_uti as mdp_a_changer FROM utilisateur";
+        $query = "SELECT id_uti as id, email_uti as email, nom_uti as nom, prenom_uti as prenom, id_rol, compte_desactive_uti as compte_desactiver, mdp_a_changer_uti as mdp_a_changer FROM utilisateur WHERE est_archive_uti = false";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -75,7 +75,7 @@ class Utilisateur extends Model
      */
     public function selectionner_utilisateur_par_email(string $email):Utilisateur | null
     {
-        $query = "SELECT id_uti, email_uti, nom_uti, prenom_uti, compte_desactive_uti, mdp_a_changer_uti FROM utilisateur WHERE email_uti = :email";
+        $query = "SELECT id_uti, email_uti, nom_uti, prenom_uti, compte_desactive_uti, mdp_a_changer_uti FROM utilisateur WHERE email_uti = :email AND est_archive_uti = false";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['email' => $email]);
         $fetch = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -97,7 +97,7 @@ class Utilisateur extends Model
 
     public function selectionner_utilisateur_par_id(int $id_utilisateur):Utilisateur | null
     {
-        $query = "SELECT id_uti, email_uti, nom_uti, prenom_uti, compte_desactive_uti, mdp_a_changer_uti FROM utilisateur WHERE id_uti = :id";
+        $query = "SELECT id_uti, email_uti, nom_uti, prenom_uti, compte_desactive_uti, mdp_a_changer_uti FROM utilisateur WHERE id_uti = :id AND est_archive_uti = false";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['id' => $id_utilisateur]);
         $fetch = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -118,7 +118,7 @@ class Utilisateur extends Model
 
     public function selectionner_utilisateurs_par_recherche(int $offset, string $recherche):array | null
     {
-        $query = "SELECT id_uti as id, email_uti as email, nom_uti as nom, prenom_uti as prenom, id_rol, compte_desactive_uti as compte_desactiver, mdp_a_changer_uti as mdp_a_changer FROM utilisateur WHERE (nom_uti LIKE :recherche OR prenom_uti LIKE :recherche OR email_uti LIKE :recherche) LIMIT :offset, 25";
+        $query = "SELECT id_uti as id, email_uti as email, nom_uti as nom, prenom_uti as prenom, id_rol, compte_desactive_uti as compte_desactiver, mdp_a_changer_uti as mdp_a_changer FROM utilisateur WHERE (nom_uti LIKE :recherche OR prenom_uti LIKE :recherche OR email_uti LIKE :recherche) AND est_archive_uti = false LIMIT :offset, 25";
         $stmt = $this->pdo->prepare($query);
         $recherche_sql = '%'.$recherche.'%';
         $stmt->bindValue('recherche', $recherche_sql, PDO::PARAM_STR);
@@ -153,7 +153,7 @@ class Utilisateur extends Model
     }
     public function selectionner_utilisateurs_avec_offset($offset):array | null
     {
-        $query = "SELECT id_uti as id, email_uti as email, nom_uti as nom, prenom_uti as prenom, id_rol, compte_desactive_uti as compte_desactiver, mdp_a_changer_uti as mdp_a_changer FROM utilisateur LIMIT :offset, 25";
+        $query = "SELECT id_uti as id, email_uti as email, nom_uti as nom, prenom_uti as prenom, id_rol, compte_desactive_uti as compte_desactiver, mdp_a_changer_uti as mdp_a_changer FROM utilisateur WHERE est_archive_uti = false LIMIT :offset, 25";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindValue('offset', $offset, PDO::PARAM_INT);
         $stmt->execute();
@@ -192,9 +192,9 @@ class Utilisateur extends Model
         return $stmt->fetchColumn();
     }
 
-    public function compter_nb_medicament_par_recherche(string $recherche):int
+    public function compter_nb_utilisateur_par_recherche(string $recherche):int
     {
-        $query = "SELECT COUNT(*) FROM utilisateur WHERE nom_uti LIKE :recherche OR prenom_uti LIKE :recherche OR email_uti LIKE :recherche";
+        $query = "SELECT COUNT(*) FROM utilisateur WHERE (nom_uti LIKE :recherche OR prenom_uti LIKE :recherche OR email_uti LIKE :recherche) AND est_archive_uti = false";
         $stmt = $this->pdo->prepare($query);
         $recherche = '%'.$recherche.'%';
         $stmt->bindParam('recherche', $recherche, PDO::PARAM_STR);
@@ -211,7 +211,7 @@ class Utilisateur extends Model
      */
     public function selectionner_mot_de_passe(string $email):string
     {
-        $query = "SELECT password_uti FROM utilisateur WHERE email_uti = :email";
+        $query = "SELECT password_uti FROM utilisateur WHERE email_uti = :email AND est_archive_uti = false";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['email' => $email]);
         $fetch = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -227,7 +227,7 @@ class Utilisateur extends Model
      */
     public function desactiver_utilisateur(int $id):void
     {
-        $query = "UPDATE utilisateur SET compte_desactive_uti = true WHERE id_uti = :id";
+        $query = "UPDATE utilisateur SET compte_desactive_uti = true WHERE id_uti = :id AND est_archive_uti = false";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['id' => $id]);
     }
@@ -240,7 +240,7 @@ class Utilisateur extends Model
      */
     public function activer_utilisateur(int $id):void
     {
-        $query = "UPDATE utilisateur SET compte_desactive_uti = false WHERE id_uti = :id";
+        $query = "UPDATE utilisateur SET compte_desactive_uti = false WHERE id_uti = :id AND est_archive_uti = false";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['id' => $id]);
     }
@@ -253,7 +253,7 @@ class Utilisateur extends Model
      */
     public function selectionner_statut_activation_utilisateur(int $id):bool
     {
-        $query = "SELECT compte_desactive_uti FROM utilisateur WHERE id_uti = :id";
+        $query = "SELECT compte_desactive_uti FROM utilisateur WHERE id_uti = :id AND est_archive_uti = false";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['id' => $id]);
         $fetch = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -268,7 +268,7 @@ class Utilisateur extends Model
         $role = $role_model->selectionner_role_par_libelle($libelle_role);
         $id_role = $role_model->selectionner_id_role($role);
 
-        $query = "UPDATE utilisateur SET email_uti = :email, prenom_uti = :prenom, nom_uti = :nom, id_rol = :id_role WHERE id_uti = :id_utilisateur";
+        $query = "UPDATE utilisateur SET email_uti = :email, prenom_uti = :prenom, nom_uti = :nom, id_rol = :id_role WHERE id_uti = :id_utilisateur AND est_archive_uti = false";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindValue('email', $email, PDO::PARAM_STR);
         $stmt->bindValue('prenom', $prenom, PDO::PARAM_STR);
@@ -292,6 +292,15 @@ class Utilisateur extends Model
         return $stmt->rowCount();
     }
 
+    public function archiver_utilisateur($id_utilisateur):void
+    {
+        $query = "UPDATE utilisateur SET est_archive_uti = true WHERE id_uti = :id";;
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue('id', $id_utilisateur, PDO::PARAM_INT);
+        $stmt->execute();
+        $stmt->fetch();
+    }
+
     /**
      * Met à jour le mot de passe de l'utilisateur
      *
@@ -301,7 +310,7 @@ class Utilisateur extends Model
      */
     public function changer_mdp_utilisateur(string $email, string $nouveau_mdp): void
     {
-        $query = "UPDATE utilisateur SET mdp_a_changer_uti = false, password_uti = :nouveau_mdp WHERE email_uti = :email";
+        $query = "UPDATE utilisateur SET mdp_a_changer_uti = false, password_uti = :nouveau_mdp WHERE email_uti = :email AND est_archive_uti = false";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['nouveau_mdp' => $nouveau_mdp, 'email' => $email]);
         $stmt->fetch();
@@ -309,7 +318,7 @@ class Utilisateur extends Model
 
     public function selectionner_mdp_a_changer(string $email):bool
     {
-        $query = "SELECT mdp_a_changer_uti FROM utilisateur WHERE email_uti = :email";
+        $query = "SELECT mdp_a_changer_uti FROM utilisateur WHERE email_uti = :email AND est_archive_uti = false";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['email' => $email]);
         $fetch = $stmt->fetch(PDO::FETCH_ASSOC);

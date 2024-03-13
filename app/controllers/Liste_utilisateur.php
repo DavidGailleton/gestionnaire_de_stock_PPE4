@@ -25,7 +25,7 @@ class Liste_utilisateur extends Controller
         require_once ROOT.'app/views/component/utilisateur_card.php';
         if (isset($recherche)){
             $utilisateurs = $utilisateur_model->selectionner_utilisateurs_par_recherche($numero_page, $recherche);
-            $nombre_page = intval(ceil($utilisateur_model->compter_nb_medicament_par_recherche($recherche) / 25));
+            $nombre_page = intval(ceil($utilisateur_model->compter_nb_utilisateur_par_recherche($recherche) / 25));
         } else {
             $utilisateurs = $utilisateur_model->selectionner_utilisateurs_avec_offset(($numero_page - 1) * 25);
             $nombre_page = intval(ceil($utilisateur_model->compter_nb_utilisateur() / 25));

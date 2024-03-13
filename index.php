@@ -93,6 +93,18 @@ if (isset($_GET['action']) && $_GET['action'] != '')
             $creation_utilisateur->creer_utilisateur($_POST['motdepasse'], $_POST['email'], $_POST['prenom'], $_POST['nom'], $_POST['libelle_role']);
             header('Location: index.php?page=liste_utilisateur');
             exit;
+        case 'supprimer_utilisateur':
+            require_once ROOT.'app/controllers/Profile_vue_admin.php';
+            $profile_vue_admin = new \ppe4\controllers\Profile_vue_admin();
+            $profile_vue_admin->archiver_utilisateur($_POST['id_utilisateur']);
+            header('Location: index.php?page=liste_utilisateur');
+            exit;
+        case 'desactiver_utiliasteur':
+            require_once ROOT.'app/controllers/Profile_vue_admin.php';
+            $profile_vue_admin = new \ppe4\controllers\Profile_vue_admin();
+            $profile_vue_admin->desactiver_utilisateur($_POST['id_utilisateur']);
+            header('Location: index.php?page=liste_utilisateur');
+            exit;
         default :
             require_once (ROOT.'app/controllers/Error.php');
             $error = new \ppe4\controllers\Error();

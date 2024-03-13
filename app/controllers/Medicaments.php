@@ -25,7 +25,7 @@ class Medicaments extends Controller
      * @param string|null $recherche
      * @return int
      */
-    public function afficher_medicaments_card(int $numero_page, string $recherche):int
+    public function afficher_medicaments_card(int $numero_page, ?string $recherche):int
     {
         require_once ROOT.'app/models/Medicament.php';
         $medicament = new \ppe4\models\Medicament();
