@@ -229,7 +229,9 @@ class Utilisateur extends Model
     {
         $query = "UPDATE utilisateur SET compte_desactive_uti = true WHERE id_uti = :id AND est_archive_uti = false";
         $stmt = $this->pdo->prepare($query);
-        $stmt->execute(['id' => $id]);
+        $stmt->bindValue('id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $stmt->fetch();
     }
 
     /**
@@ -292,10 +294,20 @@ class Utilisateur extends Model
         return $stmt->rowCount();
     }
 
-    public function archiver_utilisateur($id_utilisateur):void
+    public function archiver_utilisateur($id_utilisateur):bool
     {
         $query = "UPDATE utilisateur SET est_archive_uti = true WHERE id_uti = :id";;
         $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue('id', $id_utilisateur, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
+
+    public function reinitialiser_mot_de_passe($id_utilisateur, $nouveau_mot_de_passe):void
+    {
+        $query = "UPDATE utilisateur SET mdp_a_changer_uti = true, password_uti = :nouveau_mot_de_passe WHERE id_uti = :id AND est_archive_uti = false";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue('nouveau_mot_de_passe', $nouveau_mot_de_passe, PDO::PARAM_STR);
         $stmt->bindValue('id', $id_utilisateur, PDO::PARAM_INT);
         $stmt->execute();
         $stmt->fetch();

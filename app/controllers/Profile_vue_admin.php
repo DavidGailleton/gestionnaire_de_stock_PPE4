@@ -54,7 +54,9 @@ class Profile_vue_admin extends Controller
     {
         require_once ROOT.'app/models/Utilisateur.php';
         $utilisateur_model = new Utilisateur();
-        $utilisateur_model->archiver_utilisateur($id_utilisateur);
+        if ($utilisateur_model->archiver_utilisateur($id_utilisateur) == false){
+            echo '<script>alert("Impossible d\'archiver l\'utilisateur")</script>';
+        }
     }
 
     public function desactiver_utilisateur($id_utilisateur):void
@@ -62,5 +64,23 @@ class Profile_vue_admin extends Controller
         require_once ROOT.'app/models/Utilisateur.php';
         $utilisateur_model = new Utilisateur();
         $utilisateur_model->desactiver_utilisateur($id_utilisateur);
+    }
+
+    public function activer_utilisateur($id_utilisateur):void
+    {
+        require_once ROOT.'app/models/Utilisateur.php';
+        $utilisateur_model = new Utilisateur();
+        $utilisateur_model->activer_utilisateur($id_utilisateur);
+    }
+
+    public function reinitialiser_mot_de_passe($id_utilisateur, $mot_de_passe):void
+    {
+        require_once ROOT.'app/controllers/Bcrypt.php';
+        $bcrypt = new Bcrypt();
+        $nouveau_mdp_crypte = $bcrypt->crypter_mot_de_passe($mot_de_passe);
+
+        require_once ROOT . 'app/models/Utilisateur.php';
+        $utilisateur_model = new Utilisateur();
+        $utilisateur_model->reinitialiser_mot_de_passe($id_utilisateur, $nouveau_mdp_crypte);
     }
 }

@@ -19,7 +19,7 @@ if (isset($_POST['id_utilisateur'])){
     <?php
     if (isset($_POST['id_utilisateur']) && $utilisateur){
         echo '
-        <form method="post" action="index.php?action=modifier_utilisateur">
+        <form class="form_profile_vue_admin" method="post" action="index.php?action=modifier_utilisateur">
             <div>
                 <input type="number" name="id_utilisateur" style="display: none" value="'.$utilisateur->getId().'">
                 <p>Email</p>
@@ -51,12 +51,25 @@ if (isset($_POST['id_utilisateur'])){
             <form action="index.php?action=supprimer_utilisateur" method="post">
                 <input type="number" name="id_utilisateur" style="display: none" value="'.$utilisateur->getId().'">
                 <button id="boutton_supprimer" type="submit" onclick="return confirmer_suppression()">Supprimer l\'utilisateur</button>
-            </form>
-            <form action="">
+            </form>';
+        if ($utilisateur->isCompteDesactive()){
+            echo '<form action="index.php?action=activer_utilisateur" method="post">
+                <input type="number" name="id_utilisateur" style="display: none" value="'.$utilisateur->getId().'">
+                <button id="boutton_activer" type="submit">Activer l\'utilisateur</button>
+            </form>';
+        } else {
+            echo '<form action="index.php?action=desactiver_utiliasteur" method="post">
+                <input type="number" name="id_utilisateur" style="display: none" value="'.$utilisateur->getId().'">
                 <button id="boutton_desactiver" type="submit">Désactiver l\'utilisateur</button>
-            </form>
-            <form action="">
-                <button id="boutton_reinitialiser_mot_de_passe" type="submit">Reinitialiser mot de passe</button>
+            </form>';
+        }
+
+
+        echo    '
+            <form action="index.php?action=reinitialiser_mot_de_passe" method="post">
+                <input type="number" name="id_utilisateur" style="display: none" value="'.$utilisateur->getId().'">
+                <input name="mdp_a_changer" id="mdp_a_changer" type="text" value="" style="display: none">
+                <button id="boutton_reinitialiser_mot_de_passe" type="submit" onclick="return reinitialiser_mot_de_passe()">Reinitialiser mot de passe</button>
             </form>
         </form>
         ';
@@ -72,6 +85,19 @@ if (isset($_POST['id_utilisateur'])){
 
             if (confirmation) {
                 console.log("L'utilisateur a confirmé l'action.");
+                return true;
+            } else {
+                console.log("L'utilisateur a annulé l'action.");
+                return false;
+            }
+        }
+
+        function reinitialiser_mot_de_passe(){
+            let mot_de_passe = prompt("Veuillez entrer le nouveau mot de passe pour cet utilisateur");
+
+            if (mot_de_passe.trim() !== null || ""){
+                console.log("L'utilisateur a confirmé l'action.");
+                document.getElementById("mdp_a_changer").value = mot_de_passe;
                 return true;
             } else {
                 console.log("L'utilisateur a annulé l'action.");

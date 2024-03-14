@@ -105,6 +105,17 @@ if (isset($_GET['action']) && $_GET['action'] != '')
             $profile_vue_admin->desactiver_utilisateur($_POST['id_utilisateur']);
             header('Location: index.php?page=liste_utilisateur');
             exit;
+        case 'activer_utilisateur':
+            require_once ROOT.'app/controllers/Profile_vue_admin.php';
+            $profile_vue_admin = new \ppe4\controllers\Profile_vue_admin();
+            $profile_vue_admin->activer_utilisateur($_POST['id_utilisateur']);
+            header('Location: index.php?page=liste_utilisateur');
+            exit;
+        case 'reinitialiser_mot_de_passe':
+            require_once ROOT.'app/controllers/Profile_vue_admin.php';
+            $profile_vue_admin = new \ppe4\controllers\Profile_vue_admin();
+            $profile_vue_admin->reinitialiser_mot_de_passe($_POST['id_utilisateur'], $_POST['mdp_a_changer']);
+            header('Location: index.php?page=liste_utilisateur');
         default :
             require_once (ROOT.'app/controllers/Error.php');
             $error = new \ppe4\controllers\Error();

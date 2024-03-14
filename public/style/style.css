@@ -315,3 +315,11 @@ footer
     justify-content: space-between;
     flex-direction: column;
 }
+
+.form_profile_vue_admin{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 100%;
+    align-items: center;
+}
