@@ -36,7 +36,7 @@ class Liste_commande
                 $date_commande = $item->get_date_commande();
                 $statut = $item->get_statut();
 
-                commande_card($id, $date_commande, $statut);
+                commande_card($id, $date_commande, $statut, null);
             }
         }
 

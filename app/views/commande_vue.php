@@ -1,6 +1,11 @@
 <?php
     require_once ROOT.'app/controllers/Commande_vue.php';
     $commande_vue = new \ppe4\controllers\Commande_vue();
+
+    require_once ROOT.'app/controllers/JWT.php';
+    $jwt = new \ppe4\controllers\JWT();
+    $payload = $jwt->get_payload($_COOKIE['JWT']);
+    $role = $payload['role'];
 ?>
 
 <!doctype html>
@@ -15,6 +20,10 @@
     if (isset($_POST['id_commande'])) {
         $commande_vue->afficher_statut_commande($_POST['id_commande']);
         $commande_vue->afficher_produits_commande($_POST['id_commande']);
+    }
+
+    if ($role->getLibelle() == 'validateur'){
+        echo 'test';
     }
     ?>
 

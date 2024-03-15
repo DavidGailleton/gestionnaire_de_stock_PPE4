@@ -225,6 +225,11 @@ if (isset($_GET['page']) && $_GET['page'] != '')
             $creation_utilisateur = new \ppe4\controllers\Creation_utilisateur();
             $creation_utilisateur->afficher();
             break;
+        case 'commande_a_valider':
+            require_once ROOT.'app/controllers/Commande_a_valider.php';
+            $commande_a_valider = new \ppe4\controllers\Commande_a_valider();
+            $commande_a_valider->afficher();
+            break;
         default :
             require_once (ROOT.'app/controllers/Error.php');
             $error = new \ppe4\controllers\Error();

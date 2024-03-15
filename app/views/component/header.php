@@ -19,7 +19,7 @@ $role = $payload['user_role'];
             <li><a href="index.php?page=materiels">Commande Materiels</a></li>
         <?php endif; ?>
         <?php if ($role == ('validateur')): ?>
-            <li><a href="index.php?page=confirmation_commande">Valider une commande</a></li>
+            <li><a href="index.php?page=commande_a_valider">Valider une commande</a></li>
         <?php endif; ?>
         <?php if ($role == ('gestionnaire_de_stock')): ?>
             <li><a href="index.php?page=confirmation_commande">Valider une commande</a></li>
