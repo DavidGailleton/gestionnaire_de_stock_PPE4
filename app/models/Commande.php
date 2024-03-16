@@ -200,6 +200,56 @@ class Commande extends Model
 
         return $commandes;
     }
+    public function selectionner_commandes_en_attente():array | null
+    {
+        $query = "SELECT id_com as id, date_com as date_commande, statut_com as statut, mouvement_com as mouvement, date_val_com as date_validation, id_uti_Validateur as id_validateur, id_uti_Utilisateur as id_utilisateur FROM commande WHERE statut_com = 'en_attente' ORDER BY date_com DESC";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        if (empty($result)){
+            return null;
+        }
+
+        require_once 'Utilisateur.php';
+        $utilisateur_model = new Utilisateur();
+
+        $commandes = [];
+        foreach ($result as $row) {
+            $utilisateur = $utilisateur_model->selectionner_utilisateur_par_id($row['id_utilisateur']);
+            $statut = Statut::from($row['statut']);
+
+            if ($row['id_validateur']){
+                $validateur = $utilisateur_model->selectionner_utilisateur_par_id($row['id_validateur']);
+                $commande = new self();
+                $commande->set_commande(
+                    $row['id'],
+                    $row['statut'],
+                    new \DateTime($row['date_commande']),
+                    $row['mouvement'],
+                    new \DateTime($row['date_validation']),
+                    $utilisateur,
+                    $validateur
+                );
+                $commandes[] = $commande;
+            }
+            else {
+                $commande = new self();
+                $commande->set_commande_non_valide(
+                    $row['id'],
+                    $row['mouvement'],
+                    $statut,
+                    $utilisateur,
+                    new \DateTime($row['date_commande'])
+                );
+                $commandes[] = $commande;
+            }
+
+
+        }
+
+        return $commandes;
+    }
 
     /**
      * Ajoute une commande à la base de données.

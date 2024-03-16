@@ -7,7 +7,7 @@
 <?php include_once ROOT."app/views/component/header.php"; ?>
 <main>
     <?php
-    $this->afficher_commandes()
+    $this->afficher_commandes_a_valider()
     ?>
 </main>
 <?php include_once ROOT.'app/views/component/footer.php'?>

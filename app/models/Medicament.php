@@ -63,7 +63,7 @@ class Medicament extends Produit
      */
     public function selectionner_medicaments_par_recherche(int $offset, string $recherche):array
     {
-        $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS qte_stock, forme_med AS forme, cis_med AS cis FROM medicaments INNER JOIN produits on medicaments.id_pro = produits.id_pro WHERE produits.libelle_pro LIKE :recherche LIMIT :offset , 25";
+        $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS quantite_stock, forme_med AS forme, cis_med AS cis FROM medicaments INNER JOIN produits on medicaments.id_pro = produits.id_pro WHERE produits.libelle_pro LIKE :recherche LIMIT :offset , 25";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindValue('offset', $offset, PDO::PARAM_INT);
         $recherche = '%'.$recherche.'%';
@@ -81,7 +81,7 @@ class Medicament extends Produit
      */
     public function selectionner_medicament(int $id):Medicament
     {
-        $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS qte_stock, forme_med AS forme, cis_med AS cis FROM medicaments INNER JOIN produits on medicaments.id_pro = produits.id_pro WHERE produits.id_pro = :id";
+        $query = "SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS quantite_stock, forme_med AS forme, cis_med AS cis FROM medicaments INNER JOIN produits on medicaments.id_pro = produits.id_pro WHERE produits.id_pro = :id";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindValue('id', $id, PDO::PARAM_INT);
         $stmt->execute();

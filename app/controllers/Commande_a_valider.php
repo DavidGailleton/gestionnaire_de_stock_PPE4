@@ -15,11 +15,11 @@ class Commande_a_valider extends Controller
         require_once ROOT.'app/views/commande_a_valider.php';
     }
 
-    public function afficher_commandes():void
+    public function afficher_commandes_a_valider():void
     {
         require_once ROOT.'app/models/Commande.php';
         $commande = new Commande();
-        $commandes = $commande->selectionner_commandes();
+        $commandes = $commande->selectionner_commandes_en_attente();
 
         if (empty($commandes)){
             echo '<div>pas de commandes</div>';

@@ -116,6 +116,14 @@ if (isset($_GET['action']) && $_GET['action'] != '')
             $profile_vue_admin = new \ppe4\controllers\Profile_vue_admin();
             $profile_vue_admin->reinitialiser_mot_de_passe($_POST['id_utilisateur'], $_POST['mdp_a_changer']);
             header('Location: index.php?page=liste_utilisateur');
+        case 'accepter_commande':
+            require_once ROOT.'app/controllers/Commande_vue.php';
+            $commande_vue = new \ppe4\controllers\Commande_vue();
+            $commande_vue->accepter_commande();
+            header('Location: index.php?page=commande_a_valider');
+            exit();
+        case 'refuser_commande':
+            break;
         default :
             require_once (ROOT.'app/controllers/Error.php');
             $error = new \ppe4\controllers\Error();
