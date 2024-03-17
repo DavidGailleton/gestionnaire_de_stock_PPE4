@@ -2,19 +2,18 @@
 
 namespace ppe4\controllers;
 
-require_once 'Controller.php';
+require_once "Controller.php";
 
 class Medicaments extends Controller
 {
-
     /**
      * Affiche la vue des médicaments
      *
      * @return void
      */
-    public function afficher():void
+    public function afficher(): void
     {
-        require_once ROOT.'app/views/medicaments.php';
+        require_once ROOT . "app/views/medicaments.php";
     }
 
     /**
@@ -25,21 +24,36 @@ class Medicaments extends Controller
      * @param string|null $recherche
      * @return int
      */
-    public function afficher_medicaments_card(int $numero_page, ?string $recherche):int
-    {
-        require_once ROOT.'app/models/Medicament.php';
+    public function afficher_medicaments_card(
+        int $numero_page,
+        ?string $recherche,
+    ): int {
+        require_once ROOT . "app/models/Medicament.php";
         $medicament = new \ppe4\models\Medicament();
-        if ($recherche){
-            $medicaments = $medicament->selectionner_medicaments_par_recherche(($numero_page - 1) * 25, $recherche);
-            $nombre_page = intval(ceil($medicament->compter_nb_medicament_par_recherche($recherche) / 25));
+        if ($recherche) {
+            $medicaments = $medicament->selectionner_medicaments_par_recherche(
+                ($numero_page - 1) * 25,
+                $recherche,
+            );
+            $nombre_page = intval(
+                ceil(
+                    $medicament->compter_nb_medicament_par_recherche(
+                        $recherche,
+                    ) / 25,
+                ),
+            );
         } else {
-            $medicaments = $medicament->selectionner_medicaments(($numero_page - 1) * 25);
-            $nombre_page = intval(ceil($medicament->compter_nb_medicament() / 25));
+            $medicaments = $medicament->selectionner_medicaments(
+                ($numero_page - 1) * 25,
+            );
+            $nombre_page = intval(
+                ceil($medicament->compter_nb_medicament() / 25),
+            );
         }
 
-        include_once ROOT . 'app/views/component/medicament_card.php';
+        include_once ROOT . "app/views/component/medicament_card.php";
         $i = 0;
-        foreach ($medicaments as $item){
+        foreach ($medicaments as $item) {
             echo medic_card($item, $i);
             $i++;
         }
