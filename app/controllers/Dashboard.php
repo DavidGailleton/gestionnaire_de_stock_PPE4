@@ -1,7 +1,7 @@
 <?php
 namespace ppe4\controllers;
 
-require_once 'Controller.php';
+require_once "Controller.php";
 class Dashboard extends Controller
 {
     /**
@@ -9,10 +9,8 @@ class Dashboard extends Controller
      *
      * @return void
      */
-    public function afficher():void
+    public function afficher(): void
     {
-        require_once ROOT.'app/views/dashboard.php';
+        require_once ROOT . "app/views/dashboard.php";
     }
-
-
 }

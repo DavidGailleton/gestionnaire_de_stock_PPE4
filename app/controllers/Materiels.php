@@ -3,19 +3,18 @@
 namespace ppe4\controllers;
 use ppe4\models\Materiel;
 
-require_once ROOT.'app/controllers/Controller.php';
+require_once ROOT . "app/controllers/Controller.php";
 class Materiels extends Controller
 {
-    public function index():void
+    public function index(): void
     {
-        require_once ROOT.'app/views/materiels.php';
+        require_once ROOT . "app/views/materiels.php";
     }
 
-    public function show():void
+    public function show(): void
     {
-        require_once ROOT.'app/views/materiels_vue.php';
+        require_once ROOT . "app/views/materiels_vue.php";
     }
-
 
     /**
      * Affiche les cartes des materiels.
@@ -25,21 +24,36 @@ class Materiels extends Controller
      * @param string|null $recherche
      * @return int
      */
-    public function afficher_materiels_card(int $numero_page, ?string $recherche):int
-    {
-        require_once ROOT.'app/models/Materiel.php';
+    public function afficher_materiels_card(
+        int $numero_page,
+        ?string $recherche,
+    ): int {
+        require_once ROOT . "app/models/Materiel.php";
         $materiel = new Materiel();
-        if (isset($recherche)){
-            $materiels = $materiel->selectionner_materiels_par_recherche($recherche, ($numero_page - 1) * 25);
-            $nombre_page = intval(ceil($materiel->compter_nombre_materiels_par_recherche($recherche) / 25));
+        if (isset($recherche)) {
+            $materiels = $materiel->selectionner_materiels_par_recherche(
+                $recherche,
+                ($numero_page - 1) * 25,
+            );
+            $nombre_page = intval(
+                ceil(
+                    $materiel->compter_nombre_materiels_par_recherche(
+                        $recherche,
+                    ) / 25,
+                ),
+            );
         } else {
-            $materiels = $materiel->selectionner_materiels(($numero_page - 1) * 25);
-            $nombre_page = intval(ceil($materiel->compter_nombre_materiels() / 25));
+            $materiels = $materiel->selectionner_materiels(
+                ($numero_page - 1) * 25,
+            );
+            $nombre_page = intval(
+                ceil($materiel->compter_nombre_materiels() / 25),
+            );
         }
 
-        include_once ROOT.'app/views/component/materiel_card.php';
-        $i =0;
-        foreach ($materiels as $item){
+        include_once ROOT . "app/views/component/materiel_card.php";
+        $i = 0;
+        foreach ($materiels as $item) {
             echo materiel_card($item, $i);
             $i++;
         }

@@ -6,10 +6,8 @@ use ppe4\models\Utilisateur;
 
 class Action
 {
-    public function deconnecter():void
+    public function deconnecter(): void
     {
-        unset($_COOKIE['JWT']);
+        unset($_COOKIE["JWT"]);
     }
-
-
 }

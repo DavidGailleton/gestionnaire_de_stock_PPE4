@@ -5,21 +5,21 @@ use JetBrains\PhpStorm\NoReturn;
 use ppe4\models\Log_connexion;
 use ppe4\models\Utilisateur;
 
-require_once 'Controller.php';
+require_once "Controller.php";
 
 class Login
 {
-
     /**
      * Constructeur de la classe Login vérifiant si le token JWT est déja mis en place puis s'il est valide
      * Redirige l'utilisateur sur le dashboard si c'est le cas
      */
-    #[NoReturn] public function __construct()
+    #[NoReturn]
+    public function __construct()
     {
-        require_once ROOT.'app/models/Utilisateur.php';
-        require_once ROOT.'app/controllers/JWT.php';
+        require_once ROOT . "app/models/Utilisateur.php";
+        require_once ROOT . "app/controllers/JWT.php";
 
-        if (isset($_COOKIE['JWT'])) {
+        if (isset($_COOKIE["JWT"])) {
             $this->verifier_validite_JWT();
         }
     }
@@ -29,9 +29,9 @@ class Login
      *
      * @return void
      */
-    public function afficher():void
+    public function afficher(): void
     {
-        require_once (ROOT."./app/views/login.php");
+        require_once ROOT . "./app/views/login.php";
     }
 
     /**
@@ -42,22 +42,31 @@ class Login
      * @param string $mot_de_passe
      * @return void
      */
-    #[NoReturn] public function connecter(string $email, string $mot_de_passe):void
+    #[NoReturn]
+    public function connecter(string $email, string $mot_de_passe): void
     {
-        require_once ROOT.'app/models/Log_connexion.php';
+        require_once ROOT . "app/models/Log_connexion.php";
         $log_connexion = new Log_connexion();
         $utilisateur = new Utilisateur();
         $jwt = new JWT();
 
-        require_once ROOT.'app/controllers/Bcrypt.php';
+        require_once ROOT . "app/controllers/Bcrypt.php";
         $bcrypt = new Bcrypt();
 
-        $utilisateur_a_connecter = $utilisateur->selectionner_utilisateur_par_email($email);
+        $utilisateur_a_connecter = $utilisateur->selectionner_utilisateur_par_email(
+            $email,
+        );
 
-        if ($utilisateur_a_connecter && $this->compte_non_bloque($utilisateur_a_connecter) && $bcrypt->verifier_mot_de_passe($email, $mot_de_passe)){
-            if ($this->mot_de_passe_a_changer($email)){
-                $_SESSION['user_email'] = $email;
-                header('Location: '.SERVER_URL.'index.php?page=nouveau_mdp');
+        if (
+            $utilisateur_a_connecter &&
+            $this->compte_non_bloque($utilisateur_a_connecter) &&
+            $bcrypt->verifier_mot_de_passe($email, $mot_de_passe)
+        ) {
+            if ($this->mot_de_passe_a_changer($email)) {
+                $_SESSION["user_email"] = $email;
+                header(
+                    "Location: " . SERVER_URL . "index.php?page=nouveau_mdp",
+                );
                 exit();
             }
 
@@ -65,14 +74,14 @@ class Login
             $role = $utilisateur_a_connecter->getRole();
 
             $payload = $jwt->generer_payload($id, $email, $role);
-            setcookie('JWT', $jwt->generer_jwt($payload), time() + 14400);
+            setcookie("JWT", $jwt->generer_jwt($payload), time() + 14400);
 
             $log_connexion->inserer_log_connexion($email, false);
 
-            header('Location: '.SERVER_URL.'index.php?page=dashboard');
+            header("Location: " . SERVER_URL . "index.php?page=dashboard");
         } else {
             $log_connexion->inserer_log_connexion($email, true);
-            header('Location: '.SERVER_URL.'index.php?page=login');
+            header("Location: " . SERVER_URL . "index.php?page=login");
         }
         exit();
     }
@@ -82,13 +91,17 @@ class Login
      *
      * @return void
      */
-    public function verifier_validite_JWT():void
+    public function verifier_validite_JWT(): void
     {
         $jwt = new JWT();
-        $token = $_COOKIE['JWT'];
+        $token = $_COOKIE["JWT"];
 
-        if ($jwt->est_valide($token) && !$jwt->est_expire($token) && $jwt->verifier_validite($token)) {
-            header('Location: '.SERVER_URL.'index.php?page=dashboard');
+        if (
+            $jwt->est_valide($token) &&
+            !$jwt->est_expire($token) &&
+            $jwt->verifier_validite($token)
+        ) {
+            header("Location: " . SERVER_URL . "index.php?page=dashboard");
             exit();
         }
 
@@ -101,19 +114,19 @@ class Login
      * @param string $email
      * @return int
      */
-    public function nombre_echec_connexion_d_affile(string $email):int
+    public function nombre_echec_connexion_d_affile(string $email): int
     {
-        require_once ROOT.'app/models/Log_connexion.php';
+        require_once ROOT . "app/models/Log_connexion.php";
 
         $log_connexion = new Log_connexion();
         $logs = $log_connexion->selectionner_logs_utilisateur($email);
 
         $i = 0;
-        foreach ($logs as $log){
-              if (!$log->getEchec()){
-                  return $i;
-              }
-              $i++;
+        foreach ($logs as $log) {
+            if (!$log->getEchec()) {
+                return $i;
+            }
+            $i++;
         }
         return $i;
     }
@@ -124,12 +137,18 @@ class Login
      * @param Utilisateur $utilisateur
      * @return bool
      */
-    public function compte_non_bloque(Utilisateur $utilisateur):bool
+    public function compte_non_bloque(Utilisateur $utilisateur): bool
     {
-        if (!$utilisateur->selectionner_statut_activation_utilisateur($utilisateur->getId())){
-            $nombre_echec_connexion = $this->nombre_echec_connexion_d_affile($utilisateur->getEmail());
+        if (
+            !$utilisateur->selectionner_statut_activation_utilisateur(
+                $utilisateur->getId(),
+            )
+        ) {
+            $nombre_echec_connexion = $this->nombre_echec_connexion_d_affile(
+                $utilisateur->getEmail(),
+            );
 
-            if ($nombre_echec_connexion >= 4){
+            if ($nombre_echec_connexion >= 4) {
                 $utilisateur->desactiver_utilisateur($utilisateur->getId());
                 return false;
             }
@@ -144,7 +163,7 @@ class Login
      * @param string $email
      * @return bool
      */
-    public function mot_de_passe_a_changer(string $email):bool
+    public function mot_de_passe_a_changer(string $email): bool
     {
         $utilisateur = new Utilisateur();
         return $utilisateur->selectionner_mdp_a_changer($email);

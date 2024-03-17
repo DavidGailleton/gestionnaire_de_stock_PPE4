@@ -6,81 +6,106 @@ use ppe4\controllers\Controller;
 use ppe4\models\Role;
 use ppe4\models\Utilisateur;
 
-require_once ROOT.'app/controllers/Controller.php';
+require_once ROOT . "app/controllers/Controller.php";
 
 class Profile_vue_admin extends Controller
 {
-
     /**
      * Affiche la page de profil d'un utilisateur depuis la vue administrateur
      *
      * @return void
      */
-    public function afficher():void
+    public function afficher(): void
     {
-        require_once ROOT.'app/views/profile_vue_admin.php';
+        require_once ROOT . "app/views/profile_vue_admin.php";
     }
 
-    public function selectionner_utilisateur(int $id_utilisateur):Utilisateur | null
-    {
-        require_once ROOT.'app/models/Utilisateur.php';
+    public function selectionner_utilisateur(
+        int $id_utilisateur,
+    ): Utilisateur|null {
+        require_once ROOT . "app/models/Utilisateur.php";
         $utilisateur_model = new Utilisateur();
-        return $utilisateur_model->selectionner_utilisateur_par_id($id_utilisateur);
+        return $utilisateur_model->selectionner_utilisateur_par_id(
+            $id_utilisateur,
+        );
     }
 
     public function afficher_option_role(string $role_utilisateur): string
     {
-        require_once ROOT.'app/models/Role.php';
+        require_once ROOT . "app/models/Role.php";
         $role_model = new Role();
         $roles = $role_model->selectionner_roles();
 
         ob_start();
-        foreach ($roles as $role){
+        foreach ($roles as $role) {
             // echo '<option>'.$role->getLibelle().'</option>';
-            $selected = ($role->getLibelle() === $role_utilisateur) ? ' selected' : '';
-            echo '<option'.$selected.'>'.$role->getLibelle().'</option>';
+            $selected =
+                $role->getLibelle() === $role_utilisateur ? " selected" : "";
+            echo "<option" .
+                $selected .
+                ">" .
+                $role->getLibelle() .
+                "</option>";
         }
         return ob_get_clean();
     }
 
-    public function modifier_utilisateur(int $id_utilisateur, string $email, string $prenom, string $nom, string $libelle_role):bool
-    {
-        require_once ROOT.'app/models/Utilisateur.php';
+    public function modifier_utilisateur(
+        int $id_utilisateur,
+        string $email,
+        string $prenom,
+        string $nom,
+        string $libelle_role,
+    ): bool {
+        require_once ROOT . "app/models/Utilisateur.php";
         $utilisateur_model = new Utilisateur();
-        return $utilisateur_model->modifier_utilisateur($id_utilisateur, $email, $prenom, $nom, $libelle_role);
+        return $utilisateur_model->modifier_utilisateur(
+            $id_utilisateur,
+            $email,
+            $prenom,
+            $nom,
+            $libelle_role,
+        );
     }
 
-    public function archiver_utilisateur($id_utilisateur):void
+    public function archiver_utilisateur($id_utilisateur): void
     {
-        require_once ROOT.'app/models/Utilisateur.php';
+        require_once ROOT . "app/models/Utilisateur.php";
         $utilisateur_model = new Utilisateur();
-        if ($utilisateur_model->archiver_utilisateur($id_utilisateur) == false){
+        if (
+            $utilisateur_model->archiver_utilisateur($id_utilisateur) == false
+        ) {
             echo '<script>alert("Impossible d\'archiver l\'utilisateur")</script>';
         }
     }
 
-    public function desactiver_utilisateur($id_utilisateur):void
+    public function desactiver_utilisateur($id_utilisateur): void
     {
-        require_once ROOT.'app/models/Utilisateur.php';
+        require_once ROOT . "app/models/Utilisateur.php";
         $utilisateur_model = new Utilisateur();
         $utilisateur_model->desactiver_utilisateur($id_utilisateur);
     }
 
-    public function activer_utilisateur($id_utilisateur):void
+    public function activer_utilisateur($id_utilisateur): void
     {
-        require_once ROOT.'app/models/Utilisateur.php';
+        require_once ROOT . "app/models/Utilisateur.php";
         $utilisateur_model = new Utilisateur();
         $utilisateur_model->activer_utilisateur($id_utilisateur);
     }
 
-    public function reinitialiser_mot_de_passe($id_utilisateur, $mot_de_passe):void
-    {
-        require_once ROOT.'app/controllers/Bcrypt.php';
+    public function reinitialiser_mot_de_passe(
+        $id_utilisateur,
+        $mot_de_passe,
+    ): void {
+        require_once ROOT . "app/controllers/Bcrypt.php";
         $bcrypt = new Bcrypt();
         $nouveau_mdp_crypte = $bcrypt->crypter_mot_de_passe($mot_de_passe);
 
-        require_once ROOT . 'app/models/Utilisateur.php';
+        require_once ROOT . "app/models/Utilisateur.php";
         $utilisateur_model = new Utilisateur();
-        $utilisateur_model->reinitialiser_mot_de_passe($id_utilisateur, $nouveau_mdp_crypte);
+        $utilisateur_model->reinitialiser_mot_de_passe(
+            $id_utilisateur,
+            $nouveau_mdp_crypte,
+        );
     }
 }
