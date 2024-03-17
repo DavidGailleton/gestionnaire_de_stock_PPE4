@@ -7,6 +7,10 @@ require_once ROOT . "app/controllers/Controller.php";
 
 class Liste_commande extends Controller
 {
+    public function __construct()
+    {
+        $this->role_et_jwt_valide(['utilisateur', 'Gestionnaire_de_stock']);
+    }
     /**
      * Affiche la liste des commandes
      *

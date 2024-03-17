@@ -12,6 +12,10 @@ require_once ROOT . "app/models/Ligne_commande.php";
 
 class Commande_vue extends Controller
 {
+    public function __construct()
+    {
+        $this->role_et_jwt_valide(['validateur', 'utilisateur', 'Gestionnaire_de_stock']);
+    }
     public function afficher(): void
     {
         require_once ROOT . "app/views/commande_vue.php";

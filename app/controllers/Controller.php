@@ -7,30 +7,6 @@ use JetBrains\PhpStorm\NoReturn;
 abstract class Controller
 {
     /**
-     *  Vérifie s'il y a un token JWT dans les cookies du navigateur de l'utilisateur
-     *  Puis vérifie son authenticité
-     */
-    #[NoReturn]
-    public function __construct()
-    {
-        if (isset($_COOKIE["JWT"])) {
-            require_once ROOT . "app/controllers/JWT.php";
-            $jwt = new JWT();
-            $token = $_COOKIE["JWT"];
-
-            if (
-                !$jwt->est_valide($token) ||
-                $jwt->est_expire($token) ||
-                !$jwt->verifier_validite($token)
-            ) {
-                $this->rediriger("login");
-            }
-        } else {
-            $this->rediriger("login");
-        }
-    }
-
-    /**
      * Génère un objet de la class mis en paramètre
      *
      * @param string $model
@@ -70,6 +46,32 @@ abstract class Controller
             return "Hors stock";
         } else {
             return $nombre_en_stock . " en stock";
+        }
+    }
+
+    /**
+     * Vérifie si le token JWT est valide et si le rôle est autorisé à accéder à la page
+     *
+     * @param array $roles_autorise
+     * @return void
+     */
+    public function role_et_jwt_valide(array $roles_autorise):void
+    {
+        if (isset($_COOKIE["JWT"])) {
+            require_once ROOT . "app/controllers/JWT.php";
+            $jwt = new JWT();
+            $token = $_COOKIE["JWT"];
+
+            if (
+                !$jwt->est_valide($token) ||
+                $jwt->est_expire($token) ||
+                !$jwt->verifier_validite($token) ||
+                !in_array($jwt->get_role($token), $roles_autorise)
+            ) {
+                $this->rediriger("login");
+            }
+        } else {
+            $this->rediriger("login");
         }
     }
 }

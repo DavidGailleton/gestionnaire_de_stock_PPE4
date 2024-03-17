@@ -13,6 +13,10 @@ require_once "Controller.php";
 
 class Panier extends Controller
 {
+    public function __construct()
+    {
+        $this->role_et_jwt_valide(['utilisateur', 'Gestionnaire_de_stock']);
+    }
     /**
      * Affiche la page du panier
      *

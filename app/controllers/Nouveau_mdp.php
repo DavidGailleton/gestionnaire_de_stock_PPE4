@@ -6,10 +6,6 @@ use ppe4\models\Utilisateur;
 
 class Nouveau_mdp
 {
-    public function __construct()
-    {
-        require_once ROOT . "app/models/Utilisateur.php";
-    }
     public function afficher(): void
     {
         require_once ROOT . "app/views/nouveau_mdp.php";

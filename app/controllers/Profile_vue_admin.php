@@ -10,6 +10,10 @@ require_once ROOT . "app/controllers/Controller.php";
 
 class Profile_vue_admin extends Controller
 {
+    public function __construct()
+    {
+        $this->role_et_jwt_valide(['admin']);
+    }
     /**
      * Affiche la page de profil d'un utilisateur depuis la vue administrateur
      *

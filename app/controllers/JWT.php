@@ -151,4 +151,10 @@ class JWT
                 $token,
             ) === 1;
     }
+
+    public function get_role(string $token): string
+    {
+        $payload = $this->get_payload($token);
+        return $payload["user_role"];
+    }
 }

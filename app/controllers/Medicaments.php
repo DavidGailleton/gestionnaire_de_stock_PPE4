@@ -6,6 +6,15 @@ require_once "Controller.php";
 
 class Medicaments extends Controller
 {
+    public function __construct()
+    {
+        $this->role_et_jwt_valide(
+            [
+                "utilisateur",
+                "Gestionnaire_de_stock",
+            ],
+        );
+    }
     /**
      * Affiche la vue des médicaments
      *

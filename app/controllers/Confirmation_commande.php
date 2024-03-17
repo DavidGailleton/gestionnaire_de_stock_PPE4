@@ -6,6 +6,11 @@ use ppe4\controllers\Controller;
 
 class Confirmation_commande extends Controller
 {
+    public function __construct()
+    {
+        $this->role_et_jwt_valide(['utilisateur', 'Gestionnaire_de_stock']);
+    }
+
     /**
      * Affiche la page confirmation_commande
      *

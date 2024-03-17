@@ -8,6 +8,10 @@ require_once ROOT . "app/models/Utilisateur.php";
 require_once ROOT . "app/controllers/Controller.php";
 class Liste_utilisateur extends Controller
 {
+    public function __construct()
+    {
+        $this->role_et_jwt_valide(['admin']);
+    }
     /**
      * Affiche la liste des utilisateurs
      *

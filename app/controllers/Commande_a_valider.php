@@ -10,6 +10,11 @@ require_once ROOT . "app/models/Utilisateur.php";
 
 class Commande_a_valider extends Controller
 {
+    public function __construct()
+    {
+        $this->role_et_jwt_valide(['validateur']);
+    }
+
     public function afficher(): void
     {
         require_once ROOT . "app/views/commande_a_valider.php";

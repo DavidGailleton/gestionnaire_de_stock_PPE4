@@ -6,6 +6,10 @@ use ppe4\models\Materiel;
 require_once ROOT . "app/controllers/Controller.php";
 class Materiels extends Controller
 {
+    public function __construct()
+    {
+        $this->role_et_jwt_valide(['utilisateur', 'Gestionnaire_de_stock']);
+    }
     public function index(): void
     {
         require_once ROOT . "app/views/materiels.php";

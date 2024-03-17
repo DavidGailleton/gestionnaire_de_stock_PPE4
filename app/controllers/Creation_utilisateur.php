@@ -10,6 +10,11 @@ require_once ROOT . "app/controllers/Controller.php";
 
 class Creation_utilisateur extends Controller
 {
+    public function __construct()
+    {
+        $this->role_et_jwt_valide(['admin']);
+
+    }
     public function afficher(): void
     {
         require_once ROOT . "app/views/creation_utilisateur.php";

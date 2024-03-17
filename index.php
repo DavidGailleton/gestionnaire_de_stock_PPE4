@@ -115,12 +115,6 @@ if (isset($_GET["action"]) && $_GET["action"] != "") {
                 );
             }
             break;
-        case "deconnecter":
-            require_once ROOT . "app/controllers/Action.php";
-            $action = new Action();
-            $action->deconnecter();
-            header("Location: index.php?page=login");
-            exit();
         case "modifier_utilisateur":
             require_once ROOT . "app/controllers/Profile_vue_admin.php";
             $profile_vue_admin_model = new \ppe4\controllers\Profile_vue_admin();
