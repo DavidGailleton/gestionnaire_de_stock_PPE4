@@ -57,7 +57,7 @@ class Commande extends Model
      * @param int $id_utilisateur
      * @return array | null
      */
-    public function recuperer_commande_non_valide_par_utilisateur(int $id_utilisateur):array | null
+    public function selectionner_commande_non_valide_par_utilisateur(int $id_utilisateur):array | null
     {
         $query = "SELECT id_com as id, date_com as date_commande, statut_com as statut, mouvement_com as mouvement FROM commande WHERE id_uti_Utilisateur = :id_utilisateur AND statut_com = :statut ORDER BY date_com DESC";
         $stmt = $this->pdo->prepare($query);
@@ -90,7 +90,7 @@ class Commande extends Model
         return $commandes;
     }
 
-    public function recuperer_commande_valide_par_utilisateur(int $id_utilisateur):array | null
+    public function selectionner_commande_valide_par_utilisateur(int $id_utilisateur):array | null
     {
         $query = "SELECT id_com as id, date_com as date_commande, statut_com as statut, mouvement_com as mouvement, date_val_com as date_validation, id_uti_Validateur as id_validateur FROM commande WHERE id_uti_Utilisateur = :id_utilisateur AND statut_com != :statut ORDER BY date_com DESC";
         $stmt = $this->pdo->prepare($query);
@@ -126,10 +126,10 @@ class Commande extends Model
         return $commandes;
     }
 
-    public function recuperer_commande_par_utilisateur(int $id_utilisateur):array | null
+    public function selectionner_commande_par_utilisateur(int $id_utilisateur):array | null
     {
-        $commandes_non_valide = $this->recuperer_commande_non_valide_par_utilisateur($id_utilisateur);
-        $commandes_valide = $this->recuperer_commande_valide_par_utilisateur($id_utilisateur);
+        $commandes_non_valide = $this->selectionner_commande_non_valide_par_utilisateur($id_utilisateur);
+        $commandes_valide = $this->selectionner_commande_valide_par_utilisateur($id_utilisateur);
 
         if (isset($commandes_valide) && isset($commandes_non_valide)){
             $commandes = array_merge($commandes_valide, $commandes_non_valide);
@@ -257,9 +257,10 @@ class Commande extends Model
      *
      * @param int $id_utilisateur
      * @param bool $mouvement
+     * @param Statut $statut
      * @return int
      */
-    public function inserer_commande(int $id_utilisateur, bool $mouvement):int
+    public function inserer_commande(int $id_utilisateur, bool $mouvement, string $statut):int
     {
         require_once "Statut.php";
 
@@ -267,7 +268,7 @@ class Commande extends Model
         $stmt = $this->pdo->prepare($query);
         $stmt->bindValue('mouvement', $mouvement, \PDO::PARAM_BOOL);
         $stmt->bindValue('id_utilisateur', $id_utilisateur, \PDO::PARAM_INT);
-        $stmt->bindValue('statut', Statut::En_attente->value, \PDO::PARAM_STR);
+        $stmt->bindValue('statut', $statut, \PDO::PARAM_STR);
         $stmt->execute();
         return $this->pdo->lastInsertId();
     }

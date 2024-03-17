@@ -25,12 +25,6 @@ class Produit extends Model
         return $this->quantite_stock;
     }
 
-    public function __construct()
-    {
-        $this->table = "produits";
-        $this->get_connection();
-    }
-
     public function set_produit(int $id, string $libelle, string $description, int $quantite_stock):void
     {
         $this->id = $id;

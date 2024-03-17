@@ -58,7 +58,7 @@ if (isset($_GET['action']) && $_GET['action'] != '')
             }
             header('Location: index.php?page=panier');
             exit();
-        case 'confirmation_commande':
+        case 'confirmation_commande_utilisateur':
             require_once ROOT.'app/controllers/JWT.php';
             require_once ROOT.'app/controllers/Panier.php';
             $panier = new \ppe4\controllers\Panier();
@@ -66,7 +66,17 @@ if (isset($_GET['action']) && $_GET['action'] != '')
 
             $produits = json_decode($_POST['produits'], true);
 
-            $panier->confirmer_la_commande($produits, $jwt->get_payload($_COOKIE['JWT'])['user_id']);
+            $panier->confirmer_la_commande_utilisateur($produits, $jwt->get_payload($_COOKIE['JWT'])['user_id']);
+            break;
+        case 'confirmation_commande_gestionnaire':
+            require_once ROOT.'app/controllers/JWT.php';
+            require_once ROOT.'app/controllers/Panier.php';
+            $panier = new \ppe4\controllers\Panier();
+            $jwt = new \ppe4\controllers\JWT();
+
+            $produits = json_decode($_POST['produits'], true);
+
+            $panier->confirmer_la_commande_gestionnaire($produits, $jwt->get_payload($_COOKIE['JWT'])['user_id']);
             break;
         case 'modifier_qte_produit_panier':
             if (isset($_POST['id']) && isset($_POST['qte'])){

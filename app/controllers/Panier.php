@@ -6,6 +6,8 @@ use JetBrains\PhpStorm\NoReturn;
 use ppe4\controllers\Controller;
 use ppe4\models\Commande;
 use ppe4\models\Medicament;
+use ppe4\models\Produit;
+use ppe4\models\Statut;
 
 require_once 'Controller.php';
 
@@ -81,16 +83,35 @@ class Panier extends Controller
         return $panier->verifier_produit_dans_panier($id_produit, $id_utilisateur);
     }
 
-    public function confirmer_la_commande(array $produits, int $id_utilisateur):void
+    public function confirmer_la_commande_utilisateur(array $produits, int $id_utilisateur):void
     {
         require_once ROOT.'app/models/Commande.php';
         require_once ROOT.'app/models/Ligne_commande.php';
         $commande = new Commande();
-        $id_commande = $commande->inserer_commande($id_utilisateur, true);
+        $id_commande = $commande->inserer_commande($id_utilisateur, true, Statut::En_attente->value);
 
         $ligne_commande = new \ppe4\models\Ligne_commande();
         foreach ($produits as $produit){
             $ligne_commande->inserer_ligne_commande($id_commande, $produit['id'], $produit['qte']);
+        }
+
+        require_once ROOT.'app/models/Panier.php';
+        $panier = new \ppe4\models\Panier();
+        $panier->vider_le_panier($id_utilisateur);
+    }
+    public function confirmer_la_commande_gestionnaire(array $produits, int $id_utilisateur):void
+    {
+        require_once ROOT.'app/models/Commande.php';
+        require_once ROOT.'app/models/Ligne_commande.php';
+        require_once ROOT.'app/models/Produit.php';
+        $commande = new Commande();
+        $produit_model = new Produit();
+        $id_commande = $commande->inserer_commande($id_utilisateur, false, 'en_cours_de_preparation');
+
+        $ligne_commande = new \ppe4\models\Ligne_commande();
+        foreach ($produits as $produit){
+            $ligne_commande->inserer_ligne_commande($id_commande, $produit['id'], $produit['qte']);
+            $produit_model->augmenter_quantite($produit['id'], $produit['qte']);
         }
 
         require_once ROOT.'app/models/Panier.php';
@@ -110,7 +131,7 @@ class Panier extends Controller
 
     }
 
-    public function afficher_produits_panier(int $id_utilisateur):void
+    public function afficher_produits_panier(int $id_utilisateur, string $role):void
     {
         require_once ROOT.'app/models/Panier.php';
         $panier = new \ppe4\models\Panier();
@@ -135,10 +156,13 @@ class Panier extends Controller
                 $i++;
             }
 
+
             echo '</div>';
+
             echo '<div class="confirmation_commande">
                 <input type="button" value="Confirmer la commande" onclick="confirmer_commande()">
               </div>';
+
         }
     }
 }

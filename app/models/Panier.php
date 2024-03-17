@@ -135,7 +135,7 @@ class Panier extends Model
      */
     public function selectionner_medicaments_du_panier(int $id_utilisateur):array
     {
-        $query = "SELECT produits.id_pro AS id, produits.libelle_pro AS libelle, produits.description_pro AS description, produits.qte_stock_pro AS qte_stock, medicaments.forme_med AS forme, medicaments.cis_med AS cis FROM panier INNER JOIN medicaments on panier.id_pro = medicaments.id_pro INNER JOIN produits on medicaments.id_pro = produits.id_pro WHERE id_uti = :id_utilisateur";
+        $query = "SELECT produits.id_pro AS id, produits.libelle_pro AS libelle, produits.description_pro AS description, produits.qte_stock_pro AS quantite_stock, medicaments.forme_med AS forme, medicaments.cis_med AS cis FROM panier INNER JOIN medicaments on panier.id_pro = medicaments.id_pro INNER JOIN produits on medicaments.id_pro = produits.id_pro WHERE id_uti = :id_utilisateur";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindValue('id_utilisateur', $id_utilisateur, \PDO::PARAM_INT);
         $stmt->execute();
@@ -153,7 +153,7 @@ class Panier extends Model
     {
         require_once 'Materiel.php';
 
-        $query = "SELECT materiels.id_pro AS id, produits.libelle_pro AS libelle, produits.description_pro AS description, produits.qte_stock_pro AS qte_stock FROM panier INNER JOIN materiels on panier.id_pro = materiels.id_pro INNER JOIN ppe4.produits on panier.id_pro = produits.id_pro WHERE id_uti = :id_utilisateur";
+        $query = "SELECT materiels.id_pro AS id, produits.libelle_pro AS libelle, produits.description_pro AS description, produits.qte_stock_pro AS quantite_stock FROM panier INNER JOIN materiels on panier.id_pro = materiels.id_pro INNER JOIN ppe4.produits on panier.id_pro = produits.id_pro WHERE id_uti = :id_utilisateur";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindValue('id_utilisateur', $id_utilisateur, \PDO::PARAM_INT);
         $stmt->execute();

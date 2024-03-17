@@ -35,5 +35,15 @@ function materiel_card_panier(\ppe4\models\Materiel $materiel, int $i, int $quan
     </div>
 </article>
 </div>
+<script>
+    document.getElementById("formulaire_'.$i.'").addEventListener("input", function(){
+        let form = document.getElementById("formulaire_'.$i.'");
+        let formData = new FormData(form);
+        fetch("index.php?action=modifier_qte_produit_panier", {
+            method: "POST",
+            body: formData
+        })
+    });
+</script>
     ';
 }

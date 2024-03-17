@@ -3,15 +3,10 @@
 namespace ppe4\controllers;
 
 use ppe4\models\Commande;
+require_once ROOT.'app/controllers/Controller.php';
 
-class Liste_commande
+class Liste_commande extends Controller
 {
-    public function __construct()
-    {
-        require_once ROOT.'app/models/Commande.php';
-        require_once ROOT.'app/controllers/JWT.php';
-    }
-
     /**
      * Affiche la liste des commandes
      *
@@ -24,8 +19,9 @@ class Liste_commande
 
     public function afficher_commandes_utilisateur($id_utilisateur):void
     {
+        require_once ROOT.'app/models/Commande.php';
         $commande = new Commande();
-        $commandes = $commande->recuperer_commande_par_utilisateur($id_utilisateur);
+        $commandes = $commande->selectionner_commande_par_utilisateur($id_utilisateur);
 
         if (!$commandes){
             echo '<div>pas de commandes</div>';

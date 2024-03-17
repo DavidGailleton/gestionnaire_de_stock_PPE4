@@ -1,5 +1,5 @@
 <?php
-function commande_card(int $id_commande, DateTime $date_commande, \ppe4\models\Statut $statut, string $utilisateur):void
+function commande_card(int $id_commande, DateTime $date_commande, \ppe4\models\Statut $statut, ?string $utilisateur):void
 {
     echo '
     <article class="card">

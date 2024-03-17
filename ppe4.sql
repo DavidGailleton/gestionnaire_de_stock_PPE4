@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 04 mars 2024 à 12:37
+-- Généré le : sam. 16 mars 2024 à 16:50
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -43,13 +43,14 @@ CREATE TABLE `commande` (
 
 INSERT INTO `commande` (`id_com`, `statut_com`, `date_com`, `mouvement_com`, `date_val_com`, `id_uti_Validateur`, `id_uti_Utilisateur`) VALUES
 (1, 'en_attente', '2024-02-17 11:58:00', 0, NULL, NULL, 1),
-(2, 'en_cours_de_preparation', '2024-02-17 11:58:00', 1, NULL, NULL, 1),
 (3, 'en_attente', '2024-02-17 11:58:26', 0, NULL, NULL, 1),
-(4, 'en_cours_de_preparation', '2024-02-17 11:58:26', 1, NULL, NULL, 1),
 (5, 'en_attente', '2024-02-29 22:23:44', 1, NULL, NULL, 1),
 (6, 'en_attente', '2024-03-01 11:26:16', 1, NULL, NULL, 1),
 (7, 'en_attente', '2024-03-01 12:18:22', 1, NULL, NULL, 1),
-(8, 'en_attente', '2024-03-03 15:05:18', 1, NULL, NULL, 1);
+(8, 'en_attente', '2024-03-03 15:05:18', 1, NULL, NULL, 1),
+(9, 'en_attente', '2024-03-16 15:41:39', 1, NULL, NULL, 4),
+(10, 'en_attente', '2024-03-16 15:42:05', 1, NULL, NULL, 4),
+(11, 'en_attente', '2024-03-16 15:44:09', 1, NULL, NULL, 4);
 
 -- --------------------------------------------------------
 
@@ -76,7 +77,9 @@ INSERT INTO `ligne_commande` (`id_pro`, `id_com`, `qte`) VALUES
 (7483, 7, 31),
 (15768, 7, 7),
 (15774, 7, 1),
-(8360, 8, 4);
+(8360, 8, 4),
+(8360, 9, 11),
+(8360, 11, 9);
 
 -- --------------------------------------------------------
 
@@ -148,7 +151,41 @@ INSERT INTO `log_connexion` (`id_log_con`, `date_log_con`, `email_log_con`, `ech
 (90, 1709292249, 'jean.dupont@gmail.com', 0),
 (91, 1709394637, 'jean.dupont@gmail.com', 0),
 (92, 1709478179, 'jean.dupont@gmail.com', 0),
-(93, 1709551362, 'jean.dupont@gmail.com', 0);
+(93, 1709551362, 'jean.dupont@gmail.com', 0),
+(94, 1709637450, 'jean.dupont@gmail.com', 0),
+(95, 1709724937, 'jean.dupont@gmail.com', 0),
+(96, 1709726534, 'jean.dupont@gmail.com', 0),
+(97, 1709726590, 'validateur@gmail.com', 0),
+(98, 1709727001, 'gestionnaire-de-stock@gmail.com', 0),
+(99, 1709727034, 'admin@gmail.com', 0),
+(100, 1709841254, 'admin@gmail.com', 0),
+(101, 1709843763, 'utilisateur@gmail.com', 0),
+(102, 1709987779, 'utilisateur@gmail.com', 0),
+(103, 1709988975, 'admin@gmail.com', 0),
+(104, 1710177784, 'admin@gmail.com', 0),
+(105, 1710192513, 'admin@gmail.com', 0),
+(106, 1710262547, 'admin@gmail.com', 0),
+(107, 1710264733, 'utilisateur@gmail.com', 0),
+(108, 1710265089, 'admin@gmail.com', 0),
+(109, 1710329663, 'admin@gmail.com', 0),
+(110, 1710350885, 'admin@gmail.com', 0),
+(111, 1710361725, 'utilisateur@gmail.com', 0),
+(112, 1710361745, 'utilisateur@gmail.com', 0),
+(113, 1710361813, 'admin@gmail.com', 0),
+(114, 1710416735, 'admin@gmail.com', 0),
+(115, 1710418411, 'admin@gmail.com', 0),
+(116, 1710418451, 'utilisateur@gmail.com', 0),
+(117, 1710418460, 'admin@gmail.com', 0),
+(118, 1710419260, 'utilisateur@gmail.com', 1),
+(119, 1710419280, 'utilisateur@gmail.com', 1),
+(120, 1710419284, 'admin@gmail.com', 0),
+(121, 1710419572, 'gestionnaire-de-stock@gmail.com', 0),
+(122, 1710502464, 'admin@gmail.com', 0),
+(123, 1710502503, 'validateur@gmail.com', 0),
+(124, 1710592156, 'utilisateur@gmail.com', 0),
+(125, 1710592182, 'validateur@gmail.com', 0),
+(126, 1710599883, 'utilisateur@gmail.com', 0),
+(127, 1710602581, 'gestionnaire-de-stock@gmail.com', 0);
 
 -- --------------------------------------------------------
 
@@ -16085,6 +16122,13 @@ CREATE TABLE `panier` (
   `qte` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Déchargement des données de la table `panier`
+--
+
+INSERT INTO `panier` (`id_uti`, `id_pro`, `qte`) VALUES
+(1, 8360, 5);
+
 -- --------------------------------------------------------
 
 --
@@ -32020,8 +32064,9 @@ CREATE TABLE `role` (
 
 INSERT INTO `role` (`id_rol`, `description_rol`, `libelle_rol`) VALUES
 (1, 'utilisateur basique', 'utilisateur'),
-(2, 'possède tous les droits', 'admin'),
-(3, 'Role ayant accès à tous les produits et pouvant valider des commandes', 'validateur');
+(2, 'Permet de gérer les accès et rôle des utilisateur ', 'admin'),
+(3, 'Role permettant de modifier les produits afficher dans le magasin et de commander du matériel pour le stock', 'Gestionnaire_de_stock'),
+(10, 'Role permettant de validater les commandes faites par les utilisateur', 'validateur');
 
 -- --------------------------------------------------------
 
@@ -32040,16 +32085,22 @@ CREATE TABLE `utilisateur` (
   `ville_uti` varchar(50) DEFAULT NULL,
   `cp_uti` int(11) DEFAULT NULL,
   `id_rol` int(11) NOT NULL,
-  `compte_desactive_uti` tinyint(1) DEFAULT 0,
-  `mdp_a_changer_uti` tinyint(1) DEFAULT 1
+  `compte_desactive_uti` tinyint(1) NOT NULL DEFAULT 0,
+  `mdp_a_changer_uti` tinyint(1) NOT NULL DEFAULT 1,
+  `est_archive_uti` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `utilisateur`
 --
 
-INSERT INTO `utilisateur` (`id_uti`, `email_uti`, `password_uti`, `nom_uti`, `prenom_uti`, `no_rue_uti`, `rue_uti`, `ville_uti`, `cp_uti`, `id_rol`, `compte_desactive_uti`, `mdp_a_changer_uti`) VALUES
-(1, 'jean.dupont@gmail.com', '$2y$13$7Cn7TXEuZwDEmyfiBn4aFuJFKWa5cCjLguWru9o2QquFqmdEcMt9y', 'dupont', 'jean', NULL, NULL, NULL, NULL, 1, 0, 0);
+INSERT INTO `utilisateur` (`id_uti`, `email_uti`, `password_uti`, `nom_uti`, `prenom_uti`, `no_rue_uti`, `rue_uti`, `ville_uti`, `cp_uti`, `id_rol`, `compte_desactive_uti`, `mdp_a_changer_uti`, `est_archive_uti`) VALUES
+(1, 'utilisateur@gmail.com', '$2y$13$7cE9slcK5oFZCShEEyvcRO2Veas2bxIS2GlnL7tisauDeQDmjczfi', 'utilisateur', 'test1', NULL, NULL, NULL, NULL, 1, 0, 0, 0),
+(3, 'validateur@gmail.com', '$2y$13$.VqLfIfiuKjPpZazBCZIZe9PQMeF6RPLuHG980oPU03WnxvhYfJ5m', 'validateur', 'test', NULL, NULL, NULL, NULL, 10, 0, 0, 0),
+(4, 'gestionnaire-de-stock@gmail.com', '$2y$13$.k13SpfQQ8MgF7QZtVFr2ex3kATL4C9.b77aZngfHkr216WL1CfFy', 'Gestionnaire de stock', 'test', NULL, NULL, NULL, NULL, 3, 0, 0, 0),
+(5, 'admin@gmail.com', '$2y$13$6/KlKGvZn7PXIXV.dEYcJuSk60bqe3cXmxiCkTHuVyyx6ME7OSKTu', 'admin', 'test', NULL, NULL, NULL, NULL, 2, 0, 0, 0),
+(6, 'testest@test.Fr', '$2y$13$mORplmNXLqqM4wi9NXKnEegxj821ISek4Gj/8.CyXPOehVYLDks9C', 'test', 'test', NULL, NULL, NULL, NULL, 1, 0, 1, 0),
+(7, 'david.gailleton@gsb.fr', '$2y$13$SIRJKkgXoiSh6QvmxuuwReQfyl.H7lIXgWcJBlkP402s.RsL/ixGu', 'GAILLETON', 'David', NULL, NULL, NULL, NULL, 1, 0, 1, 0);
 
 --
 -- Index pour les tables déchargées
@@ -32126,13 +32177,13 @@ ALTER TABLE `utilisateur`
 -- AUTO_INCREMENT pour la table `commande`
 --
 ALTER TABLE `commande`
-  MODIFY `id_com` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_com` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT pour la table `log_connexion`
 --
 ALTER TABLE `log_connexion`
-  MODIFY `id_log_con` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+  MODIFY `id_log_con` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
 
 --
 -- AUTO_INCREMENT pour la table `produits`
@@ -32144,13 +32195,13 @@ ALTER TABLE `produits`
 -- AUTO_INCREMENT pour la table `role`
 --
 ALTER TABLE `role`
-  MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `id_uti` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_uti` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Contraintes pour les tables déchargées

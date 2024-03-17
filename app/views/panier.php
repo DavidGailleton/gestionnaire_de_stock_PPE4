@@ -1,5 +1,13 @@
 <?php
+require_once ROOT.'app/controllers/JWT.php';
+$jwt = new \ppe4\controllers\JWT();
+$token = $_COOKIE['JWT'] ?? ''; // Utilise l'opérateur de coalescence null pour vérifier si le cookie JWT est défini
 
+if ($jwt->est_valide($token) && !$jwt->est_expire($token) && $jwt->verifier_validite($token)) {
+    $role = $jwt->get_payload($token)['user_role'];
+}
+
+use ppe4\controllers\JWT;
 use ppe4\controllers\Panier;
 
 require_once ROOT.'app/controllers/Panier.php';
@@ -21,7 +29,14 @@ require_once ROOT.'app/controllers/JWT.php';
             }
             let form = document.createElement('form');
             form.method = 'post';
-            form.action = 'index.php?action=confirmation_commande';
+            <?php
+            if ($role == 'utilisateur') {
+                echo 'form.action = "index.php?action=confirmation_commande_utilisateur";';
+            } elseif ($role == 'Gestionnaire_de_stock'){
+                echo 'form.action = "index.php?action=confirmation_commande_gestionnaire";';
+            }
+            ?>
+            form.action = 'index.php?action=confirmation_commande_utilisateur';
             let input = document.createElement('input');
             input.type = 'hidden';
             input.name = 'produits';
@@ -41,7 +56,7 @@ require_once ROOT.'app/controllers/JWT.php';
 
     $payload = $jwt->get_payload($_COOKIE['JWT']);
 
-    $panier->afficher_produits_panier($payload['user_id']);
+    $panier->afficher_produits_panier($payload['user_id'], $payload['user_role']);
     ?>
 </main>
 <?php include_once ROOT.'app/views/component/footer.php'?>
