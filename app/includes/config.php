@@ -4,26 +4,25 @@
 /**
  * Racine du dossier du projet
  */
-define('ROOT', str_replace('index.php','',$_SERVER['SCRIPT_FILENAME']));
+define("ROOT", str_replace("index.php", "", $_SERVER["SCRIPT_FILENAME"]));
 
 //const SERVER_URL = 'http://localhost/ppe4/';
 
 /**
  * URL du projet
  */
-define('SERVER_URL', 'https://'.$_SERVER['HTTP_HOST'].'/ppe4/');
-
+define("SERVER_URL", "https://" . $_SERVER["HTTP_HOST"] . "/ppe4/");
 
 //JWT
 /**
  * Clé secrète du JSON Web Token
  */
-const JWT_SECRET = 'Kh8nFw86PCfLFCthB_c4jX7hdt9zKH.yuX7AsQpe';
+const JWT_SECRET = "Kh8nFw86PCfLFCthB_c4jX7hdt9zKH.yuX7AsQpe";
 
 /**
  * Entête du JSON Web Token
  */
-const JWT_HEADER = ['typ' => 'JWT', 'alg' => 'HS256'];
+const JWT_HEADER = ["typ" => "JWT", "alg" => "HS256"];
 
 // exigence du mot de passe
 

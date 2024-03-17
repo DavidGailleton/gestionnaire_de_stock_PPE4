@@ -12,8 +12,12 @@ class Ligne_commande extends Model
     private Produit $produit;
     private int $qte;
 
-    public function set_ligne_commande_med(int $id, Commande $commande, Medicament $medicament, int $qte):void
-    {
+    public function set_ligne_commande_med(
+        int $id,
+        Commande $commande,
+        Medicament $medicament,
+        int $qte,
+    ): void {
         $this->id = $id;
         $this->commande = $commande;
         $this->medicament = $medicament;
@@ -23,12 +27,16 @@ class Ligne_commande extends Model
     {
         $this->table = "ligne_commande";
         $this->get_connection();
-        require_once ROOT.'app/models/Materiel.php';
-        require_once ROOT.'app/models/Medicament.php';
+        require_once ROOT . "app/models/Materiel.php";
+        require_once ROOT . "app/models/Medicament.php";
     }
 
-    public function set_ligne_commande_mat(int $id, Commande $commande, Produit $produit, int $qte):void
-    {
+    public function set_ligne_commande_mat(
+        int $id,
+        Commande $commande,
+        Produit $produit,
+        int $qte,
+    ): void {
         $this->id = $id;
         $this->commande = $commande;
         $this->produit = $produit;
@@ -55,11 +63,12 @@ class Ligne_commande extends Model
         return $this->qte;
     }
 
-    public function selectionner_lignes_commande(int $id_commande):array | null
+    public function selectionner_lignes_commande(int $id_commande): array|null
     {
-        $query = "SELECT id_pro as id_produit, qte as quantite FROM ligne_commande WHERE id_com = :id_commande";
+        $query =
+            "SELECT id_pro as id_produit, qte as quantite FROM ligne_commande WHERE id_com = :id_commande";
         $stmt = $this->pdo->prepare($query);
-        $stmt->bindValue('id_commande', $id_commande, \PDO::PARAM_INT);
+        $stmt->bindValue("id_commande", $id_commande, \PDO::PARAM_INT);
         $stmt->execute();
         $stmt->setFetchMode(\PDO::FETCH_ASSOC);
         $result = $stmt->fetchAll();
@@ -67,17 +76,19 @@ class Ligne_commande extends Model
         $materiel = new Materiel();
         $medicament = new Medicament();
 
-        if (!empty($result)){
+        if (!empty($result)) {
             $produits = [];
             foreach ($result as $row) {
-                $r = $materiel->selectionner_materiel($row['id_produit']);
-                if ($r == null){
-                    $r = $medicament->selectionner_medicament($row['id_produit']);
+                $r = $materiel->selectionner_materiel($row["id_produit"]);
+                if ($r == null) {
+                    $r = $medicament->selectionner_medicament(
+                        $row["id_produit"],
+                    );
                 }
 
                 array_push($produits, [
-                    'produit' => $r,
-                    'quantite' => $row['quantite']
+                    "produit" => $r,
+                    "quantite" => $row["quantite"],
                 ]);
                 $r = null;
             }
@@ -88,13 +99,17 @@ class Ligne_commande extends Model
         return null;
     }
 
-    public function inserer_ligne_commande(int $id_commande, int $id_medicament, int $qte):void
-    {
-        $query = "INSERT INTO ligne_commande (id_com, id_pro, qte) VALUES (:id_commande, :id_produit, :qte)";
+    public function inserer_ligne_commande(
+        int $id_commande,
+        int $id_medicament,
+        int $qte,
+    ): void {
+        $query =
+            "INSERT INTO ligne_commande (id_com, id_pro, qte) VALUES (:id_commande, :id_produit, :qte)";
         $stmt = $this->pdo->prepare($query);
-        $stmt->bindValue('id_commande', $id_commande, \PDO::PARAM_INT);
-        $stmt->bindValue('id_produit', $id_medicament, \PDO::PARAM_INT);
-        $stmt->bindValue('qte', $qte, \PDO::PARAM_INT);
+        $stmt->bindValue("id_commande", $id_commande, \PDO::PARAM_INT);
+        $stmt->bindValue("id_produit", $id_medicament, \PDO::PARAM_INT);
+        $stmt->bindValue("qte", $qte, \PDO::PARAM_INT);
         $stmt->execute();
     }
 }

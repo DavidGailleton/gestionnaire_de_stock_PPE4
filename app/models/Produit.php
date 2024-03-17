@@ -25,30 +25,35 @@ class Produit extends Model
         return $this->quantite_stock;
     }
 
-    public function set_produit(int $id, string $libelle, string $description, int $quantite_stock):void
-    {
+    public function set_produit(
+        int $id,
+        string $libelle,
+        string $description,
+        int $quantite_stock,
+    ): void {
         $this->id = $id;
         $this->libelle = $libelle;
         $this->description = $description;
         $this->quantite_stock = $quantite_stock;
     }
 
-    public function augmenter_quantite(int $id_produit, int $quantite):void
+    public function augmenter_quantite(int $id_produit, int $quantite): void
     {
-        $query = "UPDATE produits SET qte_stock_pro = produits.qte_stock_pro + :quantite WHERE id_pro = :id";
+        $query =
+            "UPDATE produits SET qte_stock_pro = produits.qte_stock_pro + :quantite WHERE id_pro = :id";
         $stmt = $this->pdo->prepare($query);
-        $stmt->bindValue('quantite', $quantite, \PDO::PARAM_INT);
-        $stmt->bindValue('id', $id_produit, \PDO::PARAM_INT);
+        $stmt->bindValue("quantite", $quantite, \PDO::PARAM_INT);
+        $stmt->bindValue("id", $id_produit, \PDO::PARAM_INT);
         $stmt->execute();
     }
 
-    public function diminuer_quantite(int $id_produit, int $quantite):void
+    public function diminuer_quantite(int $id_produit, int $quantite): void
     {
-        $query = "UPDATE produits SET qte_stock_pro = produits.qte_stock_pro - :quantite WHERE id_pro = :id";
+        $query =
+            "UPDATE produits SET qte_stock_pro = produits.qte_stock_pro - :quantite WHERE id_pro = :id";
         $stmt = $this->pdo->prepare($query);
-        $stmt->bindValue('quantite', $quantite, \PDO::PARAM_INT);
-        $stmt->bindValue('id', $id_produit, \PDO::PARAM_INT);
+        $stmt->bindValue("quantite", $quantite, \PDO::PARAM_INT);
+        $stmt->bindValue("id", $id_produit, \PDO::PARAM_INT);
         $stmt->execute();
     }
-
 }

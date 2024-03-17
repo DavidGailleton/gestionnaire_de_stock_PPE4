@@ -24,13 +24,18 @@ class Log_connexion extends Model
      * @param bool $echec
      * @return void
      */
-    public function inserer_log_connexion(string $email, bool $echec):void
+    public function inserer_log_connexion(string $email, bool $echec): void
     {
         $datetime = new \DateTime();
 
-        $query = "INSERT INTO log_connexion (email_log_con, echec_log_con, date_log_con) VALUES (:email, :echec, :date)";
+        $query =
+            "INSERT INTO log_connexion (email_log_con, echec_log_con, date_log_con) VALUES (:email, :echec, :date)";
         $stmt = $this->pdo->prepare($query);
-        $stmt->execute(['email' => $email, 'echec' => $echec, 'date' => $datetime->getTimestamp()]);
+        $stmt->execute([
+            "email" => $email,
+            "echec" => $echec,
+            "date" => $datetime->getTimestamp(),
+        ]);
         $stmt->fetch();
     }
 
@@ -40,16 +45,21 @@ class Log_connexion extends Model
      * @param string $email
      * @return array
      */
-    public function selectionner_logs_utilisateur(string $email):array
+    public function selectionner_logs_utilisateur(string $email): array
     {
-        $query = "SELECT id_log_con AS id, date_log_con AS date, email_log_con AS email, echec_log_con AS echec FROM log_connexion WHERE email_log_con = :email ORDER BY date_log_con DESC";
+        $query =
+            "SELECT id_log_con AS id, date_log_con AS date, email_log_con AS email, echec_log_con AS echec FROM log_connexion WHERE email_log_con = :email ORDER BY date_log_con DESC";
         $stmt = $this->pdo->prepare($query);
-        $stmt->execute(['email' => $email]);
-        return $stmt->fetchAll(PDO::FETCH_CLASS, '\ppe4\models\Log_connexion');
+        $stmt->execute(["email" => $email]);
+        return $stmt->fetchAll(PDO::FETCH_CLASS, "\ppe4\models\Log_connexion");
     }
 
-    public function setLog_connexion(int $id, int $date, string $email, bool $echec):void
-    {
+    public function setLog_connexion(
+        int $id,
+        int $date,
+        string $email,
+        bool $echec,
+    ): void {
         $this->date = $date;
         $this->email = $email;
         $this->echec = $echec;
@@ -69,5 +79,4 @@ class Log_connexion extends Model
     {
         return $this->echec;
     }
-
 }

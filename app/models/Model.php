@@ -9,10 +9,10 @@ abstract class Model
 {
     protected int $id;
 
-    private string $host = 'localhost'; // Hôte de la base de données
-    private string $db_name = 'ppe4'; // Nom de la base de données
-    private string $username = 'root'; // Nom d'utilisateur de la base de données
-    private string $password = '';  // Mot de passe de la base de données
+    private string $host = "localhost"; // Hôte de la base de données
+    private string $db_name = "ppe4"; // Nom de la base de données
+    private string $username = "root"; // Nom d'utilisateur de la base de données
+    private string $password = ""; // Mot de passe de la base de données
 
     protected $pdo;
 
@@ -23,12 +23,20 @@ abstract class Model
      *
      * @return void
      */
-    public function get_connection ():void
+    public function get_connection(): void
     {
         $this->pdo = null;
 
         try {
-            $this->pdo = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name . ";charset=utf8", $this->username, $this->password);
+            $this->pdo = new PDO(
+                "mysql:host=" .
+                $this->host .
+                ";dbname=" .
+                $this->db_name .
+                ";charset=utf8",
+                $this->username,
+                $this->password,
+            );
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->pdo->exec("set names utf8");
         } catch (PDOException $exception) {
@@ -39,14 +47,18 @@ abstract class Model
     {
         $sql = "GET * FROM :table WHERE :id_table = :id";
         $query = $this->pdo->prepare($sql);
-        $query->execute(['table' => $this->table], ['id_table' => "id_" . $this->table[0 - 2]], ['id' => $this->id]);
+        $query->execute(
+            ["table" => $this->table],
+            ["id_table" => "id_" . $this->table[0 - 2]],
+            ["id" => $this->id],
+        );
     }
 
     public function get_all()
     {
         $sql = "GET * FROM :table";
         $query = $this->pdo->prepare($sql);
-        $query->execute(['table' => $this->table]);
+        $query->execute(["table" => $this->table]);
     }
 
     public function getId(): string
