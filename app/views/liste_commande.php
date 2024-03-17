@@ -15,7 +15,7 @@ require_once ROOT.'app/controllers/Liste_commande.php'; ?>
     $id_utilisateur = $payload['user_id'];
 
     $list_commande = new \ppe4\controllers\Liste_commande();
-    $list_commande->afficher_commandes_utilisateur($id_utilisateur);
+    $list_commande->afficher_commandes_utilisateur();
     ?>
 </main>
 <?php include_once ROOT.'app/views/component/footer.php'?>

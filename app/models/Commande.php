@@ -321,7 +321,7 @@ class Commande extends Model
         $stmt = $this->pdo->prepare($query);
         $stmt->bindValue("id_commande", $id_commande, \PDO::PARAM_INT);
         $stmt->bindValue("id_validateur", $id_validateur, \PDO::PARAM_INT);
-        $stmt->bindValue("statut", Statut::En_cours_prep, \PDO::PARAM_STR);
+        $stmt->bindValue("statut", Statut::En_cours_prep->value, \PDO::PARAM_STR);
         $stmt->execute();
     }
 
@@ -331,13 +331,14 @@ class Commande extends Model
      * @param int $id_commande
      * @return void
      */
-    public function refuser_commande(int $id_commande): void
+    public function refuser_commande(int $id_commande, int $id_validateur): void
     {
         $query =
-            "UPDATE commande SET commande.statut_com = :statut WHERE commande.id_com = :id_commande";
+            "UPDATE commande SET commande.date_val_com = NOW(), commande.id_uti_validateur = :id_validateur, commande.statut_com = :statut WHERE commande.id_com = :id_commande";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindValue("id_commande", $id_commande, \PDO::PARAM_INT);
-        $stmt->bindValue("statut", Statut::Refuse, \PDO::PARAM_STR);
+        $stmt->bindValue("id_validateur", $id_validateur, \PDO::PARAM_INT);
+        $stmt->bindValue("statut", Statut::Refuse->value, \PDO::PARAM_STR);
         $stmt->execute();
     }
 

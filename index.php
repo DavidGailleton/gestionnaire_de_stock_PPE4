@@ -174,7 +174,11 @@ if (isset($_GET["action"]) && $_GET["action"] != "") {
             header("Location: index.php?page=commande_a_valider");
             exit();
         case "refuser_commande":
-            break;
+            require_once ROOT . "app/controllers/Commande_vue.php";
+            $commande_vue = new \ppe4\controllers\Commande_vue();
+            $commande_vue->refuser_commande();
+            header("Location: index.php?page=commande_a_valider");
+            exit();
         default:
             require_once ROOT . "app/controllers/Error.php";
             $error = new \ppe4\controllers\Error();

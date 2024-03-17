@@ -67,8 +67,8 @@ class Commande_vue extends Controller
     }
 
     public function bouton_validateur(
-        int $id_commande,
-        array $lignes_commande,
+        int   $id_commande,
+        array $lignes_commandes,
     ): void {
         require_once ROOT . "app/controllers/JWT.php";
         $jwt = new JWT();
@@ -81,53 +81,50 @@ class Commande_vue extends Controller
         ) {
             $payload = $jwt->get_payload($token);
             $role = $payload["user_role"];
-            $id_valideur = $payload["user_id"];
+
+            require_once ROOT.'app/models/Medicament.php';
+            require_once ROOT.'app/models/Materiel.php';
+
 
             if ($role == "validateur") {
-                // Convertit les lignes de commande en JSON et échappe pour le contexte JavaScript
-                $lignesCommandeJson = json_encode(
-                    $lignes_commande,
-                    JSON_HEX_TAG |
-                    JSON_HEX_APOS |
-                    JSON_HEX_QUOT |
-                    JSON_HEX_AMP |
-                    JSON_UNESCAPED_UNICODE,
-                );
-
                 echo '
-            <button onclick="confirmer_commande()">Confirmer</button>
-            <button onclick="refuser_commande()">Refuser</button>
-            <script>
-                function confirmer_commande() {
-                    let data = new FormData();
-                    data.append("id_commande", ' .
+            <form action="index.php?action=accepter_commande" method="post">
+                <input type="number" name="id_commande" style="display: none" value="' .
                     $id_commande .
-                    ');
-                    data.append("id_validateur", ' .
-                    $id_valideur .
-                    ');
-                    data.append("lignes_commande", JSON.stringify(' .
-                    $lignesCommandeJson .
-                    '));
-                    fetch("index.php?action=accepter_commande", {
-                        method: "POST",
-                        body: data
-                    }).then(response => {
-                        if(response.ok) {
-                            // Traitez la réponse
-                            console.log("Commande confirmée.");
-                        } else {
-                            // Gérez les erreurs ou les réponses non OK
-                            console.error("Erreur lors de la confirmation.");
-                        }
-                    }).catch(error => console.error("Erreur fetch :", error));
+                    '"/>';
+                foreach ($lignes_commandes as $ligne) {
+                    if (get_class($ligne["produit"]) == "ppe4\models\Medicament") {
+                        $medicament = $ligne['produit'];
+                        echo '
+                        <input type="number" name="id_produit[]" style="display: none" value="' .
+                            $medicament->getId() .
+                            '"/>
+                        <input type="number" name="quantite[]" style="display: none" value="' .
+                            $ligne["quantite"] .
+                            '"/>
+                        ';
+                    } elseif (get_class($ligne["produit"]) == "ppe4\models\Materiel") {
+                        $materiel = $ligne['produit'];
+                        echo '
+                        <input type="number" name="id_produit[]" style="display: none" value="' .
+                            $materiel->getId() .
+                            '"/>
+                        <input type="number" name="quantite[]" style="display: none" value="' .
+                            $ligne["quantite"] .
+                            '"/>
+                        ';
+                    }
                 }
-                
-                function refuser_commande() {
-                    // Implémentez la logique de refus ici
-                }
-            </script>
-            ';
+                echo '
+                <input type="submit" value="Accepter la commande"/>
+            </form>
+            <form action="index.php?action=refuser_commande" method="post">
+                <input type="number" name="id_commande" style="display: none" value="' .
+                    $id_commande .
+                    '"/>
+                <input type="submit" value="Refuser la commande"/>
+            </form>
+                ';
             }
         }
     }
@@ -135,51 +132,38 @@ class Commande_vue extends Controller
     public function accepter_commande(): void
     {
         require_once ROOT . "app/models/Commande.php";
+
+        require_once ROOT . "app/controllers/JWT.php";
+        $jwt = new JWT();
+        $token = $_COOKIE["JWT"] ?? "";
+        $id_validateur = $jwt->get_payload($token)['user_id'];
+        $id_commande = $_POST['id_commande'];
+
+        $commande = new Commande();
+        $commande->valider_commande($id_commande, $id_validateur);
+
         require_once ROOT . "app/models/Produit.php";
-
-        // S'assurer que les champs nécessaires sont présents
-        if (
-            !isset(
-                $_POST["id_commande"],
-                $_POST["id_validateur"],
-                $_POST["lignes_commande"],
-            )
-        ) {
-            // Gérer l'absence de données nécessaires
-            error_log(
-                "Données nécessaires pour accepter la commande manquantes",
-            );
-            // Ici, vous pourriez renvoyer une erreur ou effectuer une redirection
-            return;
+        $produit_model = new Produit();
+        $produits = $_POST['id_produit'];
+        $quantites = $_POST['quantite'];
+        $i = 0;
+        foreach ($produits as $produit){
+            $produit_model->diminuer_quantite($produit, $quantites[$i]);
+            $i++;
         }
+    }
 
-        $id_commande = $_POST["id_commande"];
-        $id_validateur = $_POST["id_validateur"];
+    public function refuser_commande():void
+    {
+        require_once ROOT . "app/models/Commande.php";
 
-        // Décoder le JSON des lignes de commande envoyées sous forme de chaîne
-        $lignes_commande_json = $_POST["lignes_commande"];
-        $lignes_commande = json_decode($lignes_commande_json, true); // Obtention d'un tableau associatif
+        require_once ROOT . "app/controllers/JWT.php";
+        $jwt = new JWT();
+        $token = $_COOKIE["JWT"] ?? "";
+        $id_validateur = $jwt->get_payload($token)['user_id'];
+        $id_commande = $_POST['id_commande'];
 
-        if (is_array($lignes_commande)) {
-            $commande = new Commande();
-            // Assurez-vous que la méthode valider_commande accepte un id_validateur si nécessaire
-            $commande->valider_commande($id_commande, $id_validateur);
-
-            foreach ($lignes_commande as $ligne) {
-                if (isset($ligne["id_produit"], $ligne["quantite"])) {
-                    $produit = new Produit();
-                    $produit->diminuer_quantite(
-                        $ligne["id_produit"],
-                        $ligne["quantite"],
-                    );
-                } else {
-                    error_log(
-                        "Données de ligne de commande manquantes ou mal formées",
-                    );
-                }
-            }
-        } else {
-            error_log("Erreur de décodage JSON pour les lignes de commande");
-        }
+        $commande = new Commande();
+        $commande->refuser_commande($id_commande, $id_validateur);
     }
 }
