@@ -3,6 +3,7 @@
 namespace ppe4\controllers;
 
 use ppe4\controllers\Controller;
+use ppe4\models\Log_connexion;
 use ppe4\models\Role;
 use ppe4\models\Utilisateur;
 
@@ -96,6 +97,10 @@ class Profile_vue_admin extends Controller
         require_once ROOT . "app/models/Utilisateur.php";
         $utilisateur_model = new Utilisateur();
         $utilisateur_model->activer_utilisateur($id_utilisateur);
+
+        require_once ROOT.'app/models/Log_connexion.php';
+        $log_connexion = new Log_connexion();
+        $log_connexion->inserer_log_connexion_par_id($id_utilisateur, false);
     }
 
     public function reinitialiser_mot_de_passe(

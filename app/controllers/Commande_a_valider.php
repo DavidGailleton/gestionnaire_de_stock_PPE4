@@ -24,7 +24,7 @@ class Commande_a_valider extends Controller
     {
         require_once ROOT . "app/models/Commande.php";
         $commande = new Commande();
-        $commandes = $commande->selectionner_commandes_en_attente();
+        $commandes = $commande->selectionner_commandes_non_valide();
 
         if (empty($commandes)) {
             echo "<div>pas de commandes</div>";

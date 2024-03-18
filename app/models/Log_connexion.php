@@ -39,6 +39,24 @@ class Log_connexion extends Model
         $stmt->fetch();
     }
 
+    public function inserer_log_connexion_par_id(int $id_utilisateur, bool $echec):void
+    {
+        $datetime = new \DateTime();
+
+        require_once ROOT.'app/models/Utilisateur.php';
+        $utilisateur_model = new Utilisateur();
+        $utilisateur = $utilisateur_model->selectionner_utilisateur_par_id($id_utilisateur);
+        $query =
+            "INSERT INTO log_connexion (email_log_con, echec_log_con, date_log_con) VALUES (:email, :echec, :date)";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute([
+            "email" => $utilisateur->getEmail(),
+            "echec" => $echec,
+            "date" => $datetime->getTimestamp(),
+        ]);
+        $stmt->fetch();
+    }
+
     /**
      * Retourne sous forme de tableau les logs associé à un email
      *

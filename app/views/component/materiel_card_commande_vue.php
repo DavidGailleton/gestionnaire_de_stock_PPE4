@@ -3,8 +3,6 @@ require_once ROOT.'app/models/Materiel.php';
 require_once ROOT.'app/controllers/Materiels.php';
 function materiel_card_commande_vue(\ppe4\models\Materiel $materiel, int $i):string
 {
-    $materiels = new \ppe4\controllers\Materiels();
-
     return '<div class="card">
     <article class="materiel_card">
     <div class="haut">

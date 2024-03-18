@@ -72,7 +72,7 @@ class Commande_vue extends Controller
     ): void {
         require_once ROOT . "app/controllers/JWT.php";
         $jwt = new JWT();
-        $token = $_COOKIE["JWT"] ?? ""; // Utilise l'opérateur de coalescence null pour vérifier si le cookie JWT est défini
+        $token = $_COOKIE["JWT"] ?? "";
 
         if (
             $jwt->est_valide($token) &&
