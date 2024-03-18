@@ -104,5 +104,88 @@ Si tout s'est déroulé comme prévu, la base de données devrait se présenter 
 
 ![MCD](public/img/README/mcd.png)
 
-Le MCD si dessus représente 
+Le MCD si dessus représentent les différentes tables de la base de données.
+
+## Le projet
+
+### Sécurité
+
+La sécurité est une partie extremement important dans n'importe quelles applications, mais encore plus dans le secteur médical.
+
+#### BCrypt
+
+Pour encrypter les mots de passe dans la base de données, j'ai choisi d'utiliser l'algorithme de BCrypt. BCrypt permet d'encrypter un mot de passe dans une chaine de caractère unique et indéchiffrable.
+Unique, car même avec le même mot de passe, la clé sera différente.
+
+En PHP, on utilise une methode nommé `password_hash()` :
+
+```php
+/**
+     * Crypt le mot de passe mis en paramètre puis retourne son hash
+     *
+     * @param string $mot_de_passe
+     * @return string
+     */
+    public function crypter_mot_de_passe(string $mot_de_passe): string
+    {
+        return password_hash($mot_de_passe, PASSWORD_BCRYPT, ["cost" => 13]);
+    }
+```
+
+La seul manière de vérifier si un mot de passe est correct est de le comparer avec la version cryptée. En php, on utilise la méthode `password_verify()` :
+
+```php
+/**
+     * Vérifie si le mot de passe mis en paramètre est le bon mot de passe, retourne true si c'est le cas, false sinon
+     *
+     * @param string $email
+     * @param string $mot_de_passe
+     * @return bool
+     */
+    public function verifier_mot_de_passe(
+        string $email,
+        string $mot_de_passe
+    ): bool {
+        require_once ROOT . "app/models/Utilisateur.php";
+        $utilisateur = new Utilisateur();
+
+        $mot_de_passe_importe = $utilisateur->selectionner_mot_de_passe($email);
+
+        return password_verify($mot_de_passe, $mot_de_passe_importe);
+    }
+```
+
+L'algorithme permet donc de protéger les utilisateurs en cas de fuite de la base de données ou du code source.
+
+#### JWT (JSON Web Token)
+
+JSON Web Token permet d'inscrire un token JSON sur la session de l'utilisateur, dans le stockage local, ou mieux, dans le cookie du navigateur.
+
+Le token JWT est composé de 3 parties, le **header** (en tête), le **payload** et la **signature**.
+
+##### Header
+
+Le header contient les informations du token permettant de l'identifier en tant que token JWT.
+
+```json
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+```
+
+##### Payload
+
+Le payload permet de contenir toutes les informations que l'on souhaite enregistrer sur le navigateur de l'utilisateur.
+Dans notre cas, nous allons enregistrer son **id**, son **email**, son **role**, sa date d'emission et sa date d'expiration.
+
+```json
+{
+  "user_id": "9",
+  "user_email": "utilisateur@gmail.com",
+  "user_role": "utilisateur",
+  "iat": 1710779138,
+  "exp": 1710793538
+}
+```
 
