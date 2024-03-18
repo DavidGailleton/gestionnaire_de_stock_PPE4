@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : sam. 16 mars 2024 à 16:50
+-- Généré le : lun. 18 mars 2024 à 14:00
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -42,15 +42,29 @@ CREATE TABLE `commande` (
 --
 
 INSERT INTO `commande` (`id_com`, `statut_com`, `date_com`, `mouvement_com`, `date_val_com`, `id_uti_Validateur`, `id_uti_Utilisateur`) VALUES
-(1, 'en_attente', '2024-02-17 11:58:00', 0, NULL, NULL, 1),
-(3, 'en_attente', '2024-02-17 11:58:26', 0, NULL, NULL, 1),
-(5, 'en_attente', '2024-02-29 22:23:44', 1, NULL, NULL, 1),
-(6, 'en_attente', '2024-03-01 11:26:16', 1, NULL, NULL, 1),
-(7, 'en_attente', '2024-03-01 12:18:22', 1, NULL, NULL, 1),
-(8, 'en_attente', '2024-03-03 15:05:18', 1, NULL, NULL, 1),
-(9, 'en_attente', '2024-03-16 15:41:39', 1, NULL, NULL, 4),
-(10, 'en_attente', '2024-03-16 15:42:05', 1, NULL, NULL, 4),
-(11, 'en_attente', '2024-03-16 15:44:09', 1, NULL, NULL, 4);
+(1, 'refuse', '2024-03-17 19:59:37', 0, NULL, NULL, 1),
+(3, 'refuse', '2024-03-17 20:00:03', 0, NULL, NULL, 1),
+(5, 'refuse', '2024-03-17 20:00:03', 1, NULL, NULL, 1),
+(6, 'refuse', '2024-03-17 20:00:03', 1, NULL, NULL, 1),
+(7, 'refuse', '2024-03-17 20:00:03', 1, NULL, NULL, 1),
+(8, 'en_cours_de_preparation', '2024-03-17 19:52:07', 1, '2024-03-17 19:52:07', 3, 1),
+(9, 'en_cours_de_preparation', '2024-03-17 19:54:04', 1, '2024-03-17 19:54:04', 3, 4),
+(10, 'refuse', '2024-03-17 20:00:03', 1, NULL, NULL, 4),
+(11, 'en_cours_de_preparation', '2024-03-17 19:54:38', 1, '2024-03-17 19:54:38', 3, 4),
+(12, 'refuse', '2024-03-17 20:00:23', 1, NULL, NULL, 4),
+(13, 'en_cours_de_preparation', '2024-03-17 19:29:58', 1, '2024-03-17 19:29:58', 3, 4),
+(14, 'en_cours_de_preparation', '2024-03-17 19:29:51', 1, '2024-03-17 19:29:51', 3, 4),
+(15, 'en_cours_de_preparation', '2024-03-17 10:05:24', 1, NULL, NULL, 4),
+(16, 'en_cours_de_preparation', '2024-03-17 17:58:09', 1, '2024-03-17 17:58:09', 3, 1),
+(17, 'en_cours_de_preparation', '2024-03-17 17:51:32', 1, '2024-03-17 17:51:32', 3, 1),
+(18, 'en_attente', '2024-03-17 20:00:58', 1, NULL, NULL, 1),
+(19, 'en_cours_de_preparation', '2024-03-18 10:48:51', 1, '2024-03-18 10:48:51', 3, 4),
+(20, 'en_cours_de_preparation', '2024-03-18 10:44:10', 1, '2024-03-18 10:44:10', 3, 4),
+(21, 'refuse', '2024-03-18 10:48:46', 1, '2024-03-18 10:48:46', 3, 7),
+(22, 'en_cours_de_preparation', '2024-03-18 10:48:48', 1, '2024-03-18 10:48:48', 3, 4),
+(23, 'en_cours_de_preparation', '2024-03-18 10:48:44', 1, '2024-03-18 10:48:44', 3, 4),
+(24, 'en_cours_de_preparation', '2024-03-18 10:01:09', 0, NULL, NULL, 4),
+(25, 'refuse', '2024-03-18 10:43:37', 1, '2024-03-18 10:43:37', 3, 9);
 
 -- --------------------------------------------------------
 
@@ -79,7 +93,28 @@ INSERT INTO `ligne_commande` (`id_pro`, `id_com`, `qte`) VALUES
 (15774, 7, 1),
 (8360, 8, 4),
 (8360, 9, 11),
-(8360, 11, 9);
+(8360, 11, 9),
+(8360, 12, 1),
+(15768, 12, 1),
+(8360, 13, 7),
+(8360, 14, 1),
+(8360, 16, 6),
+(13907, 17, 9),
+(3001, 18, 12),
+(15768, 18, 6),
+(15775, 18, 7),
+(5837, 19, 9),
+(15769, 19, 8),
+(5837, 20, 18),
+(5837, 21, 12),
+(15769, 21, 7),
+(5837, 22, 7),
+(15769, 22, 7),
+(5837, 23, 7),
+(15768, 23, 7),
+(5837, 24, 7),
+(15769, 24, 12),
+(5837, 25, 1);
 
 -- --------------------------------------------------------
 
@@ -185,7 +220,51 @@ INSERT INTO `log_connexion` (`id_log_con`, `date_log_con`, `email_log_con`, `ech
 (124, 1710592156, 'utilisateur@gmail.com', 0),
 (125, 1710592182, 'validateur@gmail.com', 0),
 (126, 1710599883, 'utilisateur@gmail.com', 0),
-(127, 1710602581, 'gestionnaire-de-stock@gmail.com', 0);
+(127, 1710602581, 'gestionnaire-de-stock@gmail.com', 0),
+(128, 1710670141, 'utilisateur@gmail.com', 0),
+(129, 1710670200, 'validateur@gmail.com', 0),
+(130, 1710671060, 'admin@gmail.com', 0),
+(131, 1710671080, 'utilisateur@gmail.com', 0),
+(132, 1710690822, 'utilisateur@gmail.com', 0),
+(133, 1710690864, 'admin@gmail.com', 0),
+(134, 1710692410, 'admin@gmail.com', 0),
+(135, 1710692490, 'validateur@gmail.com', 0),
+(136, 1710704979, 'utilisateur@gmail.com', 0),
+(137, 1710704988, 'validateur@gmail.com', 0),
+(138, 1710705637, 'utilisateur@gmail.com', 0),
+(139, 1710749910, 'utilisateur@gmail.com', 0),
+(140, 1710749923, 'admin@gmail.com', 0),
+(141, 1710751294, 'gestionnaire-de-stock@gmail.com', 0),
+(142, 1710751410, 'validateur@gmail.com', 0),
+(143, 1710751448, 'gestionnaire-de-stock@gmail.com', 0),
+(144, 1710752342, 'admin@gmail.com', 0),
+(145, 1710752381, 'admin@gmail.com', 0),
+(146, 1710752694, 'test', 1),
+(147, 1710752865, 'david.gailleton@gsb.fr', 0),
+(148, 1710753244, 'validateur@gmail.com', 0),
+(149, 1710753269, 'admin@gmail.com', 0),
+(150, 1710753527, 'admin@gmail.com', 0),
+(151, 1710753688, 'gestionnaire-de-stock@gmail.com', 0),
+(152, 1710753754, 'validateur@gmail.com', 1),
+(153, 1710753761, 'validateur@gmail.com', 1),
+(154, 1710753766, 'admin@gmail.com', 0),
+(155, 1710753800, 'validateur@gmail.com', 1),
+(156, 1710755203, 'gestionnaire-de-stock@gmail.com', 0),
+(157, 1710756452, 'utilisateur@gmail.com', 0),
+(158, 1710757358, 'validateur@gmail.com', 1),
+(159, 1710757363, 'admin@gmail.com', 0),
+(160, 1710757386, 'validateur@gmail.com', 1),
+(161, 1710757419, 'admin@gmail.com', 0),
+(162, 1710757433, 'validateur@gmail.com', 1),
+(163, 1710757438, 'admin@gmail.com', 0),
+(165, 1710757931, 'validateur@gmail.com', 0),
+(166, 1710757970, 'validateur@gmail.com', 1),
+(167, 1710757981, 'validateur@gmail.com', 1),
+(168, 1710757985, 'admin@gmail.com', 0),
+(169, 1710758041, 'validateur@gmail.com', 1),
+(170, 1710758178, 'admin@gmail.com', 0),
+(171, 1710758216, 'validateur@gmail.com', 0),
+(172, 1710760147, 'utilisateur@gmail.com', 0);
 
 -- --------------------------------------------------------
 
@@ -16122,13 +16201,6 @@ CREATE TABLE `panier` (
   `qte` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Déchargement des données de la table `panier`
---
-
-INSERT INTO `panier` (`id_uti`, `id_pro`, `qte`) VALUES
-(1, 8360, 5);
-
 -- --------------------------------------------------------
 
 --
@@ -21991,7 +22063,7 @@ INSERT INTO `produits` (`id_pro`, `libelle_pro`, `description_pro`, `qte_stock_p
 (5834, 'FIRMAGON 120 mg, poudre et solvant pour solution i', 'sous-cutanee', 9288),
 (5835, 'FIRMAGON 80 mg, poudre et solvant pour solution in', 'sous-cutanee', 1118),
 (5836, 'FIVASA 1 g, suppositoire', 'rectale', 8844),
-(5837, 'FIVASA 1600 mg, comprime gastro-resistant', 'orale', 9998),
+(5837, 'FIVASA 1600 mg, comprime gastro-resistant', 'orale', 9964),
 (5838, 'FIVASA 400 mg, comprime enrobe gastroresistant', 'orale', 1594),
 (5839, 'FIVASA 500 mg, suppositoire', 'rectale', 5677),
 (5840, 'FIVASA 800 mg, comprime enrobe gastroresistant', 'orale', 4550),
@@ -24517,7 +24589,7 @@ INSERT INTO `produits` (`id_pro`, `libelle_pro`, `description_pro`, `qte_stock_p
 (8357, 'LEVODOPA/CARBIDOPA/ENTACAPONE TEVA 175 mg/43,75 mg', 'orale', 4754),
 (8358, 'LEVODOPA/CARBIDOPA/ENTACAPONE TEVA 200 mg/50 mg/20', 'orale', 3447),
 (8359, 'LEVODOPA/CARBIDOPA/ENTACAPONE TEVA 50 mg/12,5 mg/2', 'orale', 2546),
-(8360, 'LEVODOPA/CARBIDOPA/ENTACAPONE TEVA 75 mg/18,75 mg/', 'orale', 10000),
+(8360, 'LEVODOPA/CARBIDOPA/ENTACAPONE TEVA 75 mg/18,75 mg/', 'orale', 9980),
 (8361, 'LEVODOPA/CARBIDOPA/ENTACAPONE VIATRIS 100 mg/25 mg', 'orale', 6107),
 (8362, 'LEVODOPA/CARBIDOPA/ENTACAPONE VIATRIS 125 mg/31,25', 'orale', 3422),
 (8363, 'LEVODOPA/CARBIDOPA/ENTACAPONE VIATRIS 150 mg/37,5 ', 'orale', 6878),
@@ -31936,8 +32008,8 @@ INSERT INTO `produits` (`id_pro`, `libelle_pro`, `description_pro`, `qte_stock_p
 (15765, 'ZYVOXID 100 mg/5 ml, granules pour suspension buva', 'orale', 6742),
 (15766, 'ZYVOXID 2 mg/ml, solution pour perfusion', 'intraveineuse', 8219),
 (15767, 'ZYVOXID 600 mg, comprime pellicule', 'orale', 8309),
-(15768, 'Centrifugeuse', 'Appareil permettant de separer les melanges homogenes ou heterogenes par la force centrifuge', 43),
-(15769, 'Hotte aspirante', 'Hotte aspirante avec eclairage LED et filtre a charbon actif pour une ventilation efficace', 38),
+(15768, 'Centrifugeuse', 'Appareil permettant de separer les melanges homogenes ou heterogenes par la force centrifuge', 36),
+(15769, 'Hotte aspirante', 'Hotte aspirante avec eclairage LED et filtre a charbon actif pour une ventilation efficace', 35),
 (15770, 'Spectrophotometre', 'Appareil de mesure de l\'absorbance des liquides permettant de determiner la concentration de certaines substances', 151),
 (15771, 'Balance analytique', 'Balance precise avec affichage numerique pour les pesees de grande precision en laboratoire', 75),
 (15772, 'Four a panneaux', 'Four a convection avec portes vitrees et commande numerique pour un controle optimal de la temperature', 113),
@@ -32095,12 +32167,14 @@ CREATE TABLE `utilisateur` (
 --
 
 INSERT INTO `utilisateur` (`id_uti`, `email_uti`, `password_uti`, `nom_uti`, `prenom_uti`, `no_rue_uti`, `rue_uti`, `ville_uti`, `cp_uti`, `id_rol`, `compte_desactive_uti`, `mdp_a_changer_uti`, `est_archive_uti`) VALUES
-(1, 'utilisateur@gmail.com', '$2y$13$7cE9slcK5oFZCShEEyvcRO2Veas2bxIS2GlnL7tisauDeQDmjczfi', 'utilisateur', 'test1', NULL, NULL, NULL, NULL, 1, 0, 0, 0),
-(3, 'validateur@gmail.com', '$2y$13$.VqLfIfiuKjPpZazBCZIZe9PQMeF6RPLuHG980oPU03WnxvhYfJ5m', 'validateur', 'test', NULL, NULL, NULL, NULL, 10, 0, 0, 0),
+(1, 'utilisateur@gmail.com', '$2y$13$XVU9WdvQDri3uig3rNjcA.iGZTDPmr7SofJGYQLJBAbf2gM.SGfKW', 'utilisateur', 'test12', NULL, NULL, NULL, NULL, 1, 0, 1, 1),
+(3, 'validateur@gmail.com', '$2y$13$Mr9QSwKSk4QTxxFh7Xaode.V0ci/1Puc5swZGuJ/tXTFKH5av8zhu', 'validateur', 'test123', NULL, NULL, NULL, NULL, 10, 0, 0, 0),
 (4, 'gestionnaire-de-stock@gmail.com', '$2y$13$.k13SpfQQ8MgF7QZtVFr2ex3kATL4C9.b77aZngfHkr216WL1CfFy', 'Gestionnaire de stock', 'test', NULL, NULL, NULL, NULL, 3, 0, 0, 0),
 (5, 'admin@gmail.com', '$2y$13$6/KlKGvZn7PXIXV.dEYcJuSk60bqe3cXmxiCkTHuVyyx6ME7OSKTu', 'admin', 'test', NULL, NULL, NULL, NULL, 2, 0, 0, 0),
 (6, 'testest@test.Fr', '$2y$13$mORplmNXLqqM4wi9NXKnEegxj821ISek4Gj/8.CyXPOehVYLDks9C', 'test', 'test', NULL, NULL, NULL, NULL, 1, 0, 1, 0),
-(7, 'david.gailleton@gsb.fr', '$2y$13$SIRJKkgXoiSh6QvmxuuwReQfyl.H7lIXgWcJBlkP402s.RsL/ixGu', 'GAILLETON', 'David', NULL, NULL, NULL, NULL, 1, 0, 1, 0);
+(7, 'david.gailleton@gsb.fr', '$2y$13$y1s0hSBPFwjKjePEmtkKkexsuaGbyEC7JVhoZRwsB.EH.afjqISOG', 'GAILLETON', 'David', NULL, NULL, NULL, NULL, 1, 0, 0, 0),
+(9, 'utilisateur@gmail.com', '$2y$13$r93uQxdAxt4.FaPlMcpU7.71eRtnREM6GmXHE2BRbXhnYlY3NqbUG', 'test', 'test', NULL, NULL, NULL, NULL, 1, 0, 0, 0),
+(10, 'test@gmail.com', '$2y$13$X3OMMmuMD2OiOTCgjkEuH.g.cX6WoKRzjfF/kegXKZVekPk5vV5Pa', 'test', 'test', NULL, NULL, NULL, NULL, 1, 0, 1, 1);
 
 --
 -- Index pour les tables déchargées
@@ -32166,7 +32240,6 @@ ALTER TABLE `role`
 --
 ALTER TABLE `utilisateur`
   ADD PRIMARY KEY (`id_uti`),
-  ADD UNIQUE KEY `email_uti` (`email_uti`),
   ADD KEY `Utilisateur_Role_FK` (`id_rol`);
 
 --
@@ -32177,13 +32250,13 @@ ALTER TABLE `utilisateur`
 -- AUTO_INCREMENT pour la table `commande`
 --
 ALTER TABLE `commande`
-  MODIFY `id_com` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_com` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT pour la table `log_connexion`
 --
 ALTER TABLE `log_connexion`
-  MODIFY `id_log_con` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
+  MODIFY `id_log_con` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=173;
 
 --
 -- AUTO_INCREMENT pour la table `produits`
@@ -32201,7 +32274,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `id_uti` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_uti` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Contraintes pour les tables déchargées
