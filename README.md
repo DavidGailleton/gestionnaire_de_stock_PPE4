@@ -56,3 +56,53 @@ Vérifié bien que dans le champ ***Select a folder***, le chemin soit `C:\xampp
 
 ![xampp_installer_5.png](public%2Fimg%2FREADME%2Fxampp_installer_5.png)
 
+Si le programme d'installation vous propose de redémarrer votre poste, redémarrez-le.
+
+### Installation du projet
+
+Une fois XAMPP installé, nous pouvons ajouter le projet en local.
+
+Pour commencer, il faut télécharger le projet depuis [le dépot Github](https://github.com/DavidGailleton/gestionnaire_de_stock_PPE4) :
+
+![github_download.png](public%2Fimg%2FREADME%2Fgithub_download.png)
+
+Une fois téléchargé, extraire le dossier précédemment téléchargé dans le dossier `C:\xampp\htdocs`.
+
+**Attention, l'extracteur vous proposera surement de l'éxtraire dans le dossier `C:\xampp\htdocs\ppe4`. Bien penser à corriger** :
+
+![project_extract_1.png](public%2Fimg%2FREADME%2Fproject_extract_1.png)
+
+![project_extract_2.png](public%2Fimg%2FREADME%2Fproject_extract_2.png)
+
+### Base de données MariaDB
+
+Pour mettre la base de données en place, il faut en premier temps démarrer **Apache** et **MySQL** depuis XAMPP :
+
+![xampp_start_mysql_apache.png](public%2Fimg%2FREADME%2Fxampp_start_mysql_apache.png)
+
+Il est maintenant possible d'accéder à PHP My Admin pour accéder aux bases de données depuis le navigateur web avec l'addresse [http://localhost/phpmyadmin/](http://localhost/phpmyadmin/)
+
+Pour créer la base de données, il faut en premier temps cliquer sur *Nouvelle base de données* (**1.**), puis donner un nom à la base de données, dans notre cas `ppe4` (**2.**), puis cliquer sur *Créer* (**3.**) :
+
+![phpmyadmin_create_database.png](public%2Fimg%2FREADME%2Fphpmyadmin_create_database.png)
+
+Nous allons en suite importer la base de données du projet.
+
+Cette base des données est disponible à la racine du projet. L'importation est simplifié par l'interface phpmyadmin :
+
+![import_sql_1.png](public%2Fimg%2FREADME%2Fimport_sql_1.png)
+
+![import_sql_2.png](public%2Fimg%2FREADME%2Fimport_sql_2.png)
+
+![import_sql_3.png](public%2Fimg%2FREADME%2Fimport_sql_3.png)
+
+Si tout s'est déroulé comme prévu, la base de données devrait se présenter comme ceci :
+
+![db_view.png](public%2Fimg%2FREADME%2Fdb_view.png)
+
+## Base de données
+
+![MCD](public/img/README/mcd.png)
+
+Le MCD si dessus représente 
+
