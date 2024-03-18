@@ -253,11 +253,6 @@ if (isset($_GET["page"]) && $_GET["page"] != "") {
                 header("Location : index.php?page=error");
             }
             break;
-        case "confirmation_commande":
-            require_once ROOT . "app/controllers/Confirmation_commande.php";
-            $confirmation_commande = new \ppe4\controllers\Confirmation_commande();
-            $confirmation_commande->afficher();
-            break;
         case "liste_commande":
             require_once ROOT . "app/controllers/Liste_commande.php";
             $list_commande = new \ppe4\controllers\Liste_commande();
@@ -279,16 +274,6 @@ if (isset($_GET["page"]) && $_GET["page"] != "") {
                 exit();
             }
             $liste_utilisateur->afficher();
-            break;
-        case "page_produit":
-            require_once ROOT . "app/controllers/Page_produit.php";
-            $page_produit = new \ppe4\controllers\Page_produit();
-            $page_produit->afficher();
-            break;
-        case "profile":
-            require_once ROOT . "app/controllers/Profile.php";
-            $profile = new \ppe4\controllers\Profile();
-            $profile->afficher();
             break;
         case "profile_vue_admin":
             require_once ROOT . "app/controllers/Profile_vue_admin.php";
