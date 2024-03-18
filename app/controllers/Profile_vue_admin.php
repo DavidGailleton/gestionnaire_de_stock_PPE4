@@ -76,8 +76,9 @@ class Profile_vue_admin extends Controller
     {
         require_once ROOT . "app/models/Utilisateur.php";
         $utilisateur_model = new Utilisateur();
+        $result = $utilisateur_model->archiver_utilisateur($id_utilisateur);
         if (
-            $utilisateur_model->archiver_utilisateur($id_utilisateur) == false
+            !$result
         ) {
             echo '<script>alert("Impossible d\'archiver l\'utilisateur")</script>';
         }

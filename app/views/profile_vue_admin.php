@@ -48,6 +48,7 @@ if (isset($_POST['id_utilisateur'])){
                 </label>
             </div>
             <button type="submit">Modifier l\'utilisateur</button>
+        </form>
             <form action="index.php?action=supprimer_utilisateur" method="post">
                 <input type="number" name="id_utilisateur" style="display: none" value="'.$utilisateur->getId().'">
                 <button id="boutton_supprimer" type="submit" onclick="return confirmer_suppression()">Supprimer l\'utilisateur</button>
@@ -71,7 +72,6 @@ if (isset($_POST['id_utilisateur'])){
                 <input name="mdp_a_changer" id="mdp_a_changer" type="text" value="" style="display: none">
                 <button id="boutton_reinitialiser_mot_de_passe" type="submit" onclick="return reinitialiser_mot_de_passe()">Reinitialiser mot de passe</button>
             </form>
-        </form>
         ';
     } else {
         echo '

@@ -50,12 +50,17 @@ class Creation_utilisateur extends Controller
 
         require_once ROOT . "app/models/Utilisateur.php";
         $utilisateur_model = new Utilisateur();
-        return $utilisateur_model->creer_utilisateur(
+        $result = $utilisateur_model->creer_utilisateur(
             $mot_de_passe_crypte,
             $email,
             $prenom,
             $nom,
             $id_role
         );
+
+        if (!$result){
+            echo '<script>alert("Une erreur s\'est produit")</script>';
+        }
+        return $result;
     }
 }

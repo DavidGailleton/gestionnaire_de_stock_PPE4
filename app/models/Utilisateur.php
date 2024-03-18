@@ -89,22 +89,22 @@ class Utilisateur extends Model
             "SELECT id_uti, email_uti, nom_uti, prenom_uti, compte_desactive_uti, mdp_a_changer_uti FROM utilisateur WHERE email_uti = :email AND est_archive_uti = false";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(["email" => $email]);
-        $fetch = $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($fetch) {
+        if ($result) {
             require_once "Role.php";
             $role_model = new Role();
             $role = $role_model->selectionner_role($email);
 
             $user = new Utilisateur();
             $user->set_utilisateur(
-                $fetch["id_uti"],
-                $fetch["email_uti"],
-                $fetch["nom_uti"],
-                $fetch["prenom_uti"],
+                $result["id_uti"],
+                $result["email_uti"],
+                $result["nom_uti"],
+                $result["prenom_uti"],
                 $role,
-                $fetch["compte_desactive_uti"],
-                $fetch["mdp_a_changer_uti"],
+                $result["compte_desactive_uti"],
+                $result["mdp_a_changer_uti"],
             );
 
             return $user;
@@ -127,8 +127,8 @@ class Utilisateur extends Model
             $role_model = new Role();
             $role = $role_model->selectionner_role($fetch["email_uti"]);
 
-            $user = new Utilisateur();
-            $user->set_utilisateur(
+            $utilisateur = new Utilisateur();
+            $utilisateur->set_utilisateur(
                 $fetch["id_uti"],
                 $fetch["email_uti"],
                 $fetch["nom_uti"],
@@ -138,7 +138,7 @@ class Utilisateur extends Model
                 $fetch["mdp_a_changer_uti"],
             );
 
-            return $user;
+            return $utilisateur;
         } else {
             return null;
         }
@@ -334,6 +334,10 @@ class Utilisateur extends Model
         string $nom,
         int $id_role,
     ): bool {
+        if ($this->selectionner_utilisateur_par_email($email)){
+            return false;
+        }
+
         $query =
             "INSERT INTO utilisateur (email_uti, password_uti, nom_uti, prenom_uti, id_rol) VALUES (:email, :mot_de_passe, :nom, :prenom, :id_role)";
         $stmt = $this->pdo->prepare($query);
