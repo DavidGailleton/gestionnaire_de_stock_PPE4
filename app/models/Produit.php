@@ -41,6 +41,7 @@ class Produit extends Model
 
     public function augmenter_quantite(int $id_produit, int $quantite): void
     {
+        $this->get_connection();
         $query =
             "UPDATE produits SET qte_stock_pro = produits.qte_stock_pro + :quantite WHERE id_pro = :id";
         $stmt = $this->pdo->prepare($query);

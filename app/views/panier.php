@@ -36,7 +36,6 @@ require_once ROOT.'app/controllers/JWT.php';
                 echo 'form.action = "index.php?action=confirmation_commande_gestionnaire";';
             }
             ?>
-            form.action = 'index.php?action=confirmation_commande_utilisateur';
             let input = document.createElement('input');
             input.type = 'hidden';
             input.name = 'produits';

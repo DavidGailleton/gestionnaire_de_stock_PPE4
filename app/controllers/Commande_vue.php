@@ -85,7 +85,6 @@ class Commande_vue extends Controller
             require_once ROOT.'app/models/Medicament.php';
             require_once ROOT.'app/models/Materiel.php';
 
-
             if ($role == "validateur") {
                 echo '
             <form action="index.php?action=accepter_commande" method="post">

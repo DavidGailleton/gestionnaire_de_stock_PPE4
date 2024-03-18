@@ -1,5 +1,5 @@
 <?php
-if (!isset($_SESSION['user_email']) || !isset($_COOKIE['JWT'])){
+if (!isset($_SESSION['user_email']) || isset($_COOKIE['JWT'])){
     header('Location: '.SERVER_URL.'index.php?page=login');
     exit();
 }

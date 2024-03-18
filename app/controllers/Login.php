@@ -53,25 +53,25 @@ class Login
         require_once ROOT . "app/controllers/Bcrypt.php";
         $bcrypt = new Bcrypt();
 
-        $utilisateur_a_connecter = $utilisateur->selectionner_utilisateur_par_email(
+        $utilisateur_existe = $utilisateur->selectionner_utilisateur_par_email(
             $email,
         );
 
         if (
-            $utilisateur_a_connecter &&
-            $this->compte_non_bloque($utilisateur_a_connecter) &&
+            $utilisateur_existe &&
+            $this->compte_non_bloque($utilisateur_existe) &&
             $bcrypt->verifier_mot_de_passe($email, $mot_de_passe)
         ) {
             if ($this->mot_de_passe_a_changer($email)) {
                 $_SESSION["user_email"] = $email;
                 header(
-                    "Location: " . SERVER_URL . "index.php?page=nouveau_mdp",
+                    "Location: index.php?page=nouveau_mdp",
                 );
                 exit();
             }
 
-            $id = $utilisateur_a_connecter->getId();
-            $role = $utilisateur_a_connecter->getRole();
+            $id = $utilisateur_existe->getId();
+            $role = $utilisateur_existe->getRole();
 
             $payload = $jwt->generer_payload($id, $email, $role);
             setcookie("JWT", $jwt->generer_jwt($payload), time() + 14400);

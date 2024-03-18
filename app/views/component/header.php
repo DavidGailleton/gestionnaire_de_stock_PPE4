@@ -12,17 +12,14 @@ $role = $payload['user_role'];
         <li><a href="index.php?page=dashboard">Accueil</a></li>
 
 
-        <?php if ($role == ('utilisateur')): ?>
+        <?php if (in_array($role, ['utilisateur', 'Gestionnaire_de_stock'])): ?>
             <li><a href="index.php?page=medicaments">Commande Medicaments</a></li>
         <?php endif; ?>
-        <?php if ($role == ('utilisateur')): ?>
+        <?php if (in_array($role, ['utilisateur', 'Gestionnaire_de_stock'])): ?>
             <li><a href="index.php?page=materiels">Commande Materiels</a></li>
         <?php endif; ?>
         <?php if ($role == ('validateur')): ?>
             <li><a href="index.php?page=commande_a_valider">Valider une commande</a></li>
-        <?php endif; ?>
-        <?php if ($role == ('gestionnaire_de_stock')): ?>
-            <li><a href="index.php?page=confirmation_commande">Valider une commande</a></li>
         <?php endif; ?>
         <?php if ($role == 'admin'): ?>
             <li><a href="index.php?page=liste_utilisateur">Gestion des utilisateurs</a></li>
@@ -32,9 +29,11 @@ $role = $payload['user_role'];
         <?php endif; ?>
     </ul>
     <div class="end">
+        <?php if (in_array($role, ['utilisateur', 'Gestionnaire_de_stock'])): ?>
         <a href="index.php?page=panier">
             <img src='public/img/panier.svg' alt='panier' style="width: 2em">
         </a>
+        <?php endif;?>
         <div class="profile">
             <img src='public/img/profile.svg' alt='profile' style="width: 2em">
             <ul class="menu_deroulant">

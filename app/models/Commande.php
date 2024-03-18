@@ -68,9 +68,10 @@ class Commande extends Model
      * @param int $id_utilisateur
      * @return array | null
      */
-    public function selectionner_commande_non_valide_par_utilisateur(
+    public function selectionner_commande_non_valide_utilisateur_par_id(
         int $id_utilisateur,
     ): array|null {
+        echo $id_utilisateur;
         $query =
             "SELECT id_com as id, date_com as date_commande, statut_com as statut, mouvement_com as mouvement FROM commande WHERE id_uti_Utilisateur = :id_utilisateur AND statut_com = :statut ORDER BY date_com DESC";
         $stmt = $this->pdo->prepare($query);
@@ -105,9 +106,10 @@ class Commande extends Model
         return $commandes;
     }
 
-    public function selectionner_commande_valide_par_utilisateur(
-        int $id_utilisateur,
+    public function selectionner_commande_valide_utilisateur_par_id(
+        int $id_utilisateur
     ): array|null {
+        echo $id_utilisateur;
         $query =
             "SELECT id_com as id, date_com as date_commande, statut_com as statut, mouvement_com as mouvement, date_val_com as date_validation, id_uti_Validateur as id_validateur FROM commande WHERE id_uti_Utilisateur = :id_utilisateur AND statut_com != :statut ORDER BY date_com DESC";
         $stmt = $this->pdo->prepare($query);
@@ -123,7 +125,7 @@ class Commande extends Model
         require_once "Utilisateur.php";
         $utilisateur_model = new Utilisateur();
         $utilisateur = $utilisateur_model->selectionner_utilisateur_par_id(
-            $id_utilisateur,
+            $id_utilisateur
         );
 
         $commandes = [];
@@ -147,13 +149,13 @@ class Commande extends Model
         return $commandes;
     }
 
-    public function selectionner_commande_par_utilisateur(
+    public function selectionner_commande_utilisateur_par_id(
         int $id_utilisateur,
     ): array|null {
-        $commandes_non_valide = $this->selectionner_commande_non_valide_par_utilisateur(
+        $commandes_non_valide = $this->selectionner_commande_non_valide_utilisateur_par_id(
             $id_utilisateur,
         );
-        $commandes_valide = $this->selectionner_commande_valide_par_utilisateur(
+        $commandes_valide = $this->selectionner_commande_valide_utilisateur_par_id(
             $id_utilisateur,
         );
 

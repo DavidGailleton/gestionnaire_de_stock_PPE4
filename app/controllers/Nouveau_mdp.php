@@ -29,7 +29,7 @@ class Nouveau_mdp
         if ($ancien_mot_de_passe == $nouveau_mot_de_passe) {
             return 'L\'ancien et le nouveau mdp sont les mêmes';
         }
-
+        require_once ROOT.'app/models/Utilisateur.php';
         $utilisateur = new Utilisateur();
         if (
             $this->mot_de_passe_utilisateur_valide(

@@ -11,7 +11,7 @@ if (isset($_GET["action"]) && $_GET["action"] != "") {
         case "login":
             require_once ROOT . "app/controllers/Login.php";
             $login = new \ppe4\controllers\Login();
-            if (isset($_POST["email"])) {
+            if (isset($_POST["email"]) && isset($_POST['password'])) {
                 $login->connecter($_POST["email"], $_POST["password"]);
             } else {
                 echo "nope";
@@ -104,7 +104,9 @@ if (isset($_GET["action"]) && $_GET["action"] != "") {
                 $produits,
                 $jwt->get_payload($_COOKIE["JWT"])["user_id"],
             );
-            break;
+
+            header('Location: index.php?name=commandes');
+            exit;
         case "modifier_qte_produit_panier":
             if (isset($_POST["id"]) && isset($_POST["qte"])) {
                 require_once ROOT . "app/controllers/Panier.php";
@@ -130,14 +132,18 @@ if (isset($_GET["action"]) && $_GET["action"] != "") {
         case "creer_utilisateur":
             require_once ROOT . "app/controllers/Creation_utilisateur.php";
             $creation_utilisateur = new \ppe4\controllers\Creation_utilisateur();
-            $creation_utilisateur->creer_utilisateur(
+            $result = $creation_utilisateur->creer_utilisateur(
                 $_POST["motdepasse"],
                 $_POST["email"],
                 $_POST["prenom"],
                 $_POST["nom"],
                 $_POST["libelle_role"],
             );
-            header("Location: index.php?page=liste_utilisateur");
+            if ($result) {
+                header("Location: index.php?page=liste_utilisateur");
+            } else {
+                header("Location: index.php?page=404");
+            }
             exit();
         case "supprimer_utilisateur":
             require_once ROOT . "app/controllers/Profile_vue_admin.php";

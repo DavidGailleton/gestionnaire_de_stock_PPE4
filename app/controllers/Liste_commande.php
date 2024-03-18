@@ -28,7 +28,7 @@ class Liste_commande extends Controller
         $id_utilisateur = $jwt->get_payload($token)['user_id'];
         require_once ROOT . "app/models/Commande.php";
         $commande = new Commande();
-        $commandes = $commande->selectionner_commande_par_utilisateur(
+        $commandes = $commande->selectionner_commande_utilisateur_par_id(
             $id_utilisateur
         );
 
