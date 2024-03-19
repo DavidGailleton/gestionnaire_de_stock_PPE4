@@ -105,11 +105,10 @@ footer
     background: #dcdcdc;
     z-index: 1000;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     padding: 40px;
-    border-radius: 4px;
-    box-shadow: 0 15px 35px rgba(0,0,0,9);
+    border-radius: 1em;
 }
 .login_content {
     position: relative;
@@ -139,7 +138,7 @@ footer
     background: #b2b2b2;
     border: none;
     outline: none;
-    padding: 25px 10px 7.5px;
+    padding: 13px;
     border-radius: 4px;
     color: #fff;
     font-weight: 500;
