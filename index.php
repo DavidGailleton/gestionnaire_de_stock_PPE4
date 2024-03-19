@@ -16,7 +16,7 @@ if (isset($_GET["action"]) && $_GET["action"] != "") {
             } else {
                 echo "nope";
             }
-            break;
+            exit();
         case "ajouter_au_panier":
             if (isset($_POST["id"]) && isset($_POST["qte"])) {
                 require_once ROOT . "app/controllers/Panier.php";
