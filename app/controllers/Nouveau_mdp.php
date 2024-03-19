@@ -71,13 +71,13 @@ class Nouveau_mdp
      * Un mot de passe est valide s'il contient au moins 8 caractères, 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial.
      * Retourne true si le mot de passe est valide, false sinon.
      *
-     * @param $mdp
+     * @param string $mdp
      * @return bool
      */
-    public function mot_de_passe_respecte_regles($mdp): bool
+    public function mot_de_passe_respecte_regles(string $mdp): bool
     {
         if (
-            count($mdp) < CHAR_MIN ||
+            strlen($mdp) < CHAR_MIN ||
             preg_match_all("/[#?!@%&\-_.]/", $mdp) < SPE_CHAR_MIN ||
             preg_match_all("/[a-z]/", $mdp) < LOWER_MIN ||
             preg_match_all("/[A-Z]/", $mdp) < UPPER_MIN ||

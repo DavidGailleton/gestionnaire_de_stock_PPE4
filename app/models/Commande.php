@@ -71,7 +71,6 @@ class Commande extends Model
     public function selectionner_commande_non_valide_utilisateur_par_id(
         int $id_utilisateur,
     ): array|null {
-        echo $id_utilisateur;
         $query =
             "SELECT id_com as id, date_com as date_commande, statut_com as statut, mouvement_com as mouvement FROM commande WHERE id_uti_Utilisateur = :id_utilisateur AND statut_com = :statut ORDER BY date_com DESC";
         $stmt = $this->pdo->prepare($query);
@@ -109,7 +108,6 @@ class Commande extends Model
     public function selectionner_commande_valide_utilisateur_par_id(
         int $id_utilisateur
     ): array|null {
-        echo $id_utilisateur;
         $query =
             "SELECT id_com as id, date_com as date_commande, statut_com as statut, mouvement_com as mouvement, date_val_com as date_validation, id_uti_Validateur as id_validateur FROM commande WHERE id_uti_Utilisateur = :id_utilisateur AND statut_com != :statut ORDER BY date_com DESC";
         $stmt = $this->pdo->prepare($query);
@@ -134,9 +132,10 @@ class Commande extends Model
                 $row["id_validateur"],
             );
             $commande = new self(); // Crée une nouvelle instance de la classe Commande.
+            $statut = Statut::from($row['statut']);
             $commande->set_commande(
                 $row["id"],
-                Statut::En_attente,
+                $statut,
                 new \DateTime($row["date_commande"]),
                 $row["mouvement"],
                 new \DateTime($row["date_validation"]),
@@ -163,7 +162,7 @@ class Commande extends Model
             $commandes = array_merge($commandes_valide, $commandes_non_valide);
 
             if ($commandes) {
-                arsort($commandes, [$this->date_commande]);
+                arsort($commandes, 0);
 
                 return $commandes;
             }

@@ -1,17 +1,8 @@
 <?php
-// On génère une constante contenant le chemin vers la racine publique du projet
-
 /**
  * Racine du dossier du projet
  */
 define("ROOT", str_replace("index.php", "", $_SERVER["SCRIPT_FILENAME"]));
-
-//const SERVER_URL = 'http://localhost/ppe4/';
-
-/**
- * URL du projet
- */
-define("SERVER_URL", "https://" . $_SERVER["HTTP_HOST"] . "/ppe4/");
 
 //JWT
 /**
