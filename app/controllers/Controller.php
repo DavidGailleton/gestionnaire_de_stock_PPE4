@@ -28,7 +28,7 @@ abstract class Controller
     #[NoReturn]
     public function rediriger(string $page): void
     {
-        header("Location: " . SERVER_URL . "index.php?page=" . $page);
+        header("Location: index.php?page=" . $page);
         exit();
     }
 

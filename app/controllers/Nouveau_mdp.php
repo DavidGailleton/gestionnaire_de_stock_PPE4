@@ -36,7 +36,7 @@ class Nouveau_mdp
                 $_SESSION["user_email"],
                 $ancien_mot_de_passe,
             ) &&
-            $this->mot_de_passe_respecte_regle($nouveau_mot_de_passe)
+            $this->mot_de_passe_respecte_regles($nouveau_mot_de_passe)
         ) {
             $nouveau_mdp_crypte = $bcrypt->crypter_mot_de_passe(
                 $nouveau_mot_de_passe,
@@ -74,9 +74,10 @@ class Nouveau_mdp
      * @param $mdp
      * @return bool
      */
-    public function mot_de_passe_respecte_regle($mdp): bool
+    public function mot_de_passe_respecte_regles($mdp): bool
     {
         if (
+            count($mdp) < CHAR_MIN ||
             preg_match_all("/[#?!@%&\-_.]/", $mdp) < SPE_CHAR_MIN ||
             preg_match_all("/[a-z]/", $mdp) < LOWER_MIN ||
             preg_match_all("/[A-Z]/", $mdp) < UPPER_MIN ||

@@ -1,6 +1,6 @@
 <?php
 if (!isset($_SESSION['user_email']) || isset($_COOKIE['JWT'])){
-    header('Location: '.SERVER_URL.'index.php?page=login');
+    header('Location: index.php?page=login');
     exit();
 }
 require_once ROOT.'app/includes/config.php'

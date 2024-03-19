@@ -57,7 +57,7 @@ class Panier extends Controller
                 $quantite,
             );
         }
-        header("Location: " . SERVER_URL . "index.php?page=panier");
+        header("Location: index.php?page=panier");
         exit();
     }
 
@@ -77,7 +77,7 @@ class Panier extends Controller
 
         $payload = $jwt->get_payload($_COOKIE["JWT"]);
         $panier->supprimer_du_panier($payload["user_id"], $id_produit);
-        header("Location: " . SERVER_URL . "index.php?page=panier");
+        header("Location: index.php?page=panier");
         exit();
     }
 

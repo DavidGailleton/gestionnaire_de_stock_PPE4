@@ -78,10 +78,10 @@ class Login
 
             $log_connexion->inserer_log_connexion($email, false);
 
-            header("Location: " . SERVER_URL . "index.php?page=dashboard");
+            header("Location: index.php?page=dashboard");
         } else {
             $log_connexion->inserer_log_connexion($email, true);
-            header("Location: " . SERVER_URL . "index.php?page=login");
+            header("Location: index.php?page=login");
         }
         exit();
     }
@@ -101,7 +101,7 @@ class Login
             !$jwt->est_expire($token) &&
             $jwt->verifier_validite($token)
         ) {
-            header("Location: " . SERVER_URL . "index.php?page=dashboard");
+            header("Location: index.php?page=dashboard");
             exit();
         }
 

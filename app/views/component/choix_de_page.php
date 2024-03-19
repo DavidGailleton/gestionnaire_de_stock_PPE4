@@ -76,9 +76,9 @@ function choix_de_page(int $numero_page, int $nombre_page, string $page):void
         function redirect (no_page){
             ';
             if (isset($_GET['recherche'])){
-                echo 'window.location.href = "'.SERVER_URL.'index.php?page='.$page.'&recherche='.$_GET['recherche'].'&no_page="+no_page';
+                echo 'window.location.href = "index.php?page='.$page.'&recherche='.$_GET['recherche'].'&no_page="+no_page';
             }else{
-                echo 'window.location.href = "'.SERVER_URL.'index.php?page='.$page.'&no_page="+no_page';
+                echo 'window.location.href = "index.php?page='.$page.'&no_page="+no_page';
             };
         echo '}
     </script>';
