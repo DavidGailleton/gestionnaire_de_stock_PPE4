@@ -236,4 +236,33 @@ public function get_one()
 
 ### Page de connexion
 
+La page de connexion présente un formulaire ou rentrer son email et son mot de passe :
+
+![Page de connexion](public%2Fimg%2FREADME%2Flogin_card.png)
+
+Lors de la soumission du formulaire, le programme PHP va vérifier plusieurs choses :
+
+- En premier temps, il va simplement vérifier si l'utilisateur existe.
+- En suite, il va vérifier si le compte n'est pas bloqué (valeurs booleen *compte_desactive_uti* dans la table **Utilisateur**).
+- Pour finir, il va vérifier si le mot de passe entré est valide avec [BCrypt](#bcrypt).
+
+Si toutes ses conditions sont valides, le programme vérifiera si le mot de passe doit être modifié (ce qui arrive lors de la première connexion ou si un administrateur a réinitialisé le mot de passe).
+
+#### Nouveau mot de passe
+
+Si un nouveau mot de passe doit être mis en place, l'utilisateur sera redirigé sur le formulaire suivant :
+
+![nouveau_mot_de_passe.png](public%2Fimg%2FREADME%2Fnouveau_mot_de_passe.png)
+
+Pour valider le changement de mot de passe, plusieurs conditions doivent être remplies :
+
+- Minimum 8 caractères
+- Minimum 1 majuscule 
+- Minimum 1 minuscule
+- Minimum 1 caractère spécial
+- Minimum 1 chiffre
+
+Si le code JS présent dans la page n'a pas été modifié, l'utilisateur devrait être prévenu si l'une de ces conditions n'est pas respécté (Le JavaScript permet seulement de prévenir l'utilisateur, si la requète est quand meme envoyé, le code php revérifiera et refusera la modification du mot de passe).
+
+### Espace Utilisateur
 
