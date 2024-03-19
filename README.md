@@ -189,3 +189,51 @@ Dans notre cas, nous allons enregistrer son **id**, son **email**, son **role**,
 }
 ```
 
+##### Signature
+
+La partie la plus importante du JWT est la signature. Elle permet d'assurer l'authenticité du token via une clé privé qui ne doit absolument pas être diffusée.
+
+La signature est un hash généré via un algorithme de hashage choisie préalablement. Pour créer ce hash nous allons concaténé le header et le payload puis la hasher avec la clé secrète que nous aurons au préalable encodé en [base 64](https://fr.wikipedia.org/wiki/Base64).
+
+Dans notre cas, l'alogithme de hashage utilisé est le [SHA256](https://docs.devolutions.net/fr/kb/general-knowledge-base/what-is-sha-256/) :
+
+```php
+// Encodage en base 64 des éléments de la signature
+$base_64_header = base64_encode(json_encode(JWT_HEADER));
+$base_64_payload = base64_encode(json_encode($payload));
+$secret = base64_encode(JWT_SECRET);
+        
+//generation de la signature
+$signature = hash_hmac(
+    "sha256",
+    $base_64_header . "." . $base_64_payload, $secret
+    true,
+);
+```
+
+Une fois le tout généré, nous allons concaténer le header, le payload et la signature en les séparant par un point ce qui donnera :
+```
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+```
+
+#### Injection SQL
+
+Pour éviter le risque d'injection, PDO a introduit les [Requète préparé](https://www.php.net/manual/en/security.database.sql-injection.php#security.database.avoiding) via la fonction `prepare()`.
+
+```php
+public function get_one()
+    {
+        $sql = "GET * FROM :table WHERE :id_table = :id";
+        // préparation de la requète
+        $query = $this->pdo->prepare($sql);
+        $query->execute(
+            ["table" => $this->table],
+            ["id_table" => "id_" . $this->table[0 - 2]],
+            ["id" => $this->id],
+        );
+    }
+```
+
+### Page de connexion
+
+
