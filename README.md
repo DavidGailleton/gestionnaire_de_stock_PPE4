@@ -1,8 +1,11 @@
 <style>
 img{
 display: flex;
-width: 80%;
+width: 30em;
 align-items: center;
+}
+*{
+text-align: justify;
 }
 </style>
 
@@ -394,4 +397,41 @@ SET qte = :qte
 WHERE id_uti = :id_utilisateur AND id_pro = :id_produit;
 ```
 
-A la confirmation
+A la confirmation de la commande, L'application va en premier temps créer une commande via la requète suivante :
+
+```sql
+INSERT INTO commande (commande.date_com, commande.mouvement_com, commande.id_uti_Utilisateur, commande.statut_com) 
+VALUES (NOW(), :mouvement, :id_utilisateur, :statut);
+```
+
+Puis dans un second temps, créer pour chaque élément du panier une ligne dans la table ligne_commande :
+
+```php
+foreach ($produits as $produit) {
+            $ligne_commande->inserer_ligne_commande(
+                $id_commande,
+                $produit["id"],
+                $produit["qte"],
+            );
+        }
+```
+
+```sql
+INSERT INTO ligne_commande (id_com, id_pro, qte) 
+VALUES (:id_commande, :id_produit, :qte);
+```
+
+Enfin, pour finir, vider le panier de l'utilisateur :
+
+```sql
+DELETE 
+FROM panier 
+WHERE id_uti = :id_utilisateur
+```
+
+#### Vos commandes
+
+Il est possible d'accéder aux commandes faites au préalable via le menu déroulant disponible en cliquant sur l'icône profile :
+
+![profile_icone_header.png](public%2Fimg%2FREADME%2Fprofile_icone_header.png)
+
