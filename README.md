@@ -359,3 +359,31 @@ Pour choisir une page, une barre disponible en bas de page est disponible :
 
 ![page_select.png](public%2Fimg%2FREADME%2Fpage_select.png)
 
+#### Panier
+
+La page du panier présente la liste des produits ajoutés, ainsi qu'un bouton permettant de confirmer la commande :
+
+![liste_produit_panier.png](public%2Fimg%2FREADME%2Fliste_produit_panier.png)
+
+Il est possible de supprimer un produit de panier, ainsi que de modifier sa quantité.
+
+Lors du changement de quantité un script JS est éxécuté permettant d'éfféctuer une requete à chaque changement :
+
+```js
+document.getElementById("formulaire_'.$i.'").addEventListener("input", function(){
+        let form = document.getElementById("formulaire_'.$i.'");
+        let formData = new FormData(form);
+        fetch("index.php?action=modifier_qte_produit_panier", {
+            method: "POST",
+            body: formData
+        })
+    });
+```
+
+```sql
+UPDATE panier 
+SET qte = :qte 
+WHERE id_uti = :id_utilisateur AND id_pro = :id_produit;
+```
+
+A la confirmation
