@@ -435,3 +435,57 @@ Il est possible d'accéder aux commandes faites au préalable via le menu dérou
 
 ![profile_icone_header.png](public%2Fimg%2FREADME%2Fprofile_icone_header.png)
 
+Cette page présente l'ensemble des commandes faites par l'utilisateur :
+
+![vos_commande.png](public%2Fimg%2FREADME%2Fvos_commande.png)
+
+En sélectionnant une, vous accédez aux informations de la commande : 
+
+![lignes_commandes_vos_commande.png](public%2Fimg%2FREADME%2Flignes_commandes_vos_commande.png)
+
+### Espace Validateur
+
+L'espace validateur permet de valider les commandes faites par les utilisateurs.
+
+On accède aux commandes en attente de validation en cliquant sur l'un des raccourcis proposés :
+
+![vue_validateur.png](public%2Fimg%2FREADME%2Fvue_validateur.png)
+
+Vous pouvez en suite sélectionner une commande à valider :
+
+![commandes_a_valider.png](public%2Fimg%2FREADME%2Fcommandes_a_valider.png)
+
+Sur cette commande, vous pouvez seulement valider ou refuser la commande :
+
+![commande_vue_validateur.png](public%2Fimg%2FREADME%2Fcommande_vue_validateur.png)
+
+#### Valider commande
+
+Si la commande est validé, 2 requètes sont éxécuté.
+
+La première permet de modifier le statut de la commande :
+
+```sql
+UPDATE commande 
+SET commande.date_val_com = NOW(), commande.id_uti_validateur = :id_validateur, commande.statut_com = :statut 
+WHERE commande.id_com = :id_commande;
+```
+
+La seconde permet de réduire le nombre de produits disponible en stock :
+
+```sql
+UPDATE produits
+SET qte_stock_pro = produits.qte_stock_pro - :quantite
+WHERE id_pro = :id;
+```
+
+#### refuser commande
+
+Si la commande est refusé, seulement le statut sera modifié :
+
+```sql
+UPDATE commande 
+SET commande.date_val_com = NOW(), commande.id_uti_validateur = :id_validateur, commande.statut_com = :statut 
+WHERE commande.id_com = :id_commande;
+```
+
