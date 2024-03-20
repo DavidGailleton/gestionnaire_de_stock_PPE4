@@ -30,19 +30,28 @@ $role = $payload['user_role'];
             </div>
         <?php endif; ?>
         <?php if ($role == ('validateur')): ?>
-            <a class="dashboard_card" href="index.php?page=commande_a_valider">
-                Valider une commande
-            </a>
+            <div class="dashboard_card">
+                <a href="index.php?page=commande_a_valider">
+                    <h3>Valider une commande</h3>
+                    <img src="public/img/check.svg" alt="">
+                </a>
+            </div>
         <?php endif; ?>
         <?php if ($role == 'admin'): ?>
-            <a class="dashboard_card" href="index.php?page=liste_utilisateur">
-                Gestion des utilisateurs
-            </a>
+            <div class="dashboard_card">
+                <a href="index.php?page=liste_utilisateur">
+                    <h3>Gestion des utilisateurs</h3>
+                    <img src="public/img/edit_user.svg" alt="">
+                </a>
+            </div>
         <?php endif; ?>
         <?php if ($role == 'admin'): ?>
-            <a class="dashboard_card" href="index.php?page=creation_utilisateur">
-                Créer un utilisateur
-            </a>
+            <div class="dashboard_card">
+                <a href="index.php?page=creation_utilisateur">
+                    <h3>Créer un utilisateur</h3>
+                    <img src="public/img/add_user.svg" alt="">
+                </a>
+            </div>
         <?php endif; ?>
     </div>
 
