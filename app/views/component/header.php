@@ -37,7 +37,7 @@ $role = $payload['user_role'];
         <div class="profile">
             <img src='public/img/profile.svg' alt='profile' style="width: 2em">
             <ul class="menu_deroulant">
-                <li><a href="index.php?page=profile">Profile</a></li>
+                <!-- <li><a href="index.php?page=profile">Profile</a></li> -->
                 <?php if (in_array($role, ['utilisateur', 'Gestionnaire_de_stock'])): ?>
                 <li><a href="index.php?page=liste_commande">Vos commandes</a></li>
                 <?php endif; ?>
