@@ -106,6 +106,52 @@ Si tout s'est déroulé comme prévu, la base de données devrait se présenter 
 
 Le MCD si dessus représentent les différentes tables de la base de données.
 
+### Tables et évolutions
+
+#### Role
+
+La table Role permet simplement d'affécter un role à un utilisateur.
+
+Les roles ne sont pas un ENUM contenue dans la table Utilisateur, mais une table aparentière. Cette façon de faire permet une évolutivité de l'application web.
+Il serait possible par la suite, par exemple, de lier la table role a la table Produits afin de limiter l'accès de certains produits à certain role, ou encore d'ajouter une clé étrangère role dans la table role pour créer un role Père.
+
+#### Utilisateur
+
+La table utilisateur permet simplement de contenir toutes les informations des utilisateurs.
+
+Elle doit obligatoirement posséder un rôle. Les informations d'adresse ne sont actuellement pas utilisé dans l'application web, mais on pourrait ajouter une adresse automatiquement, par exemple avec une synchronisation d'un Active Directory.
+Elle pourrait en suite automatiser l'adresse de destination d'une commande.
+
+#### Produits
+
+La table Produits est une base aux différents produits utilisés, elle contient seulement les informations communes à tous les produits.
+
+Pour l'instant seulement la table Médicaments et Matériels ont été mis en place, mais cette fléxibilité permet d'ajouter d'autres catégories de produits plus facilement, en limitant les effets de bords sur les autres catégories de produits.
+
+##### Médicaments
+
+Tous les médicaments présents dans cette table ont été ajouté depuis la [Base de données publique des médicaments](https://base-donnees-publique.medicaments.gouv.fr/telechargement.php).
+
+##### Matériels
+
+La table Matériels est vide, car les informations nécessaires sont déja présents dans la table [Produits](#produits).
+
+#### Panier
+
+La table Panier, comme son nom l'indique, contient les différents produits ajoutés par les utilisateurs avec une valeur quantité pour chaque produit ajoutés.
+
+#### Commande
+
+La table Commande contient toutes les informations des commandes.
+
+La valeur booléenne `mouvement_com`, correspond au mouvement de la commande, `false` correspond à une commande en direction des stocks, `true` à une sortie de stock en direction d'un laboratoire.
+
+Les produits contenus dans une autre table nommée Ligne_commande
+
+##### Ligne commande
+
+Les données contenues dans la table ligne_commande sont similaires à la table [Panier](#panier). Elle associe un produit à une commande, en ajoutant une quantité aux produits.
+
 ## Le projet
 
 ### Sécurité
@@ -265,4 +311,51 @@ Pour valider le changement de mot de passe, plusieurs conditions doivent être r
 Si le code JS présent dans la page n'a pas été modifié, l'utilisateur devrait être prévenu si l'une de ces conditions n'est pas respécté (Le JavaScript permet seulement de prévenir l'utilisateur, si la requète est quand meme envoyé, le code php revérifiera et refusera la modification du mot de passe).
 
 ### Espace Utilisateur
+
+![dashboard_utilisateur_gestionnaire.png](public%2Fimg%2FREADME%2Fdashboard_utilisateur_gestionnaire.png)
+
+L'espace utilisateur du site permet aux laboratoires d'éfféctuer des commandes qui devront être, par la suite, validé.
+
+#### Choix des produits
+
+L'espace de commandes de médicaments et de matériels fonctionnent exactement de la même manière, la seule différence est la façon dont sont affichés les produits.
+
+Cette page est composée de 3 éléments :
+- La liste des produits
+- La barre de recherche
+- Le choix de page
+
+##### Liste des produits
+
+La liste des produits est affiché par des composants :
+
+![product_card.png](public%2Fimg%2FREADME%2Fproduct_card.png)
+
+En ajoutant un produit au panier, l'application va ajouter l'ajouter à la table [panier](#panier) via la requête suivante :
+
+```sql
+INSERT INTO panier (id_uti, id_pro, qte) 
+VALUES (:id_utilisateur, :id_produit, :quantite);
+```
+
+##### Barre de recherche
+
+Lors de la soumission d'une recherche, la requête éxécuté ajoutera une variable `LIKE` :
+
+```sql
+SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS quantite_stock, forme_med AS forme, cis_med AS cis 
+FROM medicaments 
+INNER JOIN produits on medicaments.id_pro = produits.id_pro 
+WHERE produits.libelle_pro 
+LIKE :recherche                                                                                                                                                                                                                                        
+LIMIT :offset , 25;
+```
+
+##### Choix de page
+
+Pour éviter de faire planter la page (la base de données des médicaments contient 15767 lignes), la liste des produits est limité à 25 par page.
+
+Pour choisir une page, une barre disponible en bas de page est disponible :
+
+![page_select.png](public%2Fimg%2FREADME%2Fpage_select.png)
 
