@@ -1,3 +1,11 @@
+<style>
+img{
+display: flex;
+width: 80%;
+align-items: center;
+}
+</style>
+
 ## Contexte
 
 ### Description du laboratoire GSB
