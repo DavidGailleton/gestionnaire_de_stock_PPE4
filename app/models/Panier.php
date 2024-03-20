@@ -77,11 +77,11 @@ class Panier extends Model
         int $qte,
     ): void {
         $query =
-            "INSERT INTO panier (id_uti, id_pro, qte) VALUES (:id_utilisateur, :id_produit, :qte)";
+            "INSERT INTO panier (id_uti, id_pro, qte) VALUES (:id_utilisateur, :id_produit, :quantite)";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindValue("id_utilisateur", $id_utilisateur, \PDO::PARAM_INT);
         $stmt->bindValue("id_produit", $id_produit, \PDO::PARAM_INT);
-        $stmt->bindValue("qte", $qte, \PDO::PARAM_INT);
+        $stmt->bindValue("quantite", $qte, \PDO::PARAM_INT);
         $stmt->execute();
     }
 

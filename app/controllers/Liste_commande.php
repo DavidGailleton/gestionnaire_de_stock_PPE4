@@ -45,4 +45,12 @@ class Liste_commande extends Controller
             }
         }
     }
+
+    public function nombre_commandes_utilisateur(int $id_utilisateur):int
+    {
+        require_once ROOT.'app/models/Commande.php';
+        $commande_model = new Commande();
+        $commandes = $commande_model->selectionner_commande_utilisateur_par_id($id_utilisateur);
+        return count($commandes);
+    }
 }
