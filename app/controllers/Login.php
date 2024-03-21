@@ -31,6 +31,11 @@ class Login
      */
     public function afficher(): void
     {
+        if (isset($_GET['echec']) && $_GET['echec'] == 'true'){
+            echo '
+            <script>alert("Email ou mot de passe incorrect")</script>
+            ';
+        }
         require_once ROOT . "./app/views/login.php";
     }
 
@@ -81,7 +86,7 @@ class Login
             header("Location: index.php?page=dashboard");
         } else {
             $log_connexion->inserer_log_connexion($email, true);
-            header("Location: index.php?page=error");
+            header("Location: index.php?page=login&echec=true");
         }
         exit();
     }
