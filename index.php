@@ -242,7 +242,7 @@ if (isset($_GET["page"]) && $_GET["page"] != "") {
                 header("Location: index.php?page=materiels&no_page=1");
                 exit();
             }
-            $materiel->index();
+            $materiel->afficher();
             break;
         case "commande":
             if (isset($_POST["id_commande"])) {

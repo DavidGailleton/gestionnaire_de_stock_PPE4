@@ -152,6 +152,12 @@ class JWT
             ) === 1;
     }
 
+    /**
+     * Récupère le role de l'utilisateur connécté
+     *
+     * @param string $token
+     * @return string
+     */
     public function get_role(string $token): string
     {
         $payload = $this->get_payload($token);

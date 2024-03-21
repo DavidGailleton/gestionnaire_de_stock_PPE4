@@ -10,14 +10,9 @@ class Materiels extends Controller
     {
         $this->role_et_jwt_valide(['utilisateur', 'Gestionnaire_de_stock']);
     }
-    public function index(): void
+    public function afficher(): void
     {
         require_once ROOT . "app/views/materiels.php";
-    }
-
-    public function show(): void
-    {
-        require_once ROOT . "app/views/materiels_vue.php";
     }
 
     /**

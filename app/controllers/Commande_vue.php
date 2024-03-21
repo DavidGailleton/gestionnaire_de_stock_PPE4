@@ -21,6 +21,12 @@ class Commande_vue extends Controller
         require_once ROOT . "app/views/commande_vue.php";
     }
 
+    /**
+     * Affiche chaque produit présent dans une commande
+     *
+     * @param int $id_commande
+     * @return array|null
+     */
     public function afficher_produits_commande(int $id_commande): array|null
     {
         $ligne_commande = new Ligne_commande();
@@ -54,6 +60,12 @@ class Commande_vue extends Controller
         }
     }
 
+    /**
+     * Affiche le statut d'une commande
+     *
+     * @param int $id_commande
+     * @return void
+     */
     public function afficher_statut_commande(int $id_commande): void
     {
         $command_model = new Commande();
@@ -66,6 +78,13 @@ class Commande_vue extends Controller
         ';
     }
 
+    /**
+     * Affiche les boutons de validation et de refus d'une commande si le compte connécté est du role validateur
+     *
+     * @param int $id_commande
+     * @param array $lignes_commandes
+     * @return void
+     */
     public function bouton_validateur(
         int   $id_commande,
         array $lignes_commandes,
@@ -128,6 +147,11 @@ class Commande_vue extends Controller
         }
     }
 
+    /**
+     * Change le statut d'une commande et diminue la quantite en stock de ce produit
+     *
+     * @return void
+     */
     public function accepter_commande(): void
     {
         require_once ROOT . "app/models/Commande.php";
@@ -152,6 +176,11 @@ class Commande_vue extends Controller
         }
     }
 
+    /**
+     * Modifie le statut de la commande en refusé
+     *
+     * @return void
+     */
     public function refuser_commande():void
     {
         require_once ROOT . "app/models/Commande.php";

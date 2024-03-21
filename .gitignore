@@ -136,6 +136,9 @@ vc_hdrs.h
 .bzr/
 .bzrignore
 
+##### Obsidian
+.obsidian/
+
 ##### CVS
 /CVS/*
 **/CVS/*

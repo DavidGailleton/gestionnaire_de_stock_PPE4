@@ -25,6 +25,12 @@ class Profile_vue_admin extends Controller
         require_once ROOT . "app/views/profile_vue_admin.php";
     }
 
+    /**
+     * Retourne un objet de la classe Utilisateur en fonction de son identifiant
+     *
+     * @param int $id_utilisateur
+     * @return Utilisateur|null
+     */
     public function selectionner_utilisateur(
         int $id_utilisateur,
     ): Utilisateur|null {
@@ -35,6 +41,12 @@ class Profile_vue_admin extends Controller
         );
     }
 
+    /**
+     * Affiche chaque role disponible dans la table Role de la base de données.
+     *
+     * @param string $role_utilisateur
+     * @return string
+     */
     public function afficher_option_role(string $role_utilisateur): string
     {
         require_once ROOT . "app/models/Role.php";
@@ -54,7 +66,6 @@ class Profile_vue_admin extends Controller
         }
         return ob_get_clean();
     }
-
     public function modifier_utilisateur(
         int $id_utilisateur,
         string $email,
@@ -103,6 +114,13 @@ class Profile_vue_admin extends Controller
         $log_connexion->inserer_log_connexion_par_id($id_utilisateur, false);
     }
 
+    /**
+     * Encrypt le mot de passe mis en paramètre puis met à jour le mot de passe de l'utilisateur
+     *
+     * @param $id_utilisateur
+     * @param $mot_de_passe
+     * @return void
+     */
     public function reinitialiser_mot_de_passe(
         $id_utilisateur,
         $mot_de_passe,

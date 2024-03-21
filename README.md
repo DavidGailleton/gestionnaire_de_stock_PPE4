@@ -45,27 +45,27 @@ Pour l'installation il faut se diriger sur [la page de téléchargement de XAMPP
 
 Une fois sur la page, téléchargé la version **PHP 8.2.12** :
 
-![xampp_download.png](public%2Fimg%2FREADME%2Fxampp_download.png)
+![xampp_download.png](public/img/README/xampp_download.png)
 
 Une fois téléchargé, lancer l'executable.
 
 Il est possible qu'une fenêtre vous prévienne que votre anti virus est actif. N'y prêtez pas attention et cliquez sur oui :
 
-![xampp_antivirus_alert.png](public%2Fimg%2FREADME%2Fxampp_antivirus_alert.png)
+![xampp_antivirus_alert.png](public/img/README/xampp_antivirus_alert.png)
 
 En suite, faite suivant plusieurs fois :
 
-![xampp_installer_1.png](public%2Fimg%2FREADME%2Fxampp_installer_1.png)
+![xampp_installer_1.png](public/img/README/xampp_installer_1.png)
 
-![xampp_installer_2.png](public%2Fimg%2FREADME%2Fxampp_installer_2.png)
+![xampp_installer_2.png](public/img/README/xampp_installer_2.png)
 
 Vérifié bien que dans le champ ***Select a folder***, le chemin soit `C:\xampp`
 
-![xampp_installer_3.png](public%2Fimg%2FREADME%2Fxampp_installer_3.png)
+![xampp_installer_3.png](public/img/README/xampp_installer_3.png)
 
-![xampp_installer_4.png](public%2Fimg%2FREADME%2Fxampp_installer_4.png)
+![xampp_installer_4.png](public/img/README/xampp_installer_4.png)
 
-![xampp_installer_5.png](public%2Fimg%2FREADME%2Fxampp_installer_5.png)
+![xampp_installer_5.png](public/img/README/xampp_installer_5.png)
 
 Si le programme d'installation vous propose de redémarrer votre poste, redémarrez-le.
 
@@ -75,41 +75,41 @@ Une fois XAMPP installé, nous pouvons ajouter le projet en local.
 
 Pour commencer, il faut télécharger le projet depuis [le dépot Github](https://github.com/DavidGailleton/gestionnaire_de_stock_PPE4) :
 
-![github_download.png](public%2Fimg%2FREADME%2Fgithub_download.png)
+![github_download.png](public/img/README/github_download.png)
 
 Une fois téléchargé, extraire le dossier précédemment téléchargé dans le dossier `C:\xampp\htdocs`.
 
 **Attention, l'extracteur vous proposera surement de l'éxtraire dans le dossier `C:\xampp\htdocs\ppe4`. Bien penser à corriger** :
 
-![project_extract_1.png](public%2Fimg%2FREADME%2Fproject_extract_1.png)
+![project_extract_1.png](public/img/README/project_extract_1.png)
 
-![project_extract_2.png](public%2Fimg%2FREADME%2Fproject_extract_2.png)
+![project_extract_2.png](public/img/README/project_extract_2.png)
 
 ### Base de données MariaDB
 
 Pour mettre la base de données en place, il faut en premier temps démarrer **Apache** et **MySQL** depuis XAMPP :
 
-![xampp_start_mysql_apache.png](public%2Fimg%2FREADME%2Fxampp_start_mysql_apache.png)
+![xampp_start_mysql_apache.png](public/img/README/xampp_start_mysql_apache.png)
 
 Il est maintenant possible d'accéder à PHP My Admin pour accéder aux bases de données depuis le navigateur web avec l'addresse [http://localhost/phpmyadmin/](http://localhost/phpmyadmin/)
 
 Pour créer la base de données, il faut en premier temps cliquer sur *Nouvelle base de données* (**1.**), puis donner un nom à la base de données, dans notre cas `ppe4` (**2.**), puis cliquer sur *Créer* (**3.**) :
 
-![phpmyadmin_create_database.png](public%2Fimg%2FREADME%2Fphpmyadmin_create_database.png)
+![phpmyadmin_create_database.png](public/img/README/phpmyadmin_create_database.png)
 
 Nous allons en suite importer la base de données du projet.
 
 Cette base des données est disponible à la racine du projet. L'importation est simplifié par l'interface phpmyadmin :
 
-![import_sql_1.png](public%2Fimg%2FREADME%2Fimport_sql_1.png)
+![import_sql_1.png](public/img/README/import_sql_1.png)
 
-![import_sql_2.png](public%2Fimg%2FREADME%2Fimport_sql_2.png)
+![import_sql_2.png](public/img/README/import_sql_2.png)
 
-![import_sql_3.png](public%2Fimg%2FREADME%2Fimport_sql_3.png)
+![import_sql_3.png](public/img/README/import_sql_3.png)
 
 Si tout s'est déroulé comme prévu, la base de données devrait se présenter comme ceci :
 
-![db_view.png](public%2Fimg%2FREADME%2Fdb_view.png)
+![db_view.png](public/img/README/db_view.png)
 
 ## Base de données
 
@@ -295,7 +295,7 @@ public function get_one()
 
 La page de connexion présente un formulaire ou rentrer son email et son mot de passe :
 
-![Page de connexion](public%2Fimg%2FREADME%2Flogin_card.png)
+![Page de connexion](public/img/README/login_card.png)
 
 Lors de la soumission du formulaire, le programme PHP va vérifier plusieurs choses :
 
@@ -309,7 +309,7 @@ Si toutes ses conditions sont valides, le programme vérifiera si le mot de pass
 
 Si un nouveau mot de passe doit être mis en place, l'utilisateur sera redirigé sur le formulaire suivant :
 
-![nouveau_mot_de_passe.png](public%2Fimg%2FREADME%2Fnouveau_mot_de_passe.png)
+![nouveau_mot_de_passe.png](public/img/README/nouveau_mot_de_passe.png)
 
 Pour valider le changement de mot de passe, plusieurs conditions doivent être remplies :
 
@@ -323,7 +323,7 @@ Si le code JS présent dans la page n'a pas été modifié, l'utilisateur devrai
 
 ### Espace Utilisateur
 
-![dashboard_utilisateur_gestionnaire.png](public%2Fimg%2FREADME%2Fdashboard_utilisateur_gestionnaire.png)
+![dashboard_utilisateur_gestionnaire.png](public/img/README/dashboard_utilisateur_gestionnaire.png)
 
 L'espace utilisateur du site permet aux laboratoires d'éfféctuer des commandes qui devront être, par la suite, validé.
 
@@ -340,7 +340,7 @@ Cette page est composée de 3 éléments :
 
 La liste des produits est affiché par des composants :
 
-![product_card.png](public%2Fimg%2FREADME%2Fproduct_card.png)
+![product_card.png](public/img/README/product_card.png)
 
 En ajoutant un produit au panier, l'application va ajouter l'ajouter à la table [panier](#panier) via la requête suivante :
 
@@ -368,13 +368,13 @@ Pour éviter de faire planter la page (la base de données des médicaments cont
 
 Pour choisir une page, une barre disponible en bas de page est disponible :
 
-![page_select.png](public%2Fimg%2FREADME%2Fpage_select.png)
+![page_select.png](public/img/README/page_select.png)
 
 #### Panier
 
 La page du panier présente la liste des produits ajoutés, ainsi qu'un bouton permettant de confirmer la commande :
 
-![liste_produit_panier.png](public%2Fimg%2FREADME%2Fliste_produit_panier.png)
+![liste_produit_panier.png](public/img/README/liste_produit_panier.png)
 
 Il est possible de supprimer un produit de panier, ainsi que de modifier sa quantité.
 
@@ -433,15 +433,15 @@ WHERE id_uti = :id_utilisateur
 
 Il est possible d'accéder aux commandes faites au préalable via le menu déroulant disponible en cliquant sur l'icône profile :
 
-![profile_icone_header.png](public%2Fimg%2FREADME%2Fprofile_icone_header.png)
+![profile_icone_header.png](public/img/README/profile_icone_header.png)
 
 Cette page présente l'ensemble des commandes faites par l'utilisateur :
 
-![vos_commande.png](public%2Fimg%2FREADME%2Fvos_commande.png)
+![vos_commande.png](public/img/README/vos_commande.png)
 
 En sélectionnant une, vous accédez aux informations de la commande : 
 
-![lignes_commandes_vos_commande.png](public%2Fimg%2FREADME%2Flignes_commandes_vos_commande.png)
+![lignes_commandes_vos_commande.png](public/img/README/lignes_commandes_vos_commande.png)
 
 ### Espace Validateur
 
@@ -449,15 +449,15 @@ L'espace validateur permet de valider les commandes faites par les utilisateurs.
 
 On accède aux commandes en attente de validation en cliquant sur l'un des raccourcis proposés :
 
-![vue_validateur.png](public%2Fimg%2FREADME%2Fvue_validateur.png)
+![vue_validateur.png](public/img/README/vue_validateur.png)
 
 Vous pouvez en suite sélectionner une commande à valider :
 
-![commandes_a_valider.png](public%2Fimg%2FREADME%2Fcommandes_a_valider.png)
+![commandes_a_valider.png](public/img/README/commandes_a_valider.png)
 
 Sur cette commande, vous pouvez seulement valider ou refuser la commande :
 
-![commande_vue_validateur.png](public%2Fimg%2FREADME%2Fcommande_vue_validateur.png)
+![commande_vue_validateur.png](public/img/README/commande_vue_validateur.png)
 
 #### Valider commande
 
@@ -489,3 +489,167 @@ SET commande.date_val_com = NOW(), commande.id_uti_validateur = :id_validateur, 
 WHERE commande.id_com = :id_commande;
 ```
 
+### Espace Administrateur
+
+![dashboard_admin.png](public/img/README/dashboard_admin.png)
+
+Le compte administrateur permet seulement de gérer les compte utilisateur.
+
+Il est possible de :
+- Créer un compte
+- Modifier un compte
+- Désactiver un compte
+- Supprimer un compte
+- Modifier le mot de passe
+
+#### Création d'un utilisateur
+
+![creation_utilisateur.png](public/img/README/creation_utilisateur.png)
+
+L'espace de création de compte présente plusieurs champs.
+
+##### Email
+
+L'email de l'utilisateur est l'identifiant de connexion de ce dernier. L'email doit être unique parmi tous les comptes non archivés.
+
+##### Prenom et Nom de famille
+
+Le prénom et le non de famille est seulement présent à titre indicatif.
+
+##### Mot de passe temporaire
+
+Le mot de passe mis en place par l'administrateur devra obligatoirement être modifié à la première connexion de l'utilisateur.
+
+##### Role
+
+Les role affiché dans la liste sont importé depuis [la table Role](#role) de la base de donnée.
+
+##### Soumission du formulaire
+
+Lors de la soumission du formulaire la fonction suivante sera exécuté :
+
+```php
+public function creer_utilisateur(
+        string $mot_de_passe,
+        string $email,
+        string $prenom,
+        string $nom,
+        string $libelle_role
+    ): bool {
+        require_once ROOT . "app/models/Role.php";
+        $role_model = new Role();
+        $role = $role_model->selectionner_role_par_libelle($libelle_role);
+        $id_role = $role_model->selectionner_id_role($role);
+
+        require_once ROOT . "app/controllers/Bcrypt.php";
+        $bcrypt = new Bcrypt();
+        $mot_de_passe_crypte = $bcrypt->crypter_mot_de_passe($mot_de_passe);
+
+        require_once ROOT . "app/models/Utilisateur.php";
+        $utilisateur_model = new Utilisateur();
+        $result = $utilisateur_model->creer_utilisateur(
+            $mot_de_passe_crypte,
+            $email,
+            $prenom,
+            $nom,
+            $id_role
+        );
+
+        if (!$result){
+            echo '<script>alert("Une erreur s\'est produit")</script>';
+        }
+        return $result;
+    }
+```
+
+```sql
+# Requete exécuté avec la fonction creer_utilisateur()
+INSERT INTO utilisateur (email_uti, password_uti, nom_uti, prenom_uti, id_rol) 
+VALUES (:email, :mot_de_passe, :nom, :prenom, :id_role);
+```
+
+#### Gestion des utilisateurs
+
+Sur la page de gestion des utilisateurs, en séléctionnant un compte, vous arriverez sur cette page :
+
+![modification_utilisateur.png](public/img/README/modification_utilisateur.png)
+
+##### Modification
+
+Pour modifier les informations du compte, il faut simplement modifier les différents champs que l'on souhaite modifier pour cliquer sur le bouton `Modifier l'utilisateur`.
+
+Lors de la soumission du formulaire, la requete SQL suivante est exécuté :
+
+```sql
+UPDATE utilisateur 
+SET email_uti = :email, prenom_uti = :prenom, nom_uti = :nom, id_rol = :id_role 
+WHERE id_uti = :id_utilisateur 
+AND est_archive_uti = false;
+```
+
+##### Reinitialiser mot de passe
+
+En cliquant sur le bouton *Reinitialiser mot de passe*, une pop up va s'afficher vous demandant d'entrer un mot de passe temporaire :
+
+![reset_password.png](public/img/README/reset_password.png)
+
+Une fois soumis, le mot de passe sera encrypté, puis modifier sur [la table Utilisateur](#utilisateur). 
+A la prochaine connexion, l'utilisateur sera forcé à modifier le mot de passe temporaire mis en place.
+
+##### Désactiver l'utilisateur
+
+Il est également possible de désactiver l'utilisateur. 
+
+La désactivation va simplement changer la valeur booléenne `compte_desactivé_uti` de la table Utilisateur, ce qui l'empêchera de se connecter.
+
+##### Suppression de l'utilisateur
+
+En cliquant sur le bouton *Supprimer utilisateur*, un pop up demandera une seconde confirmation de suppression afin d'éviter toutes erreurs :
+
+![confirmation_suppression.png](public/img/README/confirmation_suppression.png)
+
+> Etant donnée que la clé primaire de l'utilisateur peut être liée à d'autres tables, ce dernier n'est pas réellement supprimé de la table utilisateur, mais archivé via la valeur booléenne `est_archive_uti`. L'intégralité de requête `SELECT` faite vers la table **utilisateur** filtre les utilisateurs archivés.
+
+### Gestionnaire de stock
+
+La vue du gestionnaire de stockage est exactement la même que l'utilisateur.
+
+La différence vient du fait que lors de la [confirmation d'une commande](#panier), le paramètre de la fonction appelé sont différentes :
+
+```php
+public function confirmer_la_commande_gestionnaire(
+        array $produits,
+        int $id_utilisateur,
+    ): void {
+        require_once ROOT . "app/models/Commande.php";
+        require_once ROOT . "app/models/Ligne_commande.php";
+        require_once ROOT . "app/models/Produit.php";
+        $commande = new Commande();
+        $produit_model = new Produit();
+        $id_commande = $commande->inserer_commande(
+            $id_utilisateur,
+            // false pour une commande entrante
+            false,
+            // statut de la commande
+            "en_cours_de_preparation",
+        );
+
+        $ligne_commande = new \ppe4\models\Ligne_commande();
+        foreach ($produits as $produit) {
+            $ligne_commande->inserer_ligne_commande(
+                $id_commande,
+                $produit["id"],
+                $produit["qte"],
+            );
+            $produit_model->augmenter_quantite($produit["id"], $produit["qte"]);
+        }
+
+        require_once ROOT . "app/models/Panier.php";
+        $panier = new \ppe4\models\Panier();
+        $panier->vider_le_panier($id_utilisateur);
+    }
+```
+
+Dans ce cas-là, la commande n'a pas besoin d'être validé par un validateur.
+
+## Conclusion

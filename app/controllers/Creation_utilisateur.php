@@ -19,6 +19,12 @@ class Creation_utilisateur extends Controller
     {
         require_once ROOT . "app/views/creation_utilisateur.php";
     }
+
+    /**
+     * Affiche chaque role disponible dans la table Role de la base de données.
+     *
+     * @return string
+     */
     public function afficher_option_role(): string
     {
         require_once ROOT . "app/models/Role.php";
@@ -32,6 +38,16 @@ class Creation_utilisateur extends Controller
         return ob_get_clean();
     }
 
+    /**
+     * Permet d'insérer un nouvel utilisateur dans la table utilisateur de la base de données
+     *
+     * @param string $mot_de_passe
+     * @param string $email
+     * @param string $prenom
+     * @param string $nom
+     * @param string $libelle_role
+     * @return bool
+     */
     public function creer_utilisateur(
         string $mot_de_passe,
         string $email,

@@ -20,6 +20,12 @@ class Commande_a_valider extends Controller
         require_once ROOT . "app/views/commande_a_valider.php";
     }
 
+
+    /**
+     * Permet d'afficher un module d'affichage de commande pour chaque commande en attente de validation
+     *
+     * @return void
+     */
     public function afficher_commandes_a_valider(): void
     {
         require_once ROOT . "app/models/Commande.php";

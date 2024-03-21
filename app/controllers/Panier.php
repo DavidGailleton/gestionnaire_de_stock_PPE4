@@ -100,6 +100,14 @@ class Panier extends Controller
         );
     }
 
+    /**
+     * Ajout une nouvelle commande dans la table commande ainsi que les produits de cette commande dans la table ligne_commande.
+     * Met la commande en attente de validation
+     *
+     * @param array $produits
+     * @param int $id_utilisateur
+     * @return void
+     */
     public function confirmer_la_commande_utilisateur(
         array $produits,
         int $id_utilisateur,
@@ -126,6 +134,15 @@ class Panier extends Controller
         $panier = new \ppe4\models\Panier();
         $panier->vider_le_panier($id_utilisateur);
     }
+
+    /**
+     * Ajout une nouvelle commande dans la table commande ainsi que les produits de cette commande dans la table ligne_commande.
+     * Met la commande en cours de preparation
+     *
+     * @param array $produits
+     * @param int $id_utilisateur
+     * @return void
+     */
     public function confirmer_la_commande_gestionnaire(
         array $produits,
         int $id_utilisateur,
@@ -156,6 +173,13 @@ class Panier extends Controller
         $panier->vider_le_panier($id_utilisateur);
     }
 
+    /**
+     * Modifie la quantité d'un produit présent dans la table panier
+     *
+     * @param int $id_produit
+     * @param int $quantite
+     * @return void
+     */
     #[NoReturn]
     public function modifier_quantite_produit_panier(
         int $id_produit,
@@ -174,6 +198,13 @@ class Panier extends Controller
         );
     }
 
+    /**
+     * Affiche chaque produit présent dans le panier
+     *
+     * @param int $id_utilisateur
+     * @param string $role
+     * @return void
+     */
     public function afficher_produits_panier(
         int $id_utilisateur,
         string $role,

@@ -275,7 +275,7 @@ class Commande extends Model
      *
      * @param int $id_utilisateur
      * @param bool $mouvement
-     * @param Statut $statut
+     * @param string $statut
      * @return int
      */
     public function inserer_commande(

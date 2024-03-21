@@ -22,6 +22,13 @@ class Liste_utilisateur extends Controller
         require_once ROOT . "app/views/liste_utilisateur.php";
     }
 
+    /**
+     * Affiche les utilisateurs présents dans la table utilisateur de la base de données
+     *
+     * @param int $numero_page
+     * @param string|null $recherche
+     * @return int
+     */
     public function afficher_utilisateur_cards(
         int $numero_page,
         ?string $recherche,
