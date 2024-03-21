@@ -37,7 +37,7 @@ class Liste_utilisateur extends Controller
         require_once ROOT . "app/views/component/utilisateur_card.php";
         if (isset($recherche)) {
             $utilisateurs = $utilisateur_model->selectionner_utilisateurs_par_recherche(
-                $numero_page,
+                ($numero_page -1 ) * 25,
                 $recherche,
             );
             $nombre_page = intval(

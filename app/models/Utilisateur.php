@@ -149,7 +149,7 @@ class Utilisateur extends Model
         string $recherche,
     ): array|null {
         $query =
-            "SELECT id_uti as id, email_uti as email, nom_uti as nom, prenom_uti as prenom, id_rol, compte_desactive_uti as compte_desactiver, mdp_a_changer_uti as mdp_a_changer FROM utilisateur WHERE (nom_uti LIKE :recherche OR prenom_uti LIKE :recherche OR email_uti LIKE :recherche) AND est_archive_uti = false LIMIT :offset, 25";
+            "SELECT id_uti as id, email_uti as email, nom_uti as nom, prenom_uti as prenom, id_rol, compte_desactive_uti as compte_desactiver, mdp_a_changer_uti as mdp_a_changer FROM utilisateur WHERE (nom_uti LIKE :recherche || prenom_uti LIKE :recherche || email_uti LIKE :recherche) AND est_archive_uti = false LIMIT :offset, 25";
         $stmt = $this->pdo->prepare($query);
         $recherche_sql = "%" . $recherche . "%";
         $stmt->bindValue("recherche", $recherche_sql, PDO::PARAM_STR);
