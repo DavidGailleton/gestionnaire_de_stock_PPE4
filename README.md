@@ -111,6 +111,20 @@ Si tout s'est déroulé comme prévu, la base de données devrait se présenter 
 
 ![db_view.png](public/img/README/db_view.png)
 
+Pour finir, il va falloir créer un compte utilisateur ayant un accès limité à la base de données.
+
+Pour ce faire, dirigez-vous sur l'accueil (1.), puis dans la catégorie SQL (2.) :
+
+![phpmyadmin_sql_accueil.png](public/img/README/phpmyadmin_sql_accueil.png)
+
+Il faut en suite rentrer la requete sql suivante puis l'exécuter :
+
+```sql
+GRANT ALL PRIVILEGES ON ppe4.* TO 'ppe4'@'localhost' IDENTIFIED BY 'gAueR8DJ2J_DPU7Zz@c@'; FLUSH PRIVILEGES;
+```
+
+![ajout_utilisateur_ppe4.png](public/img/README/ajout_utilisateur_ppe4.png)
+
 ## Base de données
 
 ![MCD](public/img/README/mcd.png)
@@ -618,7 +632,7 @@ En cliquant sur le bouton *Supprimer utilisateur*, un pop up demandera une secon
 
 > Etant donnée que la clé primaire de l'utilisateur peut être liée à d'autres tables, ce dernier n'est pas réellement supprimé de la table utilisateur, mais archivé via la valeur booléenne `est_archive_uti`. L'intégralité de requête `SELECT` faite vers la table **utilisateur** filtre les utilisateurs archivés.
 
-### Gestionnaire de stock
+	### Gestionnaire de stock
 
 La vue du gestionnaire de stockage est exactement la même que l'utilisateur.
 
