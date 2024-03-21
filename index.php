@@ -11,8 +11,12 @@ if (isset($_GET["action"]) && $_GET["action"] != "") {
         case "login":
             require_once ROOT . "app/controllers/Login.php";
             $login = new \ppe4\controllers\Login();
-            $login->connecter($_POST["email"], $_POST["password"]);
-            header("Location: index.php?page=dashboard");
+            $result = $login->connecter($_POST["email"], $_POST["password"]);
+            if ($result) {
+                header("Location: index.php?page=dashboard");
+            } else {
+                header("Location: index.php?page=login&echec=true");
+            }
             exit();
         case "ajouter_au_panier":
             if (isset($_POST["id"]) && isset($_POST["qte"])) {

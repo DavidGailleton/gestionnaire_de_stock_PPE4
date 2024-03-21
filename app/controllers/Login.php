@@ -45,10 +45,10 @@ class Login
      *
      * @param string $email
      * @param string $mot_de_passe
-     * @return void
+     * @return bool
      */
     #[NoReturn]
-    public function connecter(string $email, string $mot_de_passe): void
+    public function connecter(string $email, string $mot_de_passe): bool
     {
         require_once ROOT . "app/models/Log_connexion.php";
         $log_connexion = new Log_connexion();
@@ -83,12 +83,11 @@ class Login
 
             $log_connexion->inserer_log_connexion($email, false);
 
-            header("Location: index.php?page=dashboard");
+            return true;
         } else {
             $log_connexion->inserer_log_connexion($email, true);
-            header("Location: index.php?page=login&echec=true");
+            return false;
         }
-        exit();
     }
 
     /**
