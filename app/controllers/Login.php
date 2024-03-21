@@ -79,12 +79,11 @@ class Login
             $log_connexion->inserer_log_connexion($email, false);
 
             header("Location: index.php?page=dashboard");
-            exit();
         } else {
             $log_connexion->inserer_log_connexion($email, true);
-            header("Location: index.php?page=login");
-            exit();
+            header("Location: index.php?page=error");
         }
+        exit();
     }
 
     /**
