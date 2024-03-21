@@ -15,15 +15,15 @@ text-align: justify;
 
 #### Le secteur d'activité
 
-L’industrie pharmaceutique est un secteur très lucratif dans lequel le mouvement de fusion acquisition est très fort. Les regroupements de laboratoires ces dernières années ont donné naissance à des entités gigantesques au sein desquelles le travail est longtemps resté organisé selon les anciennes structures.
+L’industrie pharmaceutique est un secteur très lucratif dans lequel le mouvement de fusion acquisition est très forte. Les regroupements de laboratoires ces dernières années ont donné naissance à des entités gigantesques au seins desquelles le travail est longtemps resté organisé selon les anciennes structures.
 
-De divers déboires récents autour de médicaments ou molécules ayant entraîné des complications médicales ont fait s'élever des voix contre une partie de l'activité des laboratoires : la visite médicale, réputée être le lieu d' arrangements entre l'industrie et les praticiens, et tout du moins un terrain d'influence opaque.
+De divers déboires récents autour de médicaments ou molécules ayant entraîné des complications médicales ont fait s'élever des voix contre une partie de l'activité des laboratoires : la visite médicale, réputée être le lieu d'arrangements entre l'industrie et les praticiens, et tout du moins un terrain d'influence opaque.
 
 #### L'entreprise
 
-Le laboratoire Galaxy Swiss Bourdin (GSB) est issu de la fusion entre le géant américain Galaxy (spécialisé dans le secteur des maladies virales dont le SIDA et les hépatites) et le conglomérat européen Swiss Bourdin (travaillant sur des médicaments plus conventionnels), lui même déjà union de trois petits laboratoires . En 2009, les deux géants pharmaceutiques ont uni leurs forces pour créer un leader de ce secteur industriel. L'entité Galaxy Swiss Bourdin Europe a établi son siège administratif à Paris.
+Le laboratoire Galaxy Swiss Bourdin (GSB) est issu de la fusion entre le géant américain Galaxy (spécialisé dans le secteur des maladies virales dont le SIDA et les hépatites) et le conglomérat européen Swiss Bourdin (travaillant sur des médicaments plus conventionnels), lui-même déjà union de trois petits laboratoires. En 2009, les deux géants pharmaceutiques ont uni leurs forces pour créer un leader de ce secteur industriel. L'entité Galaxy Swiss Bourdin Europe a établi son siège administratif à Paris.
 
-Le siège social de la multinationale est situé à Philadelphie, Pennsylvanie, aux EtatsUnis.
+Le siège social de la multinationale est situé à Philadelphie, Pennsylvanie, aux Etats-Unis.
 
 La France a été choisie comme témoin pour l'amélioration du suivi de l'activité de visite
 
@@ -39,7 +39,7 @@ Elle permet aux différents laboratoires de commander des médicaments ou du mat
 
 #### XAMPP
 
-XAMPP permet de mettre en place facilement un environnement Apache et un base de données MySQL ou MariaDB.
+XAMPP permet de mettre en place facilement un environnement Apache et une base de données MySQL ou MariaDB.
 
 Pour l'installation il faut se diriger sur [la page de téléchargement de XAMPP](https://www.apachefriends.org/fr/download.html)
 
@@ -47,13 +47,13 @@ Une fois sur la page, téléchargé la version **PHP 8.2.12** :
 
 ![xampp_download.png](public/img/README/xampp_download.png)
 
-Une fois téléchargé, lancer l'executable.
+Une fois téléchargé, lancer l'exécutable.
 
-Il est possible qu'une fenêtre vous prévienne que votre anti virus est actif. N'y prêtez pas attention et cliquez sur oui :
+Il est possible qu'une fenêtre vous prévienne que votre antivirus est actif. N'y prêtez pas attention et cliquez sur oui :
 
 ![xampp_antivirus_alert.png](public/img/README/xampp_antivirus_alert.png)
 
-En suite, faite suivant plusieurs fois :
+Ensuite, faite suivant plusieurs fois :
 
 ![xampp_installer_1.png](public/img/README/xampp_installer_1.png)
 
@@ -67,7 +67,7 @@ Vérifié bien que dans le champ ***Select a folder***, le chemin soit `C:\xampp
 
 ![xampp_installer_5.png](public/img/README/xampp_installer_5.png)
 
-Si le programme d'installation vous propose de redémarrer votre poste, redémarrez-le.
+Si le programme d'installation vous propose de redémarrer votre poste, redémarrez le.
 
 ### Installation du projet
 
@@ -79,7 +79,7 @@ Pour commencer, il faut télécharger le projet depuis [le dépot Github](https:
 
 Une fois téléchargé, extraire le dossier précédemment téléchargé dans le dossier `C:\xampp\htdocs`.
 
-**Attention, l'extracteur vous proposera surement de l'éxtraire dans le dossier `C:\xampp\htdocs\ppe4`. Bien penser à corriger** :
+> **Attention, l'extracteur vous proposera surement de l'extraire dans le dossier `C:\xampp\htdocs\ppe4`. Bien penser à corriger**.
 
 ![project_extract_1.png](public/img/README/project_extract_1.png)
 
@@ -91,15 +91,15 @@ Pour mettre la base de données en place, il faut en premier temps démarrer **A
 
 ![xampp_start_mysql_apache.png](public/img/README/xampp_start_mysql_apache.png)
 
-Il est maintenant possible d'accéder à PHP My Admin pour accéder aux bases de données depuis le navigateur web avec l'addresse [http://localhost/phpmyadmin/](http://localhost/phpmyadmin/)
+Il est maintenant possible d'accéder à PHP My Admin pour accéder aux bases de données depuis le navigateur web avec l'adresse [http://localhost/phpmyadmin/](http://localhost/phpmyadmin/)
 
 Pour créer la base de données, il faut en premier temps cliquer sur *Nouvelle base de données* (**1.**), puis donner un nom à la base de données, dans notre cas `ppe4` (**2.**), puis cliquer sur *Créer* (**3.**) :
 
 ![phpmyadmin_create_database.png](public/img/README/phpmyadmin_create_database.png)
 
-Nous allons en suite importer la base de données du projet.
+Nous allons ensuite importer la base de données du projet.
 
-Cette base des données est disponible à la racine du projet. L'importation est simplifié par l'interface phpmyadmin :
+Cette base des données est disponible à la racine du projet. L'importation est simplifiée par l'interface **phpmyadmin** :
 
 ![import_sql_1.png](public/img/README/import_sql_1.png)
 
@@ -135,23 +135,23 @@ Le MCD si dessus représentent les différentes tables de la base de données.
 
 #### Role
 
-La table Role permet simplement d'affécter un role à un utilisateur.
+La table Role permet simplement d'affecter un rôle à un utilisateur.
 
-Les roles ne sont pas un ENUM contenue dans la table Utilisateur, mais une table aparentière. Cette façon de faire permet une évolutivité de l'application web.
-Il serait possible par la suite, par exemple, de lier la table role a la table Produits afin de limiter l'accès de certains produits à certain role, ou encore d'ajouter une clé étrangère role dans la table role pour créer un role Père.
+Les rôles ne sont pas un ENUM contenue dans la table *Utilisateur*, mais une table à part entière. Cette façon de faire permet une évolutivité de l'application web.
+Il serait possible par la suite, par exemple, de lier la table *Role* a la table *Produits* afin de limiter l'accès de certains produits à certains rôles, ou encore d'ajouter une clé étrangère rôle dans la table *Role* pour créer un rôle Père.
 
 #### Utilisateur
 
 La table utilisateur permet simplement de contenir toutes les informations des utilisateurs.
 
-Elle doit obligatoirement posséder un rôle. Les informations d'adresse ne sont actuellement pas utilisé dans l'application web, mais on pourrait ajouter une adresse automatiquement, par exemple avec une synchronisation d'un Active Directory.
-Elle pourrait en suite automatiser l'adresse de destination d'une commande.
+Elle doit obligatoirement posséder un rôle. Les informations d'adresse ne sont actuellement pas utilisées dans l'application web, mais on pourrait ajouter une adresse automatiquement, par exemple avec une synchronisation d'un Active Directory.
+Elle pourrait ensuite automatiser l'adresse de destination d'une commande.
 
 #### Produits
 
-La table Produits est une base aux différents produits utilisés, elle contient seulement les informations communes à tous les produits.
+La table *Produit* est une base aux différents produits utilisés, elle contient seulement les informations communes à tous les produits.
 
-Pour l'instant seulement la table Médicaments et Matériels ont été mis en place, mais cette fléxibilité permet d'ajouter d'autres catégories de produits plus facilement, en limitant les effets de bords sur les autres catégories de produits.
+Pour l'instant seulement la table Médicaments et Matériels ont été mis en place, mais cette flexibilité permet d'ajouter d'autres catégories de produits plus facilement, en limitant les effets de bord sur les autres catégories de produits.
 
 ##### Médicaments
 
@@ -159,15 +159,15 @@ Tous les médicaments présents dans cette table ont été ajouté depuis la [Ba
 
 ##### Matériels
 
-La table Matériels est vide, car les informations nécessaires sont déja présents dans la table [Produits](#produits).
+La table *Materiel* est vide, car les informations nécessaires sont déjà présents dans la table [Produits](#produits).
 
 #### Panier
 
-La table Panier, comme son nom l'indique, contient les différents produits ajoutés par les utilisateurs avec une valeur quantité pour chaque produit ajoutés.
+La table *Panier*, comme son nom l'indique, contient les différents produits ajoutés au panier par les utilisateurs avec une valeur quantité pour chaque produit ajoutés.
 
 #### Commande
 
-La table Commande contient toutes les informations des commandes.
+La table *Commande* contient toutes les informations des commandes.
 
 La valeur booléenne `mouvement_com`, correspond au mouvement de la commande, `false` correspond à une commande en direction des stocks, `true` à une sortie de stock en direction d'un laboratoire.
 
@@ -175,7 +175,21 @@ Les produits contenus dans une autre table nommée Ligne_commande
 
 ##### Ligne commande
 
-Les données contenues dans la table ligne_commande sont similaires à la table [Panier](#panier). Elle associe un produit à une commande, en ajoutant une quantité aux produits.
+Les données contenues dans la table *ligne_commande* sont similaires à la table [Panier](#panier). Elle associe un produit à une commande, en ajoutant une quantité aux produits.
+
+## Modèle de conception
+
+Ce projet utilise une architecture **MVC** (Model View Controller).
+
+Cette structure permet de facilité la maintenance et l'évolutivité des logiciel en séparant les vue des requête SQL.
+
+```mermaid
+sequenceDiagram
+Model -->> Controller: Envoie de données
+Controller ->> View: Afficher la page
+View ->> Controller: Appel d'une fonction
+Controller -->> Model: Insère les données
+```
 
 ## Le projet
 
@@ -189,7 +203,7 @@ Les 4 comptes possèdent le même mot de passe : **Password@123**
 
 ### Sécurité
 
-La sécurité est une partie extremement important dans n'importe quelles applications, mais encore plus dans le secteur médical.
+La sécurité est une partie extrêmement importante dans n'importe quelles applications, mais encore plus dans le secteur médical.
 
 #### BCrypt
 
@@ -211,7 +225,7 @@ En PHP, on utilise une methode nommé `password_hash()` :
     }
 ```
 
-La seul manière de vérifier si un mot de passe est correct est de le comparer avec la version cryptée. En php, on utilise la méthode `password_verify()` :
+La seule manière de vérifier si un mot de passe est correct est de le comparer avec la version cryptée. En PHP, on utilise la méthode `password_verify()` :
 
 ```php
 /**
@@ -256,7 +270,7 @@ Le header contient les informations du token permettant de l'identifier en tant 
 ##### Payload
 
 Le payload permet de contenir toutes les informations que l'on souhaite enregistrer sur le navigateur de l'utilisateur.
-Dans notre cas, nous allons enregistrer son **id**, son **email**, son **role**, sa date d'emission et sa date d'expiration.
+Dans notre cas, nous allons enregistrer son **id**, son **email**, son **role**, sa date d'émission (**iat**) et sa date d'expiration (**exp**).
 
 ```json
 {
@@ -270,9 +284,9 @@ Dans notre cas, nous allons enregistrer son **id**, son **email**, son **role**,
 
 ##### Signature
 
-La partie la plus importante du JWT est la signature. Elle permet d'assurer l'authenticité du token via une clé privé qui ne doit absolument pas être diffusée.
+La partie la plus importante du JWT est la signature. Elle permet d'assurer l'authenticité du token via une clé privée qui ne doit absolument pas être diffusée.
 
-La signature est un hash généré via un algorithme de hashage choisie préalablement. Pour créer ce hash nous allons concaténé le header et le payload puis la hasher avec la clé secrète que nous aurons au préalable encodé en [base 64](https://fr.wikipedia.org/wiki/Base64).
+La signature est un hash généré via un algorithme de hashage choisi préalablement. Pour créer cet hash nous allons concaténer l'header et le payload puis l'hasher avec la clé secrète que nous aurons au préalable encodé en [base 64](https://fr.wikipedia.org/wiki/Base64).
 
 Dans notre cas, l'alogithme de hashage utilisé est le [SHA256](https://docs.devolutions.net/fr/kb/general-knowledge-base/what-is-sha-256/) :
 
@@ -290,14 +304,14 @@ $signature = hash_hmac(
 );
 ```
 
-Une fois le tout généré, nous allons concaténer le header, le payload et la signature en les séparant par un point ce qui donnera :
+Une fois le tout généré, nous allons concaténer l'header, le payload et la signature en les séparant par un point ce qui donnera :
 ```
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
 ```
 
 #### Injection SQL
 
-Pour éviter le risque d'injection, PDO a introduit les [Requète préparé](https://www.php.net/manual/en/security.database.sql-injection.php#security.database.avoiding) via la fonction `prepare()`.
+Pour éviter le risque d'injection SQL, PDO a introduit les [Requête préparée](https://www.php.net/manual/en/security.database.sql-injection.php#security.database.avoiding) via la fonction `prepare()`.
 
 ```php
 public function get_one()
@@ -322,7 +336,7 @@ La page de connexion présente un formulaire ou rentrer son email et son mot de 
 Lors de la soumission du formulaire, le programme PHP va vérifier plusieurs choses :
 
 - En premier temps, il va simplement vérifier si l'utilisateur existe.
-- En suite, il va vérifier si le compte n'est pas bloqué (valeurs booleen *compte_desactive_uti* dans la table **Utilisateur**).
+- Ensuite, il va vérifier si le compte n'est pas bloqué (valeurs booléenne *compte_desactive_uti* dans la table **Utilisateur**).
 - Pour finir, il va vérifier si le mot de passe entré est valide avec [BCrypt](#bcrypt).
 
 Si toutes ses conditions sont valides, le programme vérifiera si le mot de passe doit être modifié (ce qui arrive lors de la première connexion ou si un administrateur a réinitialisé le mot de passe).
@@ -341,17 +355,17 @@ Pour valider le changement de mot de passe, plusieurs conditions doivent être r
 - Minimum 1 caractère spécial
 - Minimum 1 chiffre
 
-Si le code JS présent dans la page n'a pas été modifié, l'utilisateur devrait être prévenu si l'une de ces conditions n'est pas respécté (Le JavaScript permet seulement de prévenir l'utilisateur, si la requète est quand meme envoyé, le code php revérifiera et refusera la modification du mot de passe).
+Si le code JS présent dans la page n'a pas été modifié, l'utilisateur devrait être prévenu si l'une de ces conditions n'est pas respectée (Le JavaScript permet seulement de prévenir l'utilisateur, si la requête est quand même envoyée, le code PHP revérifiera et refusera la modification du mot de passe).
 
 ### Espace Utilisateur
 
 ![dashboard_utilisateur_gestionnaire.png](public/img/README/dashboard_utilisateur_gestionnaire.png)
 
-L'espace utilisateur du site permet aux laboratoires d'éfféctuer des commandes qui devront être, par la suite, validé.
+L'espace utilisateur du site permet aux laboratoires d'effectuer des commandes qui devront être, par la suite, validé.
 
 #### Choix des produits
 
-L'espace de commandes de médicaments et de matériels fonctionnent exactement de la même manière, la seule différence est la façon dont sont affichés les produits.
+L'espace de commandes de médicaments et de matériels fonctionne exactement de la même manière, la seule différence est la façon dont sont affichés les produits.
 
 Cette page est composée de 3 éléments :
 - La liste des produits
@@ -360,7 +374,7 @@ Cette page est composée de 3 éléments :
 
 ##### Liste des produits
 
-La liste des produits est affiché par des composants :
+La liste des produits est affichée par des composants :
 
 ![product_card.png](public/img/README/product_card.png)
 
@@ -373,7 +387,7 @@ VALUES (:id_utilisateur, :id_produit, :quantite);
 
 ##### Barre de recherche
 
-Lors de la soumission d'une recherche, la requête éxécuté ajoutera une variable `LIKE` :
+Lors de la soumission d'une recherche, la requête exécutée ajoutera une variable `LIKE` :
 
 ```sql
 SELECT produits.id_pro AS id, libelle_pro AS libelle, description_pro AS description, qte_stock_pro AS quantite_stock, forme_med AS forme, cis_med AS cis 
@@ -400,7 +414,7 @@ La page du panier présente la liste des produits ajoutés, ainsi qu'un bouton p
 
 Il est possible de supprimer un produit de panier, ainsi que de modifier sa quantité.
 
-Lors du changement de quantité un script JS est éxécuté permettant d'éfféctuer une requete à chaque changement :
+Lors du changement de quantité un script JS est exécuté permettant d'effectuer une requête à chaque changement :
 
 ```js
 document.getElementById("formulaire_'.$i.'").addEventListener("input", function(){
@@ -419,14 +433,14 @@ SET qte = :qte
 WHERE id_uti = :id_utilisateur AND id_pro = :id_produit;
 ```
 
-A la confirmation de la commande, L'application va en premier temps créer une commande via la requète suivante :
+A la confirmation de la commande, L'application va en premier temps créer une commande via la requête suivante :
 
 ```sql
 INSERT INTO commande (commande.date_com, commande.mouvement_com, commande.id_uti_Utilisateur, commande.statut_com) 
 VALUES (NOW(), :mouvement, :id_utilisateur, :statut);
 ```
 
-Puis dans un second temps, créer pour chaque élément du panier une ligne dans la table ligne_commande :
+Puis dans un second temps, créer pour chaque élément du panier une ligne dans la table *ligne_commande* :
 
 ```php
 foreach ($produits as $produit) {
@@ -473,7 +487,7 @@ On accède aux commandes en attente de validation en cliquant sur l'un des racco
 
 ![vue_validateur.png](public/img/README/vue_validateur.png)
 
-Vous pouvez en suite sélectionner une commande à valider :
+Vous pouvez ensuite sélectionner une commande à valider :
 
 ![commandes_a_valider.png](public/img/README/commandes_a_valider.png)
 
@@ -483,7 +497,7 @@ Sur cette commande, vous pouvez seulement valider ou refuser la commande :
 
 #### Valider commande
 
-Si la commande est validé, 2 requètes sont éxécuté.
+Si la commande est validée, 2 requêtes sont exécutées.
 
 La première permet de modifier le statut de la commande :
 
@@ -493,7 +507,7 @@ SET commande.date_val_com = NOW(), commande.id_uti_validateur = :id_validateur, 
 WHERE commande.id_com = :id_commande;
 ```
 
-La seconde permet de réduire le nombre de produits disponible en stock :
+La seconde permet de réduire le nombre de produits disponibles en stock :
 
 ```sql
 UPDATE produits
@@ -503,7 +517,7 @@ WHERE id_pro = :id;
 
 #### refuser commande
 
-Si la commande est refusé, seulement le statut sera modifié :
+Si la commande est refusée, seulement le statut sera modifié :
 
 ```sql
 UPDATE commande 
@@ -515,7 +529,7 @@ WHERE commande.id_com = :id_commande;
 
 ![dashboard_admin.png](public/img/README/dashboard_admin.png)
 
-Le compte administrateur permet seulement de gérer les compte utilisateur.
+Le compte administrateur permet seulement de gérer les comptes utilisateur.
 
 Il est possible de :
 - Créer un compte
@@ -528,7 +542,7 @@ Il est possible de :
 
 ![creation_utilisateur.png](public/img/README/creation_utilisateur.png)
 
-L'espace de création de compte présente plusieurs champs.
+L'espace de création d'un compte présente plusieurs champs.
 
 ##### Email
 
@@ -536,7 +550,7 @@ L'email de l'utilisateur est l'identifiant de connexion de ce dernier. L'email d
 
 ##### Prenom et Nom de famille
 
-Le prénom et le non de famille est seulement présent à titre indicatif.
+Le prénom et le nom de famille sont seulement présents à titre indicatif.
 
 ##### Mot de passe temporaire
 
@@ -544,11 +558,11 @@ Le mot de passe mis en place par l'administrateur devra obligatoirement être mo
 
 ##### Role
 
-Les role affiché dans la liste sont importé depuis [la table Role](#role) de la base de donnée.
+Les rôles affichés dans la liste sont importés depuis [la table Role](#role) de la base de données.
 
 ##### Soumission du formulaire
 
-Lors de la soumission du formulaire la fonction suivante sera exécuté :
+Lors de la soumission du formulaire la fonction suivante sera exécutés :
 
 ```php
 public function creer_utilisateur(
@@ -592,7 +606,7 @@ VALUES (:email, :mot_de_passe, :nom, :prenom, :id_role);
 
 #### Gestion des utilisateurs
 
-Sur la page de gestion des utilisateurs, en séléctionnant un compte, vous arriverez sur cette page :
+Sur la page de gestion des utilisateurs, en sélectionnant un compte, vous arriverez sur cette page :
 
 ![modification_utilisateur.png](public/img/README/modification_utilisateur.png)
 
@@ -600,7 +614,7 @@ Sur la page de gestion des utilisateurs, en séléctionnant un compte, vous arri
 
 Pour modifier les informations du compte, il faut simplement modifier les différents champs que l'on souhaite modifier pour cliquer sur le bouton `Modifier l'utilisateur`.
 
-Lors de la soumission du formulaire, la requete SQL suivante est exécuté :
+Lors de la soumission du formulaire, la requête SQL suivante est exécutée :
 
 ```sql
 UPDATE utilisateur 
@@ -611,7 +625,7 @@ AND est_archive_uti = false;
 
 ##### Reinitialiser mot de passe
 
-En cliquant sur le bouton *Reinitialiser mot de passe*, une pop up va s'afficher vous demandant d'entrer un mot de passe temporaire :
+En cliquant sur le bouton *Reinitialiser mot de passe*, une pop-up va s'afficher vous demandant d'entrer un mot de passe temporaire :
 
 ![reset_password.png](public/img/README/reset_password.png)
 
@@ -622,21 +636,21 @@ A la prochaine connexion, l'utilisateur sera forcé à modifier le mot de passe 
 
 Il est également possible de désactiver l'utilisateur. 
 
-La désactivation va simplement changer la valeur booléenne `compte_desactivé_uti` de la table Utilisateur, ce qui l'empêchera de se connecter.
+La désactivation va simplement changer la valeur booléenne `compte_desactivé_uti` de la table *Utilisateur*, ce qui l'empêchera de se connecter.
 
 ##### Suppression de l'utilisateur
 
-En cliquant sur le bouton *Supprimer utilisateur*, un pop up demandera une seconde confirmation de suppression afin d'éviter toutes erreurs :
+En cliquant sur le bouton *Supprimer utilisateur*, un pop-up demandera une seconde confirmation de suppression afin d'éviter toutes erreurs :
 
 ![confirmation_suppression.png](public/img/README/confirmation_suppression.png)
 
 > Etant donnée que la clé primaire de l'utilisateur peut être liée à d'autres tables, ce dernier n'est pas réellement supprimé de la table utilisateur, mais archivé via la valeur booléenne `est_archive_uti`. L'intégralité de requête `SELECT` faite vers la table **utilisateur** filtre les utilisateurs archivés.
 
-	### Gestionnaire de stock
+### Gestionnaire de stock
 
 La vue du gestionnaire de stockage est exactement la même que l'utilisateur.
 
-La différence vient du fait que lors de la [confirmation d'une commande](#panier), le paramètre de la fonction appelé sont différentes :
+La différence vient du fait que lors de la [confirmation d'une commande](#panier), les paramètres de la fonction appelé sont différents :
 
 ```php
 public function confirmer_la_commande_gestionnaire(
@@ -676,8 +690,10 @@ Dans ce cas-là, la commande n'a pas besoin d'être validé par un validateur.
 
 ## Conclusion
 
-La mise en place de l'application de gestion de commandes pour le laboratoire Galaxy Swiss Bourdin (GSB) représente un pas important vers l'optimisation de la chaîne d'approvisionnement et la gestion des stocks au sein de l'entreprise. Cette application permet non seulement de centraliser les commandes de médicaments et de matériel, mais aussi d'améliorer le suivi et la validation des demandes, tout en assurant une gestion sécurisée des utilisateurs.
+La mise en place de l'application de gestion de commandes pour le laboratoire Galaxy Swiss Bourdin (GSB) représente un pas important vers l'optimisation de la chaîne d'approvisionnement et la gestion des stocks au sein de l'entreprise. 
 
-La structure modulaire de la base de données, permettant une évolution facile avec l'ajout de nouvelles catégories de produits, ainsi que la distinction claire des rôles entre utilisateurs, gestionnaires et validateurs, garantit une flexibilité et une adaptabilité de l'application aux besoins futurs de l'entreprise.
+Son modèle de conception lui permet une évolutivité ainsi qu'une maintenance facilité. 
+La structure de la base de données permet également cette modularité primordiale pour toutes applications. 
 
-Les interfaces utilisateur fournissent une expérience intuitive et efficace pour les différentes parties prenantes, qu'il s'agisse de passer commande, de gérer les utilisateurs ou de valider les demandes, contribuant ainsi à une meilleure efficacité opérationnelle.
+
+
