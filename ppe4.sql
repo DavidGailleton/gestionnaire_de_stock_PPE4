@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 18 mars 2024 à 14:00
+-- Généré le : jeu. 21 mars 2024 à 14:46
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -64,7 +64,10 @@ INSERT INTO `commande` (`id_com`, `statut_com`, `date_com`, `mouvement_com`, `da
 (22, 'en_cours_de_preparation', '2024-03-18 10:48:48', 1, '2024-03-18 10:48:48', 3, 4),
 (23, 'en_cours_de_preparation', '2024-03-18 10:48:44', 1, '2024-03-18 10:48:44', 3, 4),
 (24, 'en_cours_de_preparation', '2024-03-18 10:01:09', 0, NULL, NULL, 4),
-(25, 'refuse', '2024-03-18 10:43:37', 1, '2024-03-18 10:43:37', 3, 9);
+(25, 'refuse', '2024-03-18 10:43:37', 1, '2024-03-18 10:43:37', 3, 9),
+(26, 'en_cours_de_preparation', '2024-03-19 13:42:14', 1, '2024-03-19 13:42:14', 3, 9),
+(27, 'en_attente', '2024-03-20 16:06:28', 1, NULL, NULL, 9),
+(28, 'en_cours_de_preparation', '2024-03-21 12:32:42', 0, NULL, NULL, 4);
 
 -- --------------------------------------------------------
 
@@ -114,7 +117,12 @@ INSERT INTO `ligne_commande` (`id_pro`, `id_com`, `qte`) VALUES
 (15768, 23, 7),
 (5837, 24, 7),
 (15769, 24, 12),
-(5837, 25, 1);
+(5837, 25, 1),
+(15768, 26, 7),
+(960, 27, 7),
+(3425, 27, 7),
+(15770, 27, 1),
+(13907, 28, 1);
 
 -- --------------------------------------------------------
 
@@ -264,7 +272,45 @@ INSERT INTO `log_connexion` (`id_log_con`, `date_log_con`, `email_log_con`, `ech
 (169, 1710758041, 'validateur@gmail.com', 1),
 (170, 1710758178, 'admin@gmail.com', 0),
 (171, 1710758216, 'validateur@gmail.com', 0),
-(172, 1710760147, 'utilisateur@gmail.com', 0);
+(172, 1710760147, 'utilisateur@gmail.com', 0),
+(173, 1710779138, 'utilisateur@gmail.com', 0),
+(174, 1710839191, 'utilisateur@gmail.com', 0),
+(175, 1710839215, 'admin@gmail.com', 0),
+(176, 1710854900, 'utilisateur@gmail.com', 1),
+(177, 1710854905, 'utilisateur@gmail.com', 1),
+(178, 1710854912, 'admin@gmail.com', 0),
+(179, 1710855073, 'utilisateur@gmail.com', 0),
+(180, 1710855728, 'validateur@gmail.com', 0),
+(181, 1710855740, 'gestionnaire-de-stock@gmail.com', 0),
+(182, 1710855749, 'utilisateur@gmail.com', 0),
+(183, 1710857493, 'utilisateur@gmail.com', 0),
+(184, 1710924142, 'utilisateur@gmail.com', 0),
+(185, 1710940330, 'utilisateur@gmail.com', 0),
+(186, 1710941720, 'utilisateur@gmail.com', 0),
+(187, 1710941728, 'validateur@gmail.com', 0),
+(188, 1710941781, 'utilisateur@gmail.com', 0),
+(189, 1710941794, 'validateur@gmail.com', 0),
+(190, 1710941808, 'admin@gmail.com', 0),
+(191, 1710944831, 'utilisateur@gmail.com', 0),
+(192, 1710946009, 'admin@gmail.com', 0),
+(193, 1710948915, 'gestionnaire-de-stock@gmail.com', 0),
+(194, 1710950452, 'utilisateur@gmail.com', 0),
+(195, 1710950768, 'validateur@gmail.com', 0),
+(196, 1710950779, 'utilisateur@gmail.com', 0),
+(197, 1710950796, 'validateur@gmail.com', 0),
+(198, 1711009104, 'admin@gmail.com', 0),
+(199, 1711021130, 'gestionnaire-de-stock@gmail.com', 0),
+(200, 1711026759, 'admin@gmail.com', 0),
+(201, 1711027069, 'validateur@gsb.fr', 0),
+(202, 1711027099, 'admin@gsb.fr', 0),
+(203, 1711027136, 'gestionnaire-de-stock@gdb.fr', 1),
+(204, 1711027141, 'admin@gsb.fr', 0),
+(205, 1711027210, 'gestionnaire-de-stock@gsb.fr', 1),
+(206, 1711027215, 'gestionnaire-de-stock@gsb.fr', 0),
+(207, 1711027260, 'admin@gsb.fr', 0),
+(208, 1711027311, 'utilisateur@gsb.fr', 0),
+(209, 1711027369, 'admin@gsb.fr', 0),
+(210, 1711027459, 'admin@gsb.fr', 0);
 
 -- --------------------------------------------------------
 
@@ -16201,6 +16247,13 @@ CREATE TABLE `panier` (
   `qte` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Déchargement des données de la table `panier`
+--
+
+INSERT INTO `panier` (`id_uti`, `id_pro`, `qte`) VALUES
+(4, 15768, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -30144,7 +30197,7 @@ INSERT INTO `produits` (`id_pro`, `libelle_pro`, `description_pro`, `qte_stock_p
 (13904, 'TAVANIC 5 mg/ml, solution pour perfusion', 'intraveineuse', 3327),
 (13905, 'TAVANIC 500 mg, comprime pellicule secable', 'orale', 225),
 (13906, 'TAVANIC 500 mg, comprime pellicule secable', 'orale', 9309),
-(13907, 'TAVANIC 500 mg, comprime pellicule secable', 'orale', 9998),
+(13907, 'TAVANIC 500 mg, comprime pellicule secable', 'orale', 9999),
 (13908, 'TAVLESSE 100 mg, comprime pellicule', 'orale', 1636),
 (13909, 'TAVLESSE 150 mg, comprime pellicule', 'orale', 3915),
 (13910, 'TAVNEOS 10 mg, gelule', 'orale', 5339),
@@ -32008,7 +32061,7 @@ INSERT INTO `produits` (`id_pro`, `libelle_pro`, `description_pro`, `qte_stock_p
 (15765, 'ZYVOXID 100 mg/5 ml, granules pour suspension buva', 'orale', 6742),
 (15766, 'ZYVOXID 2 mg/ml, solution pour perfusion', 'intraveineuse', 8219),
 (15767, 'ZYVOXID 600 mg, comprime pellicule', 'orale', 8309),
-(15768, 'Centrifugeuse', 'Appareil permettant de separer les melanges homogenes ou heterogenes par la force centrifuge', 36),
+(15768, 'Centrifugeuse', 'Appareil permettant de separer les melanges homogenes ou heterogenes par la force centrifuge', 29),
 (15769, 'Hotte aspirante', 'Hotte aspirante avec eclairage LED et filtre a charbon actif pour une ventilation efficace', 35),
 (15770, 'Spectrophotometre', 'Appareil de mesure de l\'absorbance des liquides permettant de determiner la concentration de certaines substances', 151),
 (15771, 'Balance analytique', 'Balance precise avec affichage numerique pour les pesees de grande precision en laboratoire', 75),
@@ -32168,13 +32221,17 @@ CREATE TABLE `utilisateur` (
 
 INSERT INTO `utilisateur` (`id_uti`, `email_uti`, `password_uti`, `nom_uti`, `prenom_uti`, `no_rue_uti`, `rue_uti`, `ville_uti`, `cp_uti`, `id_rol`, `compte_desactive_uti`, `mdp_a_changer_uti`, `est_archive_uti`) VALUES
 (1, 'utilisateur@gmail.com', '$2y$13$XVU9WdvQDri3uig3rNjcA.iGZTDPmr7SofJGYQLJBAbf2gM.SGfKW', 'utilisateur', 'test12', NULL, NULL, NULL, NULL, 1, 0, 1, 1),
-(3, 'validateur@gmail.com', '$2y$13$Mr9QSwKSk4QTxxFh7Xaode.V0ci/1Puc5swZGuJ/tXTFKH5av8zhu', 'validateur', 'test123', NULL, NULL, NULL, NULL, 10, 0, 0, 0),
-(4, 'gestionnaire-de-stock@gmail.com', '$2y$13$.k13SpfQQ8MgF7QZtVFr2ex3kATL4C9.b77aZngfHkr216WL1CfFy', 'Gestionnaire de stock', 'test', NULL, NULL, NULL, NULL, 3, 0, 0, 0),
-(5, 'admin@gmail.com', '$2y$13$6/KlKGvZn7PXIXV.dEYcJuSk60bqe3cXmxiCkTHuVyyx6ME7OSKTu', 'admin', 'test', NULL, NULL, NULL, NULL, 2, 0, 0, 0),
-(6, 'testest@test.Fr', '$2y$13$mORplmNXLqqM4wi9NXKnEegxj821ISek4Gj/8.CyXPOehVYLDks9C', 'test', 'test', NULL, NULL, NULL, NULL, 1, 0, 1, 0),
+(3, 'validateur@gsb.fr', '$2y$13$/wJ459aWauMal9RCw0S0ge.SawNZtjNImTUqqLs51RZ8p8vWSV5kC', 'validateur', 'test', NULL, NULL, NULL, NULL, 10, 0, 0, 0),
+(4, 'gestionnaire-de-stock@gsb.fr', '$2y$13$gK814/CHcH/La0rMU4b4ouJ0vvv1DJ05RP6V7X.jk6tiUjR79TCiu', 'Gestionnaire de stock', 'test', NULL, NULL, NULL, NULL, 3, 0, 0, 0),
+(5, 'admin@gsb.fr', '$2y$13$xhVL23r92yZzhKUalB2khecmF.XHiQobixFBXdFEINewmhAhbsD06', 'admin', 'test', NULL, NULL, NULL, NULL, 2, 0, 0, 0),
+(6, 'testest@test.Fr', '$2y$13$mORplmNXLqqM4wi9NXKnEegxj821ISek4Gj/8.CyXPOehVYLDks9C', 'test', 'test', NULL, NULL, NULL, NULL, 1, 0, 1, 1),
 (7, 'david.gailleton@gsb.fr', '$2y$13$y1s0hSBPFwjKjePEmtkKkexsuaGbyEC7JVhoZRwsB.EH.afjqISOG', 'GAILLETON', 'David', NULL, NULL, NULL, NULL, 1, 0, 0, 0),
-(9, 'utilisateur@gmail.com', '$2y$13$r93uQxdAxt4.FaPlMcpU7.71eRtnREM6GmXHE2BRbXhnYlY3NqbUG', 'test', 'test', NULL, NULL, NULL, NULL, 1, 0, 0, 0),
-(10, 'test@gmail.com', '$2y$13$X3OMMmuMD2OiOTCgjkEuH.g.cX6WoKRzjfF/kegXKZVekPk5vV5Pa', 'test', 'test', NULL, NULL, NULL, NULL, 1, 0, 1, 1);
+(9, 'utilisateur@gsb.fr', '$2y$13$Q6Ic/HH8DF3n6yaVWQZAsOlJtmFBlyrOXhaV9UbvU5g8lHX34UNiS', 'utilisateur', 'test', NULL, NULL, NULL, NULL, 1, 0, 0, 0),
+(10, 'test@gmail.com', '$2y$13$X3OMMmuMD2OiOTCgjkEuH.g.cX6WoKRzjfF/kegXKZVekPk5vV5Pa', 'test', 'test', NULL, NULL, NULL, NULL, 1, 0, 1, 1),
+(11, 'test123@gsb.fr', '$2y$13$BupzmKeVrPlDqd30O/ZdouHI4D8SiFDC5ySWNYQqSYjvfs0BbMmRG', '123', 'test', NULL, NULL, NULL, NULL, 1, 0, 1, 1),
+(12, 'admin1@gsb.fr', '$2y$13$XeKcEndU9qdZoY5/cZExBeiiXawVIDBc38n8Ikv9/6NtKDP4Ic1Y6', 'admin', 'admin', NULL, NULL, NULL, NULL, 2, 0, 1, 1),
+(13, 'jean.dupont@gsb.fr', '$2y$13$Xs3Y6HUk..I0odUc11xrHO9jF7DbHfn6DHP7A90tCRKzTVvv1xh16', 'DUPONT', 'Jean', NULL, NULL, NULL, NULL, 1, 0, 1, 0),
+(14, 'gaetan.peillon@gsb.fr', '$2y$13$6vYlneHGYl428UVOhxrLU.d1Tkp2qO29CKBFXrTJyobQWQJSNHNpm', 'PEILLON', 'Geatan', NULL, NULL, NULL, NULL, 10, 0, 1, 0);
 
 --
 -- Index pour les tables déchargées
@@ -32250,13 +32307,13 @@ ALTER TABLE `utilisateur`
 -- AUTO_INCREMENT pour la table `commande`
 --
 ALTER TABLE `commande`
-  MODIFY `id_com` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id_com` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT pour la table `log_connexion`
 --
 ALTER TABLE `log_connexion`
-  MODIFY `id_log_con` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=173;
+  MODIFY `id_log_con` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=211;
 
 --
 -- AUTO_INCREMENT pour la table `produits`
@@ -32274,7 +32331,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `id_uti` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_uti` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Contraintes pour les tables déchargées

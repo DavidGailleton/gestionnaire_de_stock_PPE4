@@ -165,6 +165,14 @@ Les données contenues dans la table ligne_commande sont similaires à la table 
 
 ## Le projet
 
+4 comptes de test sont mis à disposition pour tester l'application :
+- utilisateur@gsb.fr
+- validateur@gsb.fr
+- gestionnaire-de-stock@gsb.fr
+- admin@gsb.fr
+
+Les 4 comptes possèdent le même mot de passe : **Password@123**
+
 ### Sécurité
 
 La sécurité est une partie extremement important dans n'importe quelles applications, mais encore plus dans le secteur médical.
@@ -653,3 +661,9 @@ public function confirmer_la_commande_gestionnaire(
 Dans ce cas-là, la commande n'a pas besoin d'être validé par un validateur.
 
 ## Conclusion
+
+La mise en place de l'application de gestion de commandes pour le laboratoire Galaxy Swiss Bourdin (GSB) représente un pas important vers l'optimisation de la chaîne d'approvisionnement et la gestion des stocks au sein de l'entreprise. Cette application permet non seulement de centraliser les commandes de médicaments et de matériel, mais aussi d'améliorer le suivi et la validation des demandes, tout en assurant une gestion sécurisée des utilisateurs.
+
+La structure modulaire de la base de données, permettant une évolution facile avec l'ajout de nouvelles catégories de produits, ainsi que la distinction claire des rôles entre utilisateurs, gestionnaires et validateurs, garantit une flexibilité et une adaptabilité de l'application aux besoins futurs de l'entreprise.
+
+Les interfaces utilisateur fournissent une expérience intuitive et efficace pour les différentes parties prenantes, qu'il s'agisse de passer commande, de gérer les utilisateurs ou de valider les demandes, contribuant ainsi à une meilleure efficacité opérationnelle.
