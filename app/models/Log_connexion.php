@@ -29,10 +29,11 @@ class Log_connexion extends Model
         $datetime = new \DateTime();
 
         $query =
-            "INSERT INTO log_connexion (email_log_con, echec_log_con, date_log_con) VALUES (:email, :echec, NOW())";
+            "INSERT INTO log_connexion (email_log_con, echec_log_con, date_log_con) VALUES (:email, :echec, :date)";
         $stmt = $this->pdo->prepare($query);
         $stmt->bindValue('email', $email, PDO::PARAM_STR);
         $stmt->bindValue('echec', $echec, PDO::PARAM_BOOL);
+        $stmt->bindValue('date', time(), PDO::PARAM_INT);
         $stmt->execute();
         $stmt->fetch();
     }
